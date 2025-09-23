@@ -1,0 +1,141 @@
+.btn-outline-primary,
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active,
+.btn-outline-primary.active,
+.show > .btn-outline-primary.dropdown-toggle {
+    background-color: var(--color-primario) !important;
+    border-color: var(--color-primario) !important;
+    color: #fff !important;
+}
+
+.hero-section {
+    height: 75vh;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.hero-background img {
+    object-fit: cover;
+    object-position: center;
+}
+
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.hero-content {
+    z-index: 10;
+}
+
+.hero-background {
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        height: 70vh;
+        min-height: 400px;
+    }
+
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section {
+        height: 80vh;
+        min-height: 470px;
+    }
+
+    .display-4 {
+        font-size: 1.75rem;
+    }
+
+    .lead {
+        font-size: 1rem;
+    }
+}
+
+.hero-section {
+    height: 75vh;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.hero-background img {
+    object-fit: cover;
+    object-position: center;
+}
+
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.hero-content {
+    z-index: 10;
+}
+
+.hero-background {
+    z-index: 1;
+}
+
+.hero-illustration {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Features Section Styles */
+.feature-icon img {
+    transition: transform 0.3s ease;
+}
+
+.card:hover .feature-icon img {
+    transform: scale(1.1);
+}
+
+.card {
+    transition: all 0.3s ease;
+    border-radius: 15px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+.btn-primary {
+    background-color: var(--color-primario) !important;
+    border-color: var(--color-primario) !important;
+    color: #fff !important;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+    background-color: var(--color-primario) !important;
+    border-color: var(--color-primario) !important;
+    color: #fff !important;
+}
+
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}

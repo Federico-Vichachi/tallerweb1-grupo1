@@ -1,35 +1,143 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <title>Taller Web I</title>
-
-  <!-- Boostrap core css -->
+  <title>Vista Home</title>
   <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-
-  <!-- custom style -->
-  <link rel="stylesheet" th:href="@{/css/main.css}"/>
-
+  <link rel="stylesheet" th:href="@{/css/variables.css}"/>
+  <link rel="stylesheet" th:href="@{/css/home.css}"/>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="#">UNLAM</a>
-</nav>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
+        <span class="fs-3 fw-bold">Nombre App</span>
+      </a>
 
-<main role="main" class="container">
-  <div class = "container">
-    <h1>Bienvenidos a Taller Web 1</h1>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <a href="login.html" class="btn btn-lg btn-primary btn-block">Volver</a>
-  </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Feed</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sobre Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">FAQ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Adopción Responsable</a>
+          </li>
+        </ul>
+
+        <div class="d-flex gap-2">
+          <a href="#" class="btn btn-outline-primary">Iniciar Sesión</a>
+          <a href="#" class="btn btn-primary">Registrarse</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main role="main" class="container-fluid p-0">
+  <section class="hero-section position-relative">
+    <div class="hero-background position-absolute w-100 h-100">
+      <img th:src="@{/images/hero.webp}" alt="Hero Image" class="img-fluid w-100 h-100 object-fit-cover opacity-75">
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"></div>
+    </div>
+
+    <div class="hero-content position-relative d-flex align-items-center justify-content-center min-vh-75">
+      <div class="container text-center text-white">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+
+            <h1 class="display-4 fw-bold mb-4 text-shadow">
+              Ayuda organizada a los animales en situación de calle y contextos adversos.
+            </h1>
+            <p class="lead mb-4 text-shadow">
+              Conectamos personas, organizaciones y veterinarios para ayudar a los animales en situación de calle o en contextos de vulnerabilidad. Nuestra plataforma permite difundir casos de adopción, campañas de recaudación, animales perdidos o encontrados, y consultas de salud, generando una red de apoyo colaborativa y responsable.
+            </p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+              <a href="#" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
+              <a href="#" class="btn btn-outline-light btn-lg px-4 py-2">Más Información</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Presentación de Funcionalidades -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-12 text-center">
+          <h2 class="display-5 fw-bold mb-3">Nuestras Funcionalidades</h2>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="card h-100 shadow-sm border-0 text-center">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <img th:src="@{/images/adopcion.svg}" alt="Adopción" class="img-fluid" style="max-width: 80px; height: auto;">
+              </div>
+              <h4 class="card-title fw-bold mb-3">Adopción Responsable</h4>
+              <p class="card-text text-muted">
+                Conectamos animales en busca de hogar con familias responsables.
+                Facilitamos el proceso de adopción con seguimiento y apoyo continuo.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="card h-100 shadow-sm border-0 text-center">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <img th:src="@{/images/vet.svg}" alt="Veterinaria" class="img-fluid" style="max-width: 80px; height: auto;">
+              </div>
+              <h4 class="card-title fw-bold mb-3">Atención Veterinaria</h4>
+              <p class="card-text text-muted">
+                Conecta con veterinarios para consultar sobre la salud de tus mascotas
+                y recibir asesoramiento profesional en cualquier momento.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="card h-100 shadow-sm border-0 text-center">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <img th:src="@{/images/donacion.svg}" alt="Donación" class="img-fluid" style="max-width: 80px; height: auto;">
+              </div>
+              <h4 class="card-title fw-bold mb-3">Donaciones</h4>
+              <p class="card-text text-muted">
+                Ofrecemos la oportunidad de crear campañas de donación a los refugios y organizaciones verificadas de la forma más transparente.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
 </main>
-<!-- /.container -->
-
-<!-- Boostrap core js -->
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
