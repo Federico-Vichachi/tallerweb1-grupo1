@@ -76,36 +76,19 @@
                         </div>
                     </div>
 
-                    <!-- Sección Tags -->
-<!--                    <div class="seccion-filtro">-->
-<!--                        <h4 class="subtitulo-filtros">Tags</h4>-->
-<!--                        <div class="contenedor-tags">-->
-<!--                            <button class="tag-btn">Vacunado</button>-->
-<!--                            <button class="tag-btn">Activo</button>-->
-<!--                            <button class="tag-btn">Tranquilo</button>-->
-<!--                            <button class="tag-btn">Sociable</button>-->
-<!--                            <button class="tag-btn">Castrado</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
                     <div class="seccion-filtro">
                         <h4 class="subtitulo-filtros">Tags</h4>
-                        <div class="contenedor-tags" style="display: flex; flex-direction: column; align-items: flex-start;">
-                            <label><input type="checkbox" name="tags" value="Vacunado" th:checked="${tagsFiltro != null and #lists.contains(tagsFiltro, 'Vacunado')}"> Vacunado</label>
-                            <label><input type="checkbox" name="tags" value="Activo" th:checked="${tagsFiltro != null and #lists.contains(tagsFiltro, 'Activo')}"> Activo</label>
-                            <label><input type="checkbox" name="tags" value="Tranquilo" th:checked="${tagsFiltro != null and #lists.contains(tagsFiltro, 'Tranquilo')}"> Tranquilo</label>
-                            <label><input type="checkbox" name="tags" value="Sociable" th:checked="${tagsFiltro != null and #lists.contains(tagsFiltro, 'Sociable')}"> Sociable</label>
-                            <label><input type="checkbox" name="tags" value="Castrado" th:checked="${tagsFiltro != null and #lists.contains(tagsFiltro, 'Castrado')}"> Castrado</label>
+
+                        <div id="contenedor-tags-dinamicos" class="contenedor-tags">
+
                         </div>
                     </div>
 
                     <!-- Sección de filtros activos -->
                     <div class="seccion-filtro">
                         <h4 class="subtitulo-filtros">Filtros Activos</h4>
-                        <div class="contenedor-filtros-activos">
-                        <span class="tags-activos">
-                            Sociable
-                            <button class="eliminar-tags">x</button>
-                        </span>
+                        <div id="contenedor-tags-activos" class="contenedor-filtros-activos">
+
                         </div>
                     </div>
 
@@ -145,54 +128,6 @@
                     <button class="btn boton-filtrado"><span class="fa-solid fa-location-dot"></span> Encontrado</button>
                 </div>
             </div>
-
-
-<!--            &lt;!&ndash; BUCLE PARA MOSTRAR LAS PUBLICACIONES DE FORMA DINÁMICA &ndash;&gt;-->
-<!--            <div th:if="${publicaciones.isEmpty()}" class="alerta alert-info mt-4">-->
-<!--                <p>No se encontraron publicaciones que coincidan con tus filtros.</p>-->
-<!--            </div>-->
-<!--            <div th:each="pub : ${publicaciones}">-->
-<!--                <div class="carta-adopcion" style="margin-top: 2rem;"> &lt;!&ndash; Añadí un margen para separar las tarjetas &ndash;&gt;-->
-<!--                    <div class="card-header-custom d-flex justify-content-between align-items-center">-->
-<!--                        <div class="user-info d-flex align-items-center">-->
-<!--                            <div class="user-icon"><i class="fa-solid fa-user"></i></div>-->
-<!--                            <div class="user-details ms-3">-->
-<!--                                <span class="user-name" th:text="${pub.nombreUsuario}">Nombre de Usuario</span>-->
-<!--                                <div>-->
-<!--                                    <span class="usuario">Usuario</span>-->
-<!--                                    <span class="fecha" th:text="'· ' + ${pub.fecha}">· Hace X horas</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="tag-adopcion" th:text="${pub.tipo}">Tipo</div>-->
-<!--                    </div>-->
-<!--                    <div class="card-body-custom pt-4">-->
-<!--                        <div class="row g-4">-->
-<!--                            <div class="col-lg-4 col-md-12">-->
-<!--                                <img th:src="@{${pub.urlImagen}}" alt="imagen animal" class="imagen-animal">-->
-<!--                            </div>-->
-<!--                            <div class="col-lg-8 col-md-12">-->
-<!--                                <h2 class="nombre-animal" th:text="${pub.nombreMascota}">Nombre Mascota</h2>-->
-<!--                                <div class="contenedor-info d-flex flex-wrap align-items-center mb-3">-->
-<!--                                    <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${pub.edad}">Edad</span></span>-->
-<!--                                    <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${pub.ubicacion}">Ubicación</span></span>-->
-<!--                                    <span><i class="fa-solid fa-paw"></i> <span th:text="${pub.raza}">Raza</span></span>-->
-<!--                                </div>-->
-<!--                                <p class="descripcion-animal" th:text="${pub.descripcion}">Descripción de la mascota...</p>-->
-<!--                                <div class="tags mb-4">-->
-<!--                                    &lt;!&ndash; Bucle anidado para los tags &ndash;&gt;-->
-<!--                                    <span th:each="tag : ${pub.tags}" class="tag" th:text="${tag}">Tag</span>-->
-<!--                                </div>-->
-<!--                                <div class="boton-pta d-flex flex-wrap gap-2">-->
-<!--                                    <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>-->
-<!--                                    <button class="btn btn-consult">Consultar</button>-->
-<!--                                    <button class="btn btn-more-info">Mas info</button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
 
                 <!-- Primer Tarjeta -->
                 <div class="carta-adopcion">

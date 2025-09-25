@@ -335,6 +335,12 @@ gap: 8px;
     margin-bottom: 8px;
 }
 
+.contenedo-tags{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
 /* --- Botones de Acción --- */
 .boton-pta .btn {
     border-radius: 10px;
