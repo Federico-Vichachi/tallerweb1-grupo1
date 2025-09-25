@@ -1,0 +1,63 @@
+/* Botones */
+.btn-primary,
+.btn-primary:hover,
+#conteiner-options .btn-outline-primary,
+#conteiner-options .btn-outline-primary:disabled,
+#conteiner-options .btn-outline-primary[disabled] {
+    background-color: var(--color-primario) !important;
+    border-color: var(--color-primario) !important;
+    color: #fff !important;
+}
+
+#conteiner-options .btn-primary,
+#conteiner-options .btn-primary:disabled,
+#conteiner-options .btn-primary[disabled],
+#formularios .btn-primary,
+#formularios .btn-primary:disabled,
+#formularios .btn-primary[disabled] {
+    background-color: var(--color-primario) !important;
+    border-color: var(--color-primario) !important;
+    color: #fff !important;
+}
+
+#conteiner-options .btn,
+#formularios .btn {
+    transition: none;
+}
+
+#formularios {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+#formularios .mainbox {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 auto;
+
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+
+@media (max-width: 768px) {
+    #formularios .mainbox {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    #formularios .mainbox {
+        padding: 10px;
+    }
+}
