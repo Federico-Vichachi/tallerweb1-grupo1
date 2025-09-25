@@ -1,8 +1,8 @@
 
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.SerivicioRegistro;
-import com.tallerwebi.dominio.SerivicioRegistroImpl;
+import com.tallerwebi.dominio.ServicioRegistro;
+import com.tallerwebi.dominio.ServicioRegistroImpl;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,11 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControladorRegistro {
 
-    SerivicioRegistro servicioRegistro;
+    ServicioRegistro servicioRegistro;
 
     @Autowired
-    public ControladorRegistro(SerivicioRegistro serivicioRegistro) {
-        this.servicioRegistro = serivicioRegistro;
+    public ControladorRegistro(ServicioRegistro servicioRegistro) {
+        this.servicioRegistro = servicioRegistro;
     }
 
     @RequestMapping(path = "/registro", method = RequestMethod.GET)

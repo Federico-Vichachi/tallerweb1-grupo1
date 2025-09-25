@@ -1,6 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.SerivicioRegistroImpl;
+import com.tallerwebi.dominio.ServicioRegistroImpl;
 import org.dom4j.rule.Mode;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 
 public class ControladorRegistroTest {
 
-    ControladorRegistro controladorRegistro = new ControladorRegistro(new SerivicioRegistroImpl());
+    ControladorRegistro controladorRegistro = new ControladorRegistro(new ServicioRegistroImpl());
 
     @Test
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConDatosValidos_EntoncesElRegistroEsExitoso(){

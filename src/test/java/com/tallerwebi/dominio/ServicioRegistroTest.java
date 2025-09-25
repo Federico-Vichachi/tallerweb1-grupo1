@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ServicioRegistroTest {
 
-    SerivicioRegistro servicioRegistro = new SerivicioRegistroImpl();
+    ServicioRegistro servicioRegistro = new ServicioRegistroImpl();
 
     @Test
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConDatosValidos_EntoncesElRegistroEsExitoso() {

@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class SerivicioRegistroImpl implements SerivicioRegistro {
+public class ServicioRegistroImpl implements ServicioRegistro {
 
     @Override
     public Usuario registrar(String email, String contrasenia, String repeticionDeContrasenia, Roles roles) {
