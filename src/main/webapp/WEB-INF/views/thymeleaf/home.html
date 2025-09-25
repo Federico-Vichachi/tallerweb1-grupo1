@@ -30,7 +30,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
           <li class="nav-item">
-            <a class="nav-link" href="#">Feed</a>
+            <a class="nav-link" th:href="@{/feed}">Feed</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Sobre Nosotros</a>
@@ -45,7 +45,7 @@
 
         <div class="d-flex gap-2">
           <a href="#" class="btn btn-outline-primary">Iniciar Sesión</a>
-          <a th:href="@{/registro.html}" class="btn btn-primary">Registrarse</a>
+          <a th:href="@{/registro}" class="btn btn-primary">Registrarse</a>
         </div>
       </div>
     </div>
@@ -71,7 +71,7 @@
               Conectamos personas, organizaciones y veterinarios para ayudar a los animales en situación de calle o en contextos de vulnerabilidad. Nuestra plataforma permite difundir casos de adopción, campañas de recaudación, animales perdidos o encontrados, y consultas de salud, generando una red de apoyo colaborativa y responsable.
             </p>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
-              <a href="#" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
+              <a th:href="@{/feed}" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
               <a href="#" class="btn btn-outline-light btn-lg px-4 py-2">Más Información</a>
             </div>
           </div>
