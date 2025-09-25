@@ -6,32 +6,26 @@
 
     <title>Taller Web I</title>
 
-    <!-- Boostrap core css -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
 
-    <!-- custom style -->
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/variables.css}"/>
+    <link rel="stylesheet" th:href="@{/css/crear-publicacion.css}" />
+
 
 </head>
 
 <body>
 
-<div id="conteiner-options">
-    <div class="conteiner-buttons">
-        <button id="boton-adopcion">Adopción</button>
-        <button id="boton-recaudacion">Recaudación</button>
-    </div>
-    <div class="conteiner-buttons">
-        <button id="boton-consulta">Consulta</button>
-        <button id="boton-perdido">Perdido</button>
-    </div>
-    <div class="conteiner-buttons">
-        <button id="boton-encontrado">Encontrado</button>
-    </div>
+<div id="conteiner-options" class="d-flex flex-wrap gap-3 justify-content-center my-4">
+    <button id="boton-adopcion" class="btn btn-outline-primary btn-lg">Adopción</button>
+    <button id="boton-recaudacion" class="btn btn-outline-primary btn-lg">Recaudación</button>
+    <button id="boton-consulta" class="btn btn-outline-primary btn-lg">Consulta</button>
+    <button id="boton-perdido" class="btn btn-outline-primary btn-lg">Perdido</button>
+    <button id="boton-encontrado" class="btn btn-outline-primary btn-lg">Encontrado</button>
 </div>
 
 <div class = "container" id="formularios">
-    <div id="form-adopcion" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div id="form-adopcion" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <form th:action="@{/publicacion-adopcion-creada}" method="POST" th:object="${datosAdopcion}">
                 <label>Titulo de la publicacion</label>
                 <input th:field="*{titulo}" id="titulo-adopcion" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
@@ -55,14 +49,13 @@
                 <label>Email<input th:field="*{email}" id="email-adopcion" type="email" placeholder="ejemplo@unlam.edu.ar" class="form-control" required/></label>
             </div>
 
-            <button id="boton-publicar-adopcion" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-adopcion" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
         </form>
     </div>
 
-    <!-- Formulario Recaudación -->
     <div id="form-recaudacion" style="display:none; margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <form th:action="@{/publicacion-recaudacion-creada}" method="POST" th:object="${datosRecaudacion}">
             <label>Titulo de la publicacion</label>
@@ -103,14 +96,14 @@
             </div>
 
 
-            <button id="boton-publicar-recaudacion" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-recaudacion" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
         </form>
     </div>
 
-    <!-- Formulario Consulta -->
+
     <div id="form-consulta" style="display:none; margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <form th:action="@{/publicacion-salud-creada}" method="POST" th:object="${datosSalud}">
             <label>Titulo de la publicacion</label>
@@ -142,14 +135,14 @@
                     <option value="reanimacion">Reanimacion</option>
                 </select>
             </div>
-            <button id="boton-publicar-salud" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-salud" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
         </form>
     </div>
 
-    <!-- Formulario Perdido -->
+
     <div id="form-perdido" style="display:none; margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <form th:action="@{/publicacion-perdido-creada}" method="POST" th:object="${datosPerdido}">
             <label>Titulo de la publicacion</label>
@@ -175,19 +168,19 @@
 
                 <label>¿Se ofrece recompensa?</label>
                 <select th:field="*{recompensa}">
-                    <option value="">--Selecciona--</option>
+                    <option value="">Selecciona</option>
                     <option value="si">Sí</option>
                     <option value="no">No</option>
                 </select>
             </div>
-            <button id="boton-publicar-perdido" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-perdido" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
         </form>
     </div>
 
-    <!-- Formulario Encontrado -->
+
     <div id="form-encontrado" style="display:none; margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <form th:action="@{/publicacion-encontrado-creada}" method="POST" th:object="${datosEncontrado}">
             <label>Titulo de la publicacion</label>
@@ -202,12 +195,12 @@
                 <label>Raza<input th:field="*{razaEncontrado}" id="raza-encontrado" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
                 <label>Tamaño<input th:field="*{tamanioEncontrado}" id="tamanio-encontrado" type="number" min="0" class="form-control" required/></label>
             </div>
-            <<h5>Información de contacto</h5>
+            <h5>Información de contacto</h5>
             <div>
                 <label>Telefono<input th:field="*{telefonoEncontrado}" id="telefono-encontrado" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>
                 <label>Email<input th:field="*{emailEncontrado}" id="email-encontrado" type="email" placeholder="ejemplo@unlam.edu.ar" class="form-control" required/></label>
             </div>
-            <button id="boton-publicar-encontrado" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-encontrado" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
