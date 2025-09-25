@@ -6,8 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Vista Home</title>
   <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-  <link rel="stylesheet" th:href="@{/css/variables.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/variables.css}"/>
   <link rel="stylesheet" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" th:href="@{/css/footer.css}"/>
 </head>
 
 <body>
@@ -17,7 +19,7 @@
     <div class="container-fluid">
       <a class="navbar-brand d-flex align-items-center" href="#">
         <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
-        <span class="fs-3 fw-bold">Nombre App</span>
+        <span class="fs-3 fw-bold">RescateAmigos</span>
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -43,7 +45,7 @@
 
         <div class="d-flex gap-2">
           <a href="#" class="btn btn-outline-primary">Iniciar Sesión</a>
-          <a href="#" class="btn btn-primary">Registrarse</a>
+          <a th:href="@{/registro.html}" class="btn btn-primary">Registrarse</a>
         </div>
       </div>
     </div>
@@ -138,6 +140,68 @@
   </section>
 
 </main>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <!--  NOSOTROS  -->
+            <div class="col-lg-5 col-md-12 mb-4 mb-lg-0">
+                <div class="nosotros-footer">
+                    <h4 class="logo-footer">
+                        <i class="fa-solid fa-heart"></i> Rescate Amigos
+                    </h4>
+                    <p class="texto-footer">
+                        Plataforma colaborativa que conecta personas y organizaciones para ayudar animales en situación de calle.
+                        Una red social dedicada al rescate, adopción responsable y bienestar animal.
+                    </p>
+                </div>
+            </div>
+
+            <!-- REDES SOCIALES -->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <div class="links-footer">
+                    <h5>Redes</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#"><i class="fa-brands fa-facebook social-icon"></i> Facebook</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa-brands fa-instagram social-icon"></i> Instagram</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa-brands fa-twitter social-icon"></i> Twitter</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CONTACTO -->
+            <div class="col-lg-4 col-md-6">
+                <div class="contacto-footer">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <a href="#">+54 9 11 3153-9412</a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="#">rescateamigos@gmail.com</a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Bonifasio Ramos 3161, Buenos Aires, Argentina</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
