@@ -31,6 +31,18 @@ public class ControladorRegistro {
 
         ModelMap model = new ModelMap();
 
+        if( email == null || email.isEmpty()) {
+            return devolverRegistroFallido(model, "El email es obligatorio.");
+        }
+
+        if( contrasenia == null || contrasenia.isEmpty()) {
+            return devolverRegistroFallido(model, "La contraseña es olbigatoria.");
+        }
+
+        if (repeticionDeContrasenia == null || repeticionDeContrasenia.isEmpty()) {
+            return devolverRegistroFallido(model, "Por favor, repita la contraseña.");
+        }
+
         if (!contrasenia.equals(repeticionDeContrasenia)) {
            return devolverRegistroFallido(model, "La repetición de la contraseña no coincide con la contraseña.");
         }
