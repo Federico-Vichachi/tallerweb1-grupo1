@@ -49,7 +49,7 @@
                 <label>Email<input th:field="*{email}" id="email-adopcion" type="email" placeholder="ejemplo@unlam.edu.ar" class="form-control" required/></label>
             </div>
 
-            <button id="boton-publicar-adopcion" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-adopcion" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
@@ -96,7 +96,7 @@
             </div>
 
 
-            <button id="boton-publicar-recaudacion" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-recaudacion" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
@@ -135,7 +135,7 @@
                     <option value="reanimacion">Reanimacion</option>
                 </select>
             </div>
-            <button id="boton-publicar-salud" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-salud" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
@@ -173,7 +173,7 @@
                     <option value="no">No</option>
                 </select>
             </div>
-            <button id="boton-publicar-perdido" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-perdido" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
@@ -200,7 +200,7 @@
                 <label>Telefono<input th:field="*{telefonoEncontrado}" id="telefono-encontrado" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>
                 <label>Email<input th:field="*{emailEncontrado}" id="email-encontrado" type="email" placeholder="ejemplo@unlam.edu.ar" class="form-control" required/></label>
             </div>
-            <button id="boton-publicar-encontrado" class="btn btn-lg btn-primary btn-block" Type="Submit" disabled>Publicar ahora</button>
+            <button id="boton-publicar-encontrado" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
             <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
             </p>
