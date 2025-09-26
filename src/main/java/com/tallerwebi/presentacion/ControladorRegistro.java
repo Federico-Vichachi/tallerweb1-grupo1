@@ -48,7 +48,7 @@ public class ControladorRegistro {
         }
 
         try {
-            servicioRegistro.registrar(email, contrasenia, repeticionDeContrasenia, rol);
+            servicioRegistro.registrar(email, contrasenia, rol);
         } catch (Exception e) {
             return devolverRegistroFallido(model, e.getMessage());
         }

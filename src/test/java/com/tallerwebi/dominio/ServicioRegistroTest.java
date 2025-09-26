@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.dominio.excepcion.ContraseniaNoContieneNumeroException;
+import com.tallerwebi.dominio.excepcion.FormatoDeContraseniaInvalidoException;
+import com.tallerwebi.dominio.excepcion.FormatoDeEmailInvalidoException;
 import com.tallerwebi.presentacion.Roles;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,23 +19,36 @@ public class ServicioRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConDatosValidos_EntoncesElRegistroEsExitoso() {
         dadoQueNoExisteUnUsuarioConEseEmail();
 
-        Usuario usuario = cuandoSeRegistra("test@gmail.com", "password123", "password123", Roles.USUARIO_COMUN);
+        Usuario usuario = cuandoSeRegistra("test@gmail.com", "StrongPass@2025", Roles.USUARIO_COMUN);
 
         entoncesElRegistroEsExitoso(usuario);
     }
 
     @Test
-    public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnaContraseniaQueNoContieneAlMenosUnNumero_EntoncesElRegistroFalla(){
+    public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConEmailInvalido_EntoncesElRegistroFalla() {
         dadoQueNoExisteUnUsuarioConEseEmail();
 
-        assertThrows(ContraseniaNoContieneNumeroException.class, () -> cuandoSeRegistra("testgmail.com", "password", "password", Roles.USUARIO_COMUN));
+        assertThrows(FormatoDeEmailInvalidoException.class, () -> {
+            cuandoSeRegistra("invalid-email", "StrongPass@2025", Roles.USUARIO_COMUN);
+        });
     }
+
+    @Test
+    public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConContraseniaInvalida_EntoncesElRegistroFalla() {
+        dadoQueNoExisteUnUsuarioConEseEmail();
+
+        assertThrows(FormatoDeContraseniaInvalidoException.class, () -> {
+            cuandoSeRegistra("test@gmail.com", "weakpass2025", Roles.USUARIO_COMUN);
+        });
+    }
+
+
 
     private void dadoQueNoExisteUnUsuarioConEseEmail() {
     }
 
-    private Usuario cuandoSeRegistra(String email, String contrasenia, String repeticionDeContrasenia, Roles rol) {
-        return servicioRegistro.registrar(email, contrasenia, repeticionDeContrasenia, rol);
+    private Usuario cuandoSeRegistra(String email, String contrasenia, Roles rol) {
+        return servicioRegistro.registrar(email, contrasenia, rol);
     }
 
     private void entoncesElRegistroEsExitoso(Usuario usuario) {
