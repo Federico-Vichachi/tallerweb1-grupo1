@@ -1,166 +1,180 @@
 <!DOCTYPE HTML>
 <html lang="es">
+
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Vista Home</title>
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link rel="stylesheet" th:href="@{/css/variables.css}"/>
-  <link rel="stylesheet" th:href="@{/css/home.css}"/>
-  <link rel="stylesheet" th:href="@{/css/footer.css}"/>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vista Home</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/variables.css}"/>
+    <link rel="stylesheet" th:href="@{/css/home.css}"/>
 </head>
 
 <body>
 
 <header>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
-        <span class="fs-3 fw-bold">RescateAmigos</span>
-      </a>
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
+                <!--                <img src="/webapp/resources/core/images/isotipo.svg" alt="Isotipo" height="60" class="me-2">-->
+                <span class="logo-text fs-3 fw-bold">RescateAmigos</span>
+            </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/feed}">Feed</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Sobre Nosotros</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">FAQ</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Adopción Responsable</a>
-          </li>
-        </ul>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Feed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Adopción Responsable</a>
+                    </li>
+                </ul>
 
-        <div class="d-flex gap-2">
-          <a href="#" class="btn btn-outline-primary">Iniciar Sesión</a>
-          <a th:href="@{/registro}" class="btn btn-primary">Registrarse</a>
+                <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-primary">Iniciar Sesión</a>
+                    <a href="#" class="btn btn-secondary">Registrarse</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 </header>
 
 <main role="main" class="container-fluid p-0">
-  <section class="hero-section position-relative">
-    <div class="hero-background position-absolute w-100 h-100">
-      <img th:src="@{/images/hero.webp}" alt="Hero Image" class="img-fluid w-100 h-100 object-fit-cover opacity-75">
-      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"></div>
-    </div>
+    <section class="hero-section position-relative">
+        <div class="hero-background position-absolute w-100 h-100">
+            <img th:src="@{/images/hero.webp}" alt="Hero Image"
+                 class="img-fluid w-100 h-100 object-fit-cover opacity-75">
+            <!--            <img src="/webapp/resources/core/images/hero.webp" alt="Hero Image"-->
+            class="img-fluid w-100 h-100 object-fit-cover opacity-75">
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"></div>
+        </div>
 
-    <div class="hero-content position-relative d-flex align-items-center justify-content-center min-vh-75">
-      <div class="container text-center text-white">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 col-md-10">
+        <div class="hero-content position-relative d-flex align-items-center justify-content-center min-vh-75">
+            <div class="container text-center text-white">
+                <div class="row justify-content-center">
+                    <div class="hero-text col-lg-8 col-md-10">
 
-            <h1 class="display-4 fw-bold mb-4 text-shadow">
-              Ayuda organizada a los animales en situación de calle y contextos adversos.
-            </h1>
-            <p class="lead mb-4 text-shadow">
-              Conectamos personas, organizaciones y veterinarios para ayudar a los animales en situación de calle o en contextos de vulnerabilidad. Nuestra plataforma permite difundir casos de adopción, campañas de recaudación, animales perdidos o encontrados, y consultas de salud, generando una red de apoyo colaborativa y responsable.
-            </p>
-            <div class="d-flex gap-3 justify-content-center flex-wrap">
-              <a th:href="@{/feed}" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
-              <a href="#" class="btn btn-outline-light btn-lg px-4 py-2">Más Información</a>
+                        <h1 class="display-4 fw-bold hero-title text-shadow">
+                            Ayuda organizada a los animales en situación de calle y contextos adversos.
+                        </h1>
+                        <p class="lead hero-description text-shadow">
+                            Conectamos personas, organizaciones y veterinarios para ayudar a los animales en situación
+                            de calle o en
+                            contextos de vulnerabilidad. Nuestra plataforma permite difundir casos de adopción, campañas
+                            de
+                            recaudación, animales perdidos o encontrados, y consultas de salud, generando una red de
+                            apoyo
+                            colaborativa y responsable.
+                        </p>
+                        <div class="d-flex hero-buttons justify-content-center flex-wrap">
+                            <a href="#" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
+                            <a href="#" class="btn btn-light btn-lg px-4 py-2">Más Información</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Presentación de Funcionalidades -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <div class="row mb-5">
-        <div class="col-12 text-center">
-          <h2 class="display-5 fw-bold mb-3">Nuestras Funcionalidades</h2>
-        </div>
-      </div>
-
-      <div class="row g-4">
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="card h-100 shadow-sm border-0 text-center">
-            <div class="card-body p-4">
-              <div class="feature-icon mb-4">
-                <img th:src="@{/images/adopcion.svg}" alt="Adopción" class="img-fluid" style="max-width: 80px; height: auto;">
-              </div>
-              <h4 class="card-title fw-bold mb-3">Adopción Responsable</h4>
-              <p class="card-text text-muted">
-                Conectamos animales en busca de hogar con familias responsables.
-                Facilitamos el proceso de adopción con seguimiento y apoyo continuo.
-              </p>
+    <section class="features-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <h2 class="display-5 fw-bold mb-3">Nuestras Funcionalidades</h2>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="card h-100 shadow-sm border-0 text-center">
-            <div class="card-body p-4">
-              <div class="feature-icon mb-4">
-                <img th:src="@{/images/vet.svg}" alt="Veterinaria" class="img-fluid" style="max-width: 80px; height: auto;">
-              </div>
-              <h4 class="card-title fw-bold mb-3">Atención Veterinaria</h4>
-              <p class="card-text text-muted">
-                Conecta con veterinarios para consultar sobre la salud de tus mascotas
-                y recibir asesoramiento profesional en cualquier momento.
-              </p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <div class="icono-funcionalidad mb-4">
+                                <img th:src="@{/images/adopcion.svg}" alt="Adopción" class="img-fluid"
+                                     style="max-width: 80px; height: auto;">
+                            </div>
+                            <h4 class="card-title fw-bold mb-3">Adopción Responsable</h4>
+                            <p class="card-text text-muted">
+                                Conectamos animales en busca de hogar con familias responsables.
+                                Facilitamos el proceso de adopción con seguimiento y apoyo continuo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <div class="feature-icon mb-4">
+                                <img th:src="@{/images/vet.svg}" alt="Veterinaria" class="img-fluid"
+                                     style="max-width: 80px; height: auto;">
+                            </div>
+                            <h4 class="card-title fw-bold mb-3">Atención Veterinaria</h4>
+                            <p class="card-text text-muted">
+                                Conecta con veterinarios para consultar sobre la salud de tus mascotas
+                                y recibir asesoramiento profesional en cualquier momento.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <div class="feature-icon mb-4">
+                                <img th:src="@{/images/donacion.svg}" alt="Donación" class="img-fluid"
+                                     style="max-width: 80px; height: auto;">
+                            </div>
+                            <h4 class="card-title fw-bold mb-3">Donaciones</h4>
+                            <p class="card-text text-muted">
+                                Ofrecemos la oportunidad de crear campañas de donación a los refugios y organizaciones
+                                verificadas de
+                                la forma más transparente.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+
+
         </div>
-
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="card h-100 shadow-sm border-0 text-center">
-            <div class="card-body p-4">
-              <div class="feature-icon mb-4">
-                <img th:src="@{/images/donacion.svg}" alt="Donación" class="img-fluid" style="max-width: 80px; height: auto;">
-              </div>
-              <h4 class="card-title fw-bold mb-3">Donaciones</h4>
-              <p class="card-text text-muted">
-                Ofrecemos la oportunidad de crear campañas de donación a los refugios y organizaciones verificadas de la forma más transparente.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-  </section>
+    </section>
 
 </main>
 
-<!-- FOOTER -->
 
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <!--  NOSOTROS  -->
             <div class="col-lg-5 col-md-12 mb-4 mb-lg-0">
-                <div class="nosotros-footer">
-                    <h4 class="logo-footer">
-                        <i class="fa-solid fa-heart"></i> Rescate Amigos
-                    </h4>
-                    <p class="texto-footer">
-                        Plataforma colaborativa que conecta personas y organizaciones para ayudar animales en situación de calle.
+                <div class="about-footer">
+                    <div class="d-flex align-items-center">
+                        <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="50" class="me-2">
+                        <h4 class="footer-text">
+                            Rescate Amigos
+                        </h4>
+                    </div>
+                    <p class="footer-text">
+                        Plataforma colaborativa que conecta personas y organizaciones para ayudar animales en situación
+                        de calle.
                         Una red social dedicada al rescate, adopción responsable y bienestar animal.
                     </p>
                 </div>
             </div>
 
-            <!-- REDES SOCIALES -->
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <div class="links-footer">
                     <h5>Redes</h5>
@@ -178,10 +192,9 @@
                 </div>
             </div>
 
-            <!-- CONTACTO -->
             <div class="col-lg-4 col-md-6">
-                <div class="contacto-footer">
-                    <h5>Contacto</h5>
+                <div class="contact-footer">
+                    <h5 class="footer-text">Contacto</h5>
                     <ul class="list-unstyled">
                         <li>
                             <i class="fa-solid fa-phone"></i>
@@ -193,7 +206,7 @@
                         </li>
                         <li>
                             <i class="fa-solid fa-location-dot"></i>
-                            <span>Bonifasio Ramos 3161, Buenos Aires, Argentina</span>
+                            <a>Bonifasio Ramos 3161, Buenos Aires, Argentina</a>
                         </li>
                     </ul>
                 </div>
@@ -204,5 +217,7 @@
 </footer>
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+
 </body>
+
 </html>
