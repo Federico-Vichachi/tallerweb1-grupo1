@@ -224,7 +224,6 @@ h2 {
         min-height: 400px;
     }
 
-    /* Reducir espaciado en tablets */
     .hero-title {
         margin-bottom: 2rem !important;
     }

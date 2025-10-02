@@ -1,5 +1,16 @@
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+    background-color: var(--color-primario) !important;
+    border-color: var(--color-primario) !important;
+    color: #fff !important;
+}
+
 body {
-    background: var(--color-secundario);
+    background: var(--color-fondo);
     min-height: 100vh;
 }
 
@@ -8,18 +19,6 @@ h3 {
     letter-spacing: 0.5px;
     font-size: 2rem;
     margin-bottom: 0;
-}
-
-.btn-primary {
-    background-color: var(--color-primario) !important;
-    border-color: var(--color-primario) !important;
-    color: #fff !important;
-}
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
-    background-color: #c63a1e !important;
-    border-color: #c63a1e !important;
-    color: #fff !important;
+    color: var(--color-secundario);
 }
 

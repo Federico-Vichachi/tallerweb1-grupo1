@@ -20,7 +20,7 @@
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
                 <!--                <img src="/webapp/resources/core/images/isotipo.svg" alt="Isotipo" height="60" class="me-2">-->
-                <span class="logo-text fs-3 fw-bold">RescateAmigos</span>
+                <span class="logo-text fs-3 fw-bold">Rescate Amigos</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -31,7 +31,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Feed</a>
+                        <a class="nav-link" th:href="@{/feed}" >Feed</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sobre Nosotros</a>
@@ -46,7 +46,7 @@
 
                 <div class="d-flex gap-2">
                     <a href="#" class="btn btn-primary">Iniciar Sesión</a>
-                    <a href="#" class="btn btn-secondary">Registrarse</a>
+                    <a th:href="@{/registro}" class="btn btn-secondary">Registrarse</a>
                 </div>
             </div>
         </div>
@@ -58,7 +58,6 @@
         <div class="hero-background position-absolute w-100 h-100">
             <img th:src="@{/images/hero.webp}" alt="Hero Image"
                  class="img-fluid w-100 h-100 object-fit-cover opacity-75">
-            <!--            <img src="/webapp/resources/core/images/hero.webp" alt="Hero Image"-->
             class="img-fluid w-100 h-100 object-fit-cover opacity-75">
             <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"></div>
         </div>
@@ -81,7 +80,7 @@
                             colaborativa y responsable.
                         </p>
                         <div class="d-flex hero-buttons justify-content-center flex-wrap">
-                            <a href="#" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
+                            <a th:href="@{/feed}" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
                             <a href="#" class="btn btn-light btn-lg px-4 py-2">Más Información</a>
                         </div>
                     </div>
