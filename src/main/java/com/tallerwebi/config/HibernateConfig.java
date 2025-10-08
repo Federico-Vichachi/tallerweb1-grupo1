@@ -53,10 +53,16 @@ public class HibernateConfig {
         return sessionFactory;
     }
 
+//    @Bean
+//    public HibernateTransactionManager transactionManager() {
+//        return new HibernateTransactionManager(sessionFactory(dataSource()).getObject());
+//    }
+
     @Bean
-    public HibernateTransactionManager transactionManager() {
-        return new HibernateTransactionManager(sessionFactory(dataSource()).getObject());
+    public HibernateTransactionManager transactionManager(LocalSessionFactoryBean sessionFactory) {
+        return new HibernateTransactionManager(sessionFactory.getObject());
     }
+
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();

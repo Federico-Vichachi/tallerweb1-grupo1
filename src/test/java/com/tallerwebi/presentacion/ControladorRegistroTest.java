@@ -2,14 +2,24 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioRegistroImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 
+@ExtendWith(MockitoExtension.class)
 public class ControladorRegistroTest {
 
-    ControladorRegistro controladorRegistro = new ControladorRegistro(new ServicioRegistroImpl());
+    @Mock
+    ServicioRegistroImpl servicioRegistroImpl;
+
+    @InjectMocks
+    private ControladorRegistro controladorRegistro;
 
     @Test
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConDatosValidos_EntoncesElRegistroEsExitoso() {

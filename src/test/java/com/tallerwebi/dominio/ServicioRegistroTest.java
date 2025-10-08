@@ -4,7 +4,6 @@ import com.tallerwebi.dominio.excepcion.FormatoDeContraseniaInvalidoException;
 import com.tallerwebi.dominio.excepcion.FormatoDeEmailInvalidoException;
 import com.tallerwebi.presentacion.Roles;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
@@ -48,7 +47,7 @@ public class ServicioRegistroTest {
     }
 
     private Usuario cuandoSeRegistra(String email, String contrasenia, Roles rol) {
-        return servicioRegistro.registrar(email, contrasenia, rol);
+        return servicioRegistro.registrarUsuario(email, contrasenia, rol);
     }
 
     private void entoncesElRegistroEsExitoso(Usuario usuario) {

@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 public class ServicioRegistroImpl implements ServicioRegistro {
 
     @Override
-    public Usuario registrar(String email, String contrasenia, Roles roles) {
+    public Usuario registrarUsuario(String email, String contrasenia, Roles roles) {
 
         if (validarFormatoEmail(email)) {
             throw new FormatoDeEmailInvalidoException("El formato del email es inválido.");

@@ -2,8 +2,6 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioRegistro;
-import com.tallerwebi.dominio.ServicioRegistroImpl;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,7 +46,7 @@ public class ControladorRegistro {
         }
 
         try {
-            servicioRegistro.registrar(email, contrasenia, rol);
+            servicioRegistro.registrarUsuario(email, contrasenia, rol);
         } catch (Exception e) {
             return devolverRegistroFallido(model, e.getMessage());
         }
