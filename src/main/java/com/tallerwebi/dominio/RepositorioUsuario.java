@@ -6,6 +6,7 @@ public interface RepositorioUsuario {
     Usuario buscarPorNombreDeUsuario(String nombreDeUsuario);
     Usuario buscarPorEmail(String email);
     Usuario buscarPorId(Long id);
+    Usuario buscarPorTelefono(String telefono);
     void eliminar(Usuario usuario);
 }
 

@@ -3,10 +3,7 @@ package com.tallerwebi.dominio;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -18,6 +15,9 @@ public class Domicilio {
     private String calle;
     private String numero;
     private String ciudad;
-    private String provincia;
+    @Enumerated(EnumType.STRING)
+    private Provincias provincia;
     private String codigoPostal;
+    private String departamento;
+    private String piso;
 }

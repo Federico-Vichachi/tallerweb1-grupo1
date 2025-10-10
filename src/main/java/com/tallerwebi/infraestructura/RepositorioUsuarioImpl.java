@@ -39,6 +39,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
+    public Usuario buscarPorTelefono(String telefono) {
+        return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class).add(Restrictions.eq("telefono", telefono)).uniqueResult();
+    }
+
+    @Override
     public void eliminar(Usuario usuario) {
         sessionFactory.getCurrentSession().delete(usuario);
     }

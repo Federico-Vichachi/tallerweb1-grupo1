@@ -17,27 +17,123 @@
                     <h3>Registro de Usuario</h3>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/registrar}" method="post">
+                    <form th:action="@{/registrar}" method="post" th:object="${datosRegistro}">
                         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" th:field="*{email}"
+                                   required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                   title="Ingrese un email válido (ejemplo: usuario@dominio.com)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" th:field="*{nombre}"
+                                   required pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{2,50}$"
+                                   title="Solo letras y espacios, entre 2 y 50 caracteres">
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" th:field="*{apellido}"
+                                   required pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{2,50}$"
+                                   title="Solo letras y espacios, entre 2 y 50 caracteres">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombreDeUsuario" class="form-label">Nombre de Usuario</label>
+                            <input type="text" class="form-control" id="nombreDeUsuario" name="nombreDeUsuario" th:field="*{nombreDeUsuario}"
+                                   required pattern="^[a-zA-Z0-9._]{3,30}$"
+                                   title="Solo letras, números, puntos y guiones bajos, entre 3 y 30 caracteres">
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="telefono" name="telefono" th:field="*{telefono}"
+                                   required pattern="^[+]?[0-9]{8,15}$"
+                                   title="Solo números, opcionalmente con + al inicio, entre 8 y 15 dígitos">
                         </div>
                         <div class="mb-3">
                             <label for="contrasenia" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="contrasenia" name="contrasenia" required>
+                            <input type="password" class="form-control" id="contrasenia" name="contrasenia" th:field="*{contrasenia}"
+                                   required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                                   title="Mínimo 8 caracteres con al menos: 1 minúscula, 1 mayúscula, 1 número y 1 carácter especial (@$!%*?&)">
                         </div>
                         <div class="mb-3">
                             <label for="repeticionDeContrasenia" class="form-label">Repetir Contraseña</label>
-                            <input type="password" class="form-control" id="repeticionDeContrasenia" name="repeticionDeContrasenia" required>
+                            <input type="password" class="form-control" id="repeticionDeContrasenia" name="repeticionDeContrasenia" th:field="*{repeticionDeContrasenia}"
+                                   required minlength="8"
+                                   title="Debe coincidir con la contraseña ingresada arriba">
                         </div>
                         <div class="mb-3">
                             <label for="rol" class="form-label">Rol</label>
-                            <select class="form-select" id="rol" name="rol">
+                            <select class="form-select" id="rol" name="rol" th:field="*{rol}">
                                 <option value="USUARIO_COMUN">Usuario Común</option>
                                 <option value="ORGANIZACION">Organización</option>
                                 <option value="VETERINARIO">Veterinario</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Domicilio</label>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <input type="text" class="form-control" placeholder="Calle" name="calle" th:field="*{calle}"
+                                           required pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s0-9.]{3,100}$"
+                                           title="Letras, números, espacios y puntos, entre 3 y 100 caracteres">
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <input type="text" class="form-control" placeholder="Número" name="numero" th:field="*{numero}"
+                                           required pattern="^[0-9]{1,6}$"
+                                           title="Solo números, máximo 6 dígitos">
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <input type="text" class="form-control" placeholder="Ciudad" name="ciudad" th:field="*{ciudad}"
+                                           required pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{2,50}$"
+                                           title="Solo letras y espacios, entre 2 y 50 caracteres">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <select class="form-select" name="provincia" th:field="*{provincia}" required>
+                                        <option value="">Seleccione una provincia</option>
+                                        <option value="CAPITAL_FEDERAL">Capital Federal</option>
+                                        <option value="BUENOS_AIRES">Buenos Aires</option>
+                                        <option value="CATAMARCA">Catamarca</option>
+                                        <option value="CHACO">Chaco</option>
+                                        <option value="CHUBUT">Chubut</option>
+                                        <option value="CORDOBA">Córdoba</option>
+                                        <option value="CORRIENTES">Corrientes</option>
+                                        <option value="ENTRE_RIOS">Entre Ríos</option>
+                                        <option value="FORMOSA">Formosa</option>
+                                        <option value="JUJUY">Jujuy</option>
+                                        <option value="LA_PAMPA">La Pampa</option>
+                                        <option value="LA_RIOJA">La Rioja</option>
+                                        <option value="MENDOZA">Mendoza</option>
+                                        <option value="MISIONES">Misiones</option>
+                                        <option value="NEUQUEN">Neuquén</option>
+                                        <option value="RIO_NEGRO">Río Negro</option>
+                                        <option value="SALTA">Salta</option>
+                                        <option value="SAN_JUAN">San Juan</option>
+                                        <option value="SAN_LUIS">San Luis</option>
+                                        <option value="SANTA_CRUZ">Santa Cruz</option>
+                                        <option value="SANTA_FE">Santa Fe</option>
+                                        <option value="SANTIAGO_DEL_ESTERO">Santiago del Estero</option>
+                                        <option value="TIERRA_DEL_FUEGO">Tierra del Fuego</option>
+                                        <option value="TUCUMAN">Tucumán</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <input type="text" class="form-control" placeholder="Código Postal" name="codigoPostal" th:field="*{codigoPostal}"
+                                           required pattern="^[0-9]{4,8}$"
+                                           title="Solo números, entre 4 y 8 dígitos">
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <input type="text" class="form-control" placeholder="Piso" name="piso" th:field="*{piso}"
+                                           pattern="^[0-9]{1,3}$"
+                                           title="Solo números, máximo 3 dígitos (opcional)">
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <input type="text" class="form-control" placeholder="Dpto" name="departamento" th:field="*{departamento}"
+                                           pattern="^[a-zA-Z0-9]{1,10}$"
+                                           title="Solo letras y números, máximo 10 caracteres (opcional)">
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Registrarse</button>
                     </form>
@@ -49,4 +145,3 @@
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
-

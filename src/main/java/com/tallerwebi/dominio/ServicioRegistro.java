@@ -1,7 +1,7 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.presentacion.Roles;
+import com.tallerwebi.dominio.Usuario;
 
 public interface ServicioRegistro {
-    Usuario registrarUsuario(String email, String contrasenia, Roles roles);
+    void registrarUsuario(Usuario usuario);
 }
