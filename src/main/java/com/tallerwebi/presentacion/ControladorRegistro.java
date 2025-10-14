@@ -33,7 +33,6 @@ public class ControladorRegistro {
 
         ModelMap model = new ModelMap();
 
-        // Validar campos obligatorios vacíos
         if (datosRegistro.getEmail() == null || datosRegistro.getEmail().trim().isEmpty()) {
             return devolverRegistroFallido(model, "El email es obligatorio.");
         }
@@ -55,6 +54,9 @@ public class ControladorRegistro {
         if (datosRegistro.getRepeticionDeContrasenia() == null || datosRegistro.getRepeticionDeContrasenia().trim().isEmpty()) {
             return devolverRegistroFallido(model, "Por favor, repita la contraseña.");
         }
+        if (!datosRegistro.getContrasenia().equals(datosRegistro.getRepeticionDeContrasenia())) {
+            return devolverRegistroFallido(model, "La repetición de la contraseña no coincide con la contraseña.");
+        }
         if (datosRegistro.getRol() == null) {
             return devolverRegistroFallido(model, "El rol es obligatorio.");
         }
@@ -62,7 +64,7 @@ public class ControladorRegistro {
             return devolverRegistroFallido(model, "La calle es obligatoria.");
         }
         if (datosRegistro.getNumero() == null || datosRegistro.getNumero().trim().isEmpty()) {
-            return devolverRegistroFallido(model, "El número es obligatorio.");
+            return devolverRegistroFallido(model, "El número de domicilio es obligatorio.");
         }
         if (datosRegistro.getCiudad() == null || datosRegistro.getCiudad().trim().isEmpty()) {
             return devolverRegistroFallido(model, "La ciudad es obligatoria.");
@@ -72,11 +74,6 @@ public class ControladorRegistro {
         }
         if (datosRegistro.getCodigoPostal() == null || datosRegistro.getCodigoPostal().trim().isEmpty()) {
             return devolverRegistroFallido(model, "El código postal es obligatorio.");
-        }
-
-        // Validar que las contraseñas coincidan
-        if (!datosRegistro.getContrasenia().equals(datosRegistro.getRepeticionDeContrasenia())) {
-            return devolverRegistroFallido(model, "La repetición de la contraseña no coincide con la contraseña.");
         }
 
         try {
@@ -101,7 +98,6 @@ public class ControladorRegistro {
         } catch (Exception e) {
             return devolverRegistroFallido(model, e.getMessage());
         }
-
 
         return new ModelAndView("login");
     }

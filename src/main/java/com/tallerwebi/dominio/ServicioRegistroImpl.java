@@ -40,7 +40,7 @@ public class ServicioRegistroImpl implements ServicioRegistro {
             throw new FormatoDeCalleInvalidoException("El formato de la calle es inválido.");
         }
         if (!validarFormatoNumero(usuario.getDomicilio().getNumero())) {
-            throw new FormatoDeNumeroInvalidoException("El formato del número es inválido.");
+            throw new FormatoDeNumeroInvalidoException("El formato del número de domicilio es inválido.");
         }
         if (!validarFormatoCiudad(usuario.getDomicilio().getCiudad())) {
             throw new FormatoDeCiudadInvalidoException("El formato de la ciudad es inválido.");
@@ -113,7 +113,7 @@ public class ServicioRegistroImpl implements ServicioRegistro {
     }
 
     public static boolean validarFormatoCiudad(String ciudad) {
-        String ciudadRegex = "^[a-zA-ZÀ-ÿ\\u00f1\\u00d1\\s]{2,50}$";
+        String ciudadRegex = "^[a-zA-ZÀ-ÿ\\u00f1\\u00d1\\s0-9]{2,50}$";
         return ciudad != null && !ciudad.trim().isEmpty() && ciudad.matches(ciudadRegex);
     }
 
