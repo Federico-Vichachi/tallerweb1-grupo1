@@ -22,3 +22,16 @@ h3 {
     color: var(--color-secundario);
 }
 
+.mensaje-error {
+    color: #dc3545 !important;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.input-error, .no-valido {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+
