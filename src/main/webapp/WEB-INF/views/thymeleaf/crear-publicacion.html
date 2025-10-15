@@ -26,7 +26,7 @@
 
 <div class = "container" id="formularios">
     <div id="form-adopcion" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form th:action="@{/publicacion-adopcion-creada}" method="POST" th:object="${datosAdopcion}">
+        <form th:action="@{/publicacion-adopcion}" method="POST" th:object="${datosAdopcion}">
                 <label>Titulo de la publicacion</label>
                 <input th:field="*{titulo}" id="titulo-adopcion" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
                 <label>Descripcion corta (maximo 100 caracteres)</label>
@@ -57,32 +57,32 @@
     </div>
 
     <div id="form-recaudacion" style="display:none; margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form th:action="@{/publicacion-recaudacion-creada}" method="POST" th:object="${datosRecaudacion}">
+        <form th:action="@{/publicacion-recaudacion}" method="POST" th:object="${datosRecaudacion}">
             <label>Titulo de la publicacion</label>
-            <input th:field="*{tituloRecaudacion}" id="titulo-recaudacion" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
+            <input th:field="*{titulo}" id="titulo-recaudacion" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
             <label>Descripcion corta (maximo 100 caracteres)</label>
-            <input th:field="*{descripcionCortaRecaudacion}" id="descripcion-corta-recaudacion" type="text" placeholder="Cuenta breve descripcion del animal." maxlength="100"  class="form-control" required/>
+            <input th:field="*{descripcionCorta}" id="descripcion-corta-recaudacion" type="text" placeholder="Cuenta breve descripcion del animal." maxlength="100"  class="form-control" required/>
             <label>Descripcion detallada</label>
-            <input th:field="*{descripcionDetalladaRecaudacion}" id="descripcion-detallada-recaudacion" type="text" placeholder="Cuenta la historia del animal, sus caracteristicas, necesidades especiales, etc." class="form-control" required/>
+            <input th:field="*{descripcionDetallada}" id="descripcion-detallada-recaudacion" type="text" placeholder="Cuenta la historia del animal, sus caracteristicas, necesidades especiales, etc." class="form-control" required/>
             <label>Fotos del animal</label>
-            <input th:field="*{imagenRecaudacion}" id="imagen-recaudacion" type="file" placeholder="Haz click para subir o arrastra hasta aquí. Maximo 5 imagenes" class="form-control" required/>
+            <input th:field="*{imagen}" id="imagen-recaudacion" type="file" placeholder="Haz click para subir o arrastra hasta aquí. Maximo 5 imagenes" class="form-control" required/>
             <div>
-                <label>Edad aproximada<input th:field="*{edadRecaudacion}" id="edad-recaudacion" type="number" placeholder="Ej: 2 años" min="0" class="form-control" required/></label>
-                <label>Raza<input th:field="*{razaRecaudacion}" id="raza-recaudacion" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
+                <label>Edad aproximada<input th:field="*{edad}" id="edad-recaudacion" type="number" placeholder="Ej: 2 años" min="0" class="form-control" required/></label>
+                <label>Raza<input th:field="*{raza}" id="raza-recaudacion" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
             </div>
             <div>
                 <label>Meta de recaudacion</label><br>
-                <input th:field="*{metaRecaudacion}" id="meta-recaudacion" type="number" min="0">
+                <input th:field="*{meta}" id="meta-recaudacion" type="number" min="0">
             </div>
 
             <div>
                 <h6>Datos para recibir donaciones</h6>
 
                 <label>CBU / Alias</label>
-                <input th:field="*{cbuRecaudacion}" id="cbu-recaudacion" type="text" placeholder="Ej: mi.alias.mp" class="form-control" required />
+                <input th:field="*{cbu}" id="cbu-recaudacion" type="text" placeholder="Ej: mi.alias.mp" class="form-control" required />
 
                 <label>Método preferido</label>
-                <select th:field="*{metodoPreferidoRecaudacion}" class="form-control" required>
+                <select th:field="*{metodoPreferido}" class="form-control" required>
                     <option value="">Selecciona uno</option>
                     <option value="mercadopago">Mercado Pago</option>
                     <option value="transferencia">Transferencia bancaria</option>
@@ -91,8 +91,8 @@
             </div>
             <h5>Información de contacto</h5>
             <div>
-                <label>Telefono<input th:field="*{telefonoRecaudacion}" id="telefono-recaudacion" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>
-                <label>Email<input th:field="*{emailRecaudacion}" id="email-recaudacion" type="email" placeholder="ejemplo@unlam.edu.ar" class="form-control" required/></label>
+                <label>Telefono<input th:field="*{telefono}" id="telefono-recaudacion" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>
+                <label>Email<input th:field="*{email}" id="email-recaudacion" type="email" placeholder="ejemplo@unlam.edu.ar" class="form-control" required/></label>
             </div>
 
 
@@ -105,28 +105,28 @@
 
 
     <div id="form-consulta" style="display:none; margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form th:action="@{/publicacion-salud-creada}" method="POST" th:object="${datosSalud}">
+        <form th:action="@{/publicacion-salud}" method="POST" th:object="${datosSalud}">
             <label>Titulo de la publicacion</label>
-            <input th:field="*{tituloSalud}" id="titulo-salud" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
+            <input th:field="*{titulo}" id="titulo-salud" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
             <label>Descripcion corta (maximo 100 caracteres)</label>
-            <input th:field="*{descripcionCortaSalud}" id="descripcion-corta-salud" type="text" placeholder="Cuenta breve descripcion del animal." maxlength="100"  class="form-control" required/>
+            <input th:field="*{descripcionCorta}" id="descripcion-corta-salud" type="text" placeholder="Cuenta breve descripcion del animal." maxlength="100"  class="form-control" required/>
             <label>Descripcion detallada</label>
-            <input th:field="*{descripcionDetalladaSalud}" id="descripcion-detallada-salud" type="text" placeholder="Cuenta la historia del animal, sus caracteristicas, necesidades especiales, etc." class="form-control" required/>
+            <input th:field="*{descripcionDetallada}" id="descripcion-detallada-salud" type="text" placeholder="Cuenta la historia del animal, sus caracteristicas, necesidades especiales, etc." class="form-control" required/>
             <label>Fotos del animal</label>
-            <input th:field="*{imagenSalud}" id="imagen-salud" type="file" placeholder="Haz click para subir o arrastra hasta aquí. Maximo 5 imagenes" class="form-control" required/>
+            <input th:field="*{imagen}" id="imagen-salud" type="file" placeholder="Haz click para subir o arrastra hasta aquí. Maximo 5 imagenes" class="form-control" required/>
             <div>
-                <label>Edad aproximada<input th:field="*{edadSalud}" id="edad-salud" type="number" placeholder="Ej: 2 años" min="0" class="form-control" required/></label>
-                <label>Tamaño<input th:field="*{tamanioSalud}" id="tamanio-salud" type="number" min="0" class="form-control" required/></label>
+                <label>Edad aproximada<input th:field="*{edad}" id="edad-salud" type="number" placeholder="Ej: 2 años" min="0" class="form-control" required/></label>
+                <label>Tamaño<input th:field="*{tamanio}" id="tamanio-salud" type="number" min="0" class="form-control" required/></label>
             </div>
             <div>
-                <label>Raza<input th:field="*{razaSalud}" id="raza-salud" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
-                <label>Ubicacion<input th:field="*{ubicacionSalud}" id="ubicacion-salud" type="text" class="form-control" required/></label>
+                <label>Raza<input th:field="*{raza}" id="raza-salud" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
+                <label>Ubicacion<input th:field="*{ubicacion}" id="ubicacion-salud" type="text" class="form-control" required/></label>
             </div>
             <div>
-                <label>Sintomas principales<input th:field="*{sintomasPrincipalesSalud}" id="sintomas-salud" type="text" placeholder="Ej: Vomitos" class="form-control" required/></label>
-                <label>Diagnostico previo<input th:field="*{diagnosticoSalud}" id="diagnostico-salud" type="text" placeholder="EJ: Leve molestia en pata izquierda" class="form-control" required/></label><br>
+                <label>Sintomas principales<input th:field="*{sintomasPrincipales}" id="sintomas-salud" type="text" placeholder="Ej: Vomitos" class="form-control" required/></label>
+                <label>Diagnostico previo<input th:field="*{diagnostico}" id="diagnostico-salud" type="text" placeholder="EJ: Leve molestia en pata izquierda" class="form-control" required/></label><br>
                 <label>Nivel de urgencia</label>
-                <select th:field="*{nivelUrgenciaSalud}" class="form-control" required>
+                <select th:field="*{nivelUrgencia}" class="form-control" required>
                     <option value="">Selecciona uno</option>
                     <option value="no-urgente">No urgente</option>
                     <option value="prioritario">Prioritario</option>
@@ -144,21 +144,21 @@
 
 
     <div id="form-perdido" style="display:none; margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form th:action="@{/publicacion-perdido-creada}" method="POST" th:object="${datosPerdido}">
+        <form th:action="@{/publicacion-perdido}" method="POST" th:object="${datosPerdido}">
             <label>Titulo de la publicacion</label>
-            <input th:field="*{tituloPerdido}" id="titulo-perdido" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
+            <input th:field="*{titulo}" id="titulo-perdido" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
             <label>Descripcion corta (maximo 100 caracteres)</label>
-            <input th:field="*{descripcionCortaPerdido}" id="descripcion-corta-perdido" type="text" placeholder="Cuenta breve descripcion del animal." maxlength="100"  class="form-control" required/>
+            <input th:field="*{descripcionCorta}" id="descripcion-corta-perdido" type="text" placeholder="Cuenta breve descripcion del animal." maxlength="100"  class="form-control" required/>
             <label>Descripcion detallada</label>
-            <input th:field="*{descripcionDetalladaPerdido}" id="descripcion-detallada-perdido" type="text" placeholder="Cuenta la historia del animal, sus caracteristicas, necesidades especiales, etc." class="form-control" required/>
+            <input th:field="*{descripcionDetallada}" id="descripcion-detallada-perdido" type="text" placeholder="Cuenta la historia del animal, sus caracteristicas, necesidades especiales, etc." class="form-control" required/>
             <label>Fotos del animal</label>
-            <input th:field="*{imagenPerdido}" id="imagen-perdido" type="file" placeholder="Haz click para subir o arrastra hasta aquí. Maximo 5 imagenes" class="form-control" required/>
+            <input th:field="*{imagen}" id="imagen-perdido" type="file" placeholder="Haz click para subir o arrastra hasta aquí. Maximo 5 imagenes" class="form-control" required/>
             <div>
-                <label>Raza<input th:field="*{razaPerdido}" id="raza-perdido" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
-                <label>Tamaño<input th:field="*{tamanioPerdido}" id="tamanio-perdido" type="number" min="0" class="form-control" required/></label>
+                <label>Raza<input th:field="*{raza}" id="raza-perdido" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
+                <label>Tamaño<input th:field="*{tamanio}" id="tamanio-perdido" type="number" min="0" class="form-control" required/></label>
             </div>
             <div>
-                <label>Ultima ubicacion vista<input th:field="*{ubicacionPerdido}" id="ubicacion-perdido" type="text" class="form-control" required/></label>
+                <label>Ultima ubicacion vista<input th:field="*{ubicacion}" id="ubicacion-perdido" type="text" class="form-control" required/></label>
                 <label>Fecha de desaparición<input th:field="*{fechaDesaparicion}" id="fecha-desaparicion" type="date" class="form-control" required/></label>
                 <label>Hora de desaparición<input th:field="*{horaDesaparicion}" id="hora-desaparicion" type="time" class="form-control" required/></label>
             </div>
@@ -182,23 +182,23 @@
 
 
     <div id="form-encontrado" style="display:none; margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form th:action="@{/publicacion-encontrado-creada}" method="POST" th:object="${datosEncontrado}">
+        <form th:action="@{/publicacion-encontrado}" method="POST" th:object="${datosEncontrado}">
             <label>Titulo de la publicacion</label>
-            <input th:field="*{tituloEncontrado}" id="titulo-encontrado" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
+            <input th:field="*{titulo}" id="titulo-encontrado" type="text" placeholder="Ej: Hermoso Golden Retriever busca familia." class="form-control" required/>
             <label>Descripcion corta (maximo 100 caracteres)</label>
-            <input th:field="*{descripcionCortaEncontrado}" id="descripcion-corta-encontrado" type="text" placeholder="Cuenta breve descripcion del animal." maxlength="100"  class="form-control" required/>
+            <input th:field="*{descripcionCorta}" id="descripcion-corta-encontrado" type="text" placeholder="Cuenta breve descripcion del animal." maxlength="100"  class="form-control" required/>
             <label>Descripcion detallada</label>
-            <input th:field="*{descripcionDetalladaEncontrado}" id="descripcion-detallada-encontrado" type="text" placeholder="Cuenta la historia del animal, sus caracteristicas, necesidades especiales, etc." class="form-control" required/>
+            <input th:field="*{descripcionDetallada}" id="descripcion-detallada-encontrado" type="text" placeholder="Cuenta la historia del animal, sus caracteristicas, necesidades especiales, etc." class="form-control" required/>
             <label>Fotos del animal</label>
-            <input th:field="*{imagenEncontrado}" id="imagen-encontrado" type="file" placeholder="Haz click para subir o arrastra hasta aquí. Maximo 5 imagenes" class="form-control" required/>
+            <input th:field="*{imagen}" id="imagen-encontrado" type="file" placeholder="Haz click para subir o arrastra hasta aquí. Maximo 5 imagenes" class="form-control" required/>
             <div>
-                <label>Raza<input th:field="*{razaEncontrado}" id="raza-encontrado" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
-                <label>Tamaño<input th:field="*{tamanioEncontrado}" id="tamanio-encontrado" type="number" min="0" class="form-control" required/></label>
+                <label>Raza<input th:field="*{raza}" id="raza-encontrado" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
+                <label>Tamaño<input th:field="*{tamanio}" id="tamanio-encontrado" type="number" min="0" class="form-control" required/></label>
             </div>
             <h5>Información de contacto</h5>
             <div>
-                <label>Telefono<input th:field="*{telefonoEncontrado}" id="telefono-encontrado" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>
-                <label>Email<input th:field="*{emailEncontrado}" id="email-encontrado" type="email" placeholder="ejemplo@unlam.edu.ar" class="form-control" required/></label>
+                <label>Telefono<input th:field="*{telefono}" id="telefono-encontrado" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>
+                <label>Email<input th:field="*{email}" id="email-encontrado" type="email" placeholder="ejemplo@unlam.edu.ar" class="form-control" required/></label>
             </div>
             <button id="boton-publicar-encontrado" class="btn btn-lg btn-primary btn-block" Type="Submit">Publicar ahora</button>
 
