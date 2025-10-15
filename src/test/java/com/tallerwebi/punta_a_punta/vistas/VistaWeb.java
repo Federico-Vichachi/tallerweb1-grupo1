@@ -29,7 +29,11 @@ public class VistaWeb {
         this.obtenerElemento(selectorCSS).type(texto);
     }
 
-    private Locator obtenerElemento(String selectorCSS){
+    protected Locator obtenerElemento(String selectorCSS){
+        return page.locator(selectorCSS);
+    }
+
+    protected Locator obtenerElementos(String selectorCSS) {
         return page.locator(selectorCSS);
     }
 }

@@ -2,8 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-
-    <title>Feed</title>
+    <title>Feed de Publicaciones</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" th:href="@{/css/feed.css}"/>
@@ -13,12 +12,12 @@
 
 <div class="container my-5">
     <div class="row g-4">
-        <!-- COLUMNA DE FILTROS -->
+        <!-- Columna de filtros -->
         <div class="col-lg-4 col-xl-3">
             <form th:action="@{/feed}" method="GET" id="form-filtros">
                 <aside class="filtro-columna">
                     <h3 class="titulo-filtros"><i class="fa-solid fa-filter"></i> Filtros</h3>
-                    <!-- Sección Buscar -->
+                    <!-- Seccion Buscar -->
                     <div class="filtro-seccion">
                         <h4 class="subtitulo-filtros">Buscar</h4>
                         <div class="busqueda">
@@ -26,89 +25,38 @@
                             <input type="text" name="nombre" class="busqueda-cuadro" placeholder="Buscar por nombre..." th:value="${nombreFiltro}">
                         </div>
                     </div>
-                    <!-- Sección Categorías -->
+                    <!-- Seccion Categorias -->
                     <div class="seccion-filtro">
-                        <h4 class="subtitulo-filtros">Categorias
-
-                        </h4>
+                        <h4 class="subtitulo-filtros">Categorias</h4>
                         <div class="item-categoria">
-                            <input type="radio" id="animal-adopcion" name="categoria" value="adopcion" th:checked="${categoriaFiltro=='adopcion'}">
+                            <input type="radio" id="animal-adopcion" name="categoria" value="ADOPCION" th:checked="${categoriaFiltro=='ADOPCION'}">
                             <label for="animal-adopcion">Adopcion</label>
                         </div>
                         <div class="item-categoria">
-                            <input type="radio" id="animal-perdido" name="categoria" value="perdido" th:checked="${categoriaFiltro=='perdido'}">
+                            <input type="radio" id="animal-perdido" name="categoria" value="PERDIDO" th:checked="${categoriaFiltro=='PERDIDO'}">
                             <label for="animal-perdido">Perdido</label>
                         </div>
                         <div class="item-categoria">
-                            <input type="radio" id="animal-encontrado" name="categoria" value="encontrado" th:checked="${categoriaFiltro=='encontrado'}">
+                            <input type="radio" id="animal-encontrado" name="categoria" value="ENCONTRADO" th:checked="${categoriaFiltro=='ENCONTRADO'}">
                             <label for="animal-encontrado">Encontrado</label>
                         </div>
                         <div class="item-categoria">
-                            <input type="radio" id="animal-salud" name="categoria" value="salud" th:checked="${categoriaFiltro=='salud'}">
+                            <input type="radio" id="animal-salud" name="categoria" value="SALUD" th:checked="${categoriaFiltro=='SALUD'}">
                             <label for="animal-salud">Salud</label>
                         </div>
                         <div class="item-categoria">
-                            <input type="radio" id="animal-recaudacion" name="categoria" value="recaudacion" th:checked="${categoriaFiltro=='recaudacion'}">
+                            <input type="radio" id="animal-recaudacion" name="categoria" value="RECAUDACION" th:checked="${categoriaFiltro=='RECAUDACION'}">
                             <label for="animal-recaudacion">Recaudacion</label>
                         </div>
                     </div>
-
-                    <!-- Sección Ubicación -->
-                    <div class="seccion-filtro">
-                        <h4 class="subtitulo-filtros"><span class="fa-solid fa-location-dot"></span> Ubicacion</h4>
-                        <div class="mb-3">
-                            <label for="provincia" class="form-label visually-hidden">Provincia</label>
-                            <select class="form-select" id="provincia" name="provincia">
-                                <option selected>Seleccionar Provincia</option>
-                                <option value="1" th:selected="${provinciaFiltro==1}">Buenos Aires</option>
-                                <option value="2" th:selected="${provinciaFiltro==2}">Córdoba</option>
-                                <option value="3" th:selected="${provinciaFiltro==3}">Santa Fe</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="localidad" class="form-label visually-hidden">Localidad</label>
-                            <select class="form-select" id="localidad" name="locailidad">
-                                <option selected>Seleccionar localidad</option>
-                                <option value="1" th:selected="${localidadFiltro==1}">La Matanza</option>
-                                <option value="2" th:selected="${localidadFiltro==2}">Rosario</option>
-                                <option value="3" th:selected="${localidadFiltro==3}">Córdoba Capital</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="seccion-filtro">
-                        <h4 class="subtitulo-filtros">Tags</h4>
-
-                        <div id="contenedor-tags-dinamicos" class="contenedor-tags">
-
-                        </div>
-                    </div>
-
-                    <!-- Sección de filtros activos -->
-                    <div class="seccion-filtro">
-                        <h4 class="subtitulo-filtros">Filtros Activos</h4>
-                        <div id="contenedor-tags-activos" class="contenedor-filtros-activos">
-
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 mt-4">
-                        Aplicar Filtros
-                    </button>
-
-                    <!-- Botón Limpiar -->
-                    <a th:href="@{/feed}" class="limpiar-filtros-btn">
-                        Limpiar
-                    </a>
+                    <button type="submit" class="btn btn-primary w-100 mt-4">Aplicar Filtros</button>
+                    <a th:href="@{/feed}" class="limpiar-filtros-btn">Limpiar</a>
                 </aside>
-
             </form>
-
         </div>
 
-        <!-- PUBLICACIONES -->
+        <!--  COLUMNA DE PUBLICACIONES  -->
         <div class="col-lg-8 col-xl-9">
-            <!-- Encabezado de publicaciones -->
             <div class="publicaciones-container">
                 <div class="d-flex justify-content-between align-items-center mb-4 gap-3">
                     <div>
@@ -119,193 +67,70 @@
                         <span class="fa-solid fa-plus"></span> Nueva Publicacion
                     </a>
                 </div>
-                <div class="filter-tabs d-flex flex-wrap gap-2">
-                    <button class="btn boton-filtrado active">Todas</button>
-                    <button class="btn boton-filtrado"><span class="fa-regular fa-heart"></span> Adopcion</button>
-                    <button class="btn boton-filtrado"><span class="fa-solid fa-dollar-sign"></span> Recaudacion</button>
-                    <button class="btn boton-filtrado"><span class="fa-solid fa-circle-plus"></span> Salud</button>
-                    <button class="btn boton-filtrado"><span class="fa-solid fa-magnifying-glass"></span> Perdido</button>
-                    <button class="btn boton-filtrado"><span class="fa-solid fa-location-dot"></span> Encontrado</button>
-                </div>
             </div>
 
-                <!-- Primer Tarjeta -->
-                <div class="carta-adopcion">
-                    <div class="card-header-custom d-flex justify-content-between align-items-center">
-                        <div class="user-info d-flex align-items-center">
-                            <div class="user-icon"><i class="fa-solid fa-user"></i></div>
-                            <div class="user-details ms-3">
-                                <span class="user-name">Illesca Dylan</span>
-                                <div><span class="usuario">Usuario</span><span class="fecha">· Hace 4 horas</span></div>
-                            </div>
-                        </div>
-                        <div class="tag-adopcion">Adopcion</div>
-                    </div>
-                    <div class="card-body-custom pt-4">
-                        <div class="row g-4">
-                            <div class="col-lg-4 col-md-12">
-                                <img th:src="@{/images/gatovagancia.webp}" alt="gato ciruja" class="imagen-animal">
-                            </div>
-                            <div class="col-lg-8 col-md-12">
-                                <h2 class="nombre-animal">Kitty</h2>
-                                <div class="contenedor-info d-flex flex-wrap align-items-center mb-3">
-                                    <span><i class="fa-solid fa-calendar-days"></i> 3 meses</span>
-                                    <span class="mx-3"><i class="fa-solid fa-location-dot"></i> Tucuman</span>
-                                    <span><i class="fa-solid fa-paw"></i> Europeo</span>
-                                </div>
-                                <p class="descripcion-animal">Luna es una gatita juguetona y muy inteligente...</p>
-                                <div class="tags mb-4">
-                                    <span class="tag">Vacunada</span> <span class="tag">Sociable</span> <span class="tag">Activo</span>
-                                </div>
-                                <div class="boton-pta d-flex flex-wrap gap-2">
-                                    <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
-                                    <button class="btn btn-consult">Consultar</button>
-                                    <button class="btn btn-more-info">Mas info</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- <<<< CIERRE DE LA PRIMERA TARJETA >>>> -->
+            <!-- MENSAJE ERROR -->
+            <div th:if="${error}" class="alert alert-warning mt-3" role="alert">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <span th:text="${error}"></span>
+            </div>
 
-                <!-- Segunda Tarjeta -->
-                <div class="carta-adopcion"> <!-- Tengo que cambiar esto y hacerlo mas general para cada tarjeta -->
-                    <div class="card-header-custom d-flex justify-content-between align-items-center">
-                        <div class="user-info d-flex align-items-center">
-                            <div class="user-icon"><i class="fa-solid fa-user"></i></div>
-                            <div class="user-details ms-3">
-                                <span class="user-name">Illesca Dylan</span>
-                                <div><span class="usuario">Usuario</span><span class="fecha">· Hace 4 horas</span></div>
-                            </div>
-                        </div>
-                        <div class="tag-adopcion">Perdido</div>
-                    </div>
-                    <div class="card-body-custom pt-4">
-                        <div class="row g-4">
-                            <div class="col-lg-4 col-md-12">
-                                <img th:src="@{/images/perro.webp}" alt="perro" class="imagen-animal">
-                            </div>
-                            <div class="col-lg-8 col-md-12">
-                                <h2 class="nombre-animal">Chiquita</h2>
-                                <div class="contenedor-info d-flex flex-wrap align-items-center mb-3">
-                                    <span><i class="fa-solid fa-calendar-days"></i> 8 meses</span>
-                                    <span class="mx-3"><i class="fa-solid fa-location-dot"></i> La Matanza</span>
-                                    <span><i class="fa-solid fa-paw"></i> Caniche</span>
-                                </div>
-                                <p class="descripcion-animal">Luna es una gatita juguetona y muy inteligente...</p>
-                                <div class="tags mb-4">
-                                    <span class="tag">Vacunada</span> <span class="tag">Sociable</span> <span class="tag">Activo</span>
-                                </div>
-                                <div class="boton-pta d-flex flex-wrap gap-2">
-                                    <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
-                                    <button class="btn btn-consult">Consultar</button>
-                                    <button class="btn btn-more-info">Mas info</button>
-                                </div>
+            <!-- MENSAJE  -->
+            <div th:if="${mensaje}" class="alert alert-info mt-3" role="alert">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                <span th:text="${mensaje}"></span>
+            </div>
+
+            <!-- BUCLE -->
+            <div class="carta-adopcion mb-4" th:each="publicacion : ${publicaciones}">
+                <div class="card-header-custom d-flex justify-content-between align-items-center">
+                    <div class="user-info d-flex align-items-center">
+                        <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                        <div class="user-details ms-3">
+                            <span class="user-name" th:text="${publicacion.usuario.nombre + ' ' + publicacion.usuario.apellido}"></span>
+                            <div>
+                                <span class="usuario">Usuario</span>
+                                <span class="fecha" th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
                             </div>
                         </div>
                     </div>
+                    <div class="tag-adopcion" th:text="${#strings.capitalize(#strings.toLowerCase(publicacion.tipo.toString()))}"></div>
                 </div>
-
-                <!-- Tercera Tarjeta -->
-                <div class="carta-adopcion">
-                    <div class="card-header-custom d-flex justify-content-between align-items-center">
-                        <div class="user-info d-flex align-items-center">
-                            <div class="user-icon"><i class="fa-solid fa-user"></i></div>
-                            <div class="user-details ms-3">
-                                <span class="user-name">Illesca Dylan</span>
-                                <div><span class="usuario">Usuario</span><span class="fecha">· Hace 4 horas</span></div>
-                            </div>
+                <div class="card-body-custom pt-4">
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-md-12">
+                            <img th:src="@{${publicacion.urlImagen}}" alt="Imagen de la mascota" class="imagen-animal">
                         </div>
-                        <div class="tag-adopcion">Encontrado</div>
-                    </div>
-                    <div class="card-body-custom pt-4">
-                        <div class="row g-4">
-                            <div class="col-lg-4 col-md-12">
-                                <img th:src="@{/images/siames.webp}" alt="gato lindo" class="imagen-animal">
+                        <div class="col-lg-8 col-md-12">
+                            <h2 class="nombre-animal" th:text="${publicacion.nombreMascota}"></h2>
+                            <div class="contenedor-info d-flex flex-wrap align-items-center mb-3">
+                                <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span></span>
+                                <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${publicacion.ubicacion}"></span></span>
+                                <span><i class="fa-solid fa-paw"></i> <span th:text="${publicacion.raza}"></span></span>
                             </div>
-                            <div class="col-lg-8 col-md-12">
-                                <h2 class="nombre-animal">Mia</h2>
-                                <div class="contenedor-info d-flex flex-wrap align-items-center mb-3">
-                                    <span><i class="fa-solid fa-calendar-days"></i> 2 anios</span>
-                                    <span class="mx-3"><i class="fa-solid fa-location-dot"></i> Pinamar</span>
-                                    <span><i class="fa-solid fa-paw"></i> Siames</span>
-                                </div>
-                                <p class="descripcion-animal">Luna es una gatita juguetona y muy inteligente...</p>
-                                <div class="tags mb-4">
-                                    <span class="tag">Vacunada</span> <span class="tag">Sociable</span> <span class="tag">Activo</span>
-                                </div>
-                                <div class="boton-pta d-flex flex-wrap gap-2">
-                                    <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
-                                    <button class="btn btn-consult">Consultar</button>
-                                    <button class="btn btn-more-info">Mas info</button>
-                                </div>
+                            <p class="descripcion-animal" th:text="${publicacion.descripcion}"></p>
+
+                            <div class="tags mb-4" th:if="${publicacion.tags != null and !publicacion.tags.isEmpty()}">
+                                <span th:each="tag : ${publicacion.tags.split(',')}" class="tag" th:text="${tag}"></span>
+                            </div>
+
+                            <div class="boton-pta d-flex flex-wrap gap-2">
+                                <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
+                                <button class="btn btn-consult">Consultar</button>
+                                <a th:href="@{'/post/' + ${publicacion.id}}" class="btn btn-more-info">Mas info</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-
-</div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <!--  NOSOTROS  -->
-            <div class="col-lg-5 col-md-12 mb-4 mb-lg-0">
-                <div class="nosotros-footer">
-                    <h4 class="logo-footer">
-                        <i class="fa-solid fa-heart"></i> Rescate Amigos
-                    </h4>
-                    <p class="texto-footer">
-                        Plataforma colaborativa que conecta personas y organizaciones para ayudar animales en situación de calle.
-                        Una red social dedicada al rescate, adopción responsable y bienestar animal.
-                    </p>
-                </div>
-            </div>
-
-            <!-- REDES SOCIALES -->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <div class="links-footer">
-                    <h5>Redes</h5>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="#"><i class="fa-brands fa-facebook social-icon"></i> Facebook</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa-brands fa-instagram social-icon"></i> Instagram</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa-brands fa-twitter social-icon"></i> Twitter</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- CONTACTO -->
-            <div class="col-lg-4 col-md-6">
-                <div class="contacto-footer">
-                    <h5>Contacto</h5>
-                    <ul class="list-unstyled">
-                        <li>
-                            <i class="fa-solid fa-phone"></i>
-                            <a href="#">+54 9 11 3153-9412</a>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-envelope"></i>
-                            <a href="#">rescateamigos@gmail.com</a>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-location-dot"></i>
-                            <span>Bonifasio Ramos 3161, Buenos Aires, Argentina</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
 
         </div>
     </div>
+</div>
+
+<footer class="footer">
+
 </footer>
 <script th:src="@{/js/filtros.js}"></script>
 
