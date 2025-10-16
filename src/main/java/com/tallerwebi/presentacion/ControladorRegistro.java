@@ -32,7 +32,22 @@ public class ControladorRegistro {
     public ModelAndView registrar(@ModelAttribute("datosRegistro") DatosRegistro datosRegistro) {
 
         ModelMap model = new ModelMap();
+        ModelAndView camposObligatoriosVacios = verificarCamposObligatoriosVacios(datosRegistro, model);
+        if (camposObligatoriosVacios.getModelMap().containsKey("error")) {
+            return camposObligatoriosVacios;
+        }
 
+        try {
+            servicioRegistro.registrarUsuario(datosRegistro);
+        } catch (Exception e) {
+            return devolverRegistroFallido(model, e.getMessage());
+        }
+
+        return new ModelAndView("inicio-de-sesion");
+    }
+
+
+    private ModelAndView verificarCamposObligatoriosVacios(DatosRegistro datosRegistro, ModelMap model) {
         if (datosRegistro.getEmail() == null || datosRegistro.getEmail().trim().isEmpty()) {
             return devolverRegistroFallido(model, "El email es obligatorio.");
         }
@@ -75,33 +90,8 @@ public class ControladorRegistro {
         if (datosRegistro.getCodigoPostal() == null || datosRegistro.getCodigoPostal().trim().isEmpty()) {
             return devolverRegistroFallido(model, "El código postal es obligatorio.");
         }
-
-        try {
-            Usuario usuario = new Usuario();
-            usuario.setNombre(datosRegistro.getNombre());
-            usuario.setApellido(datosRegistro.getApellido());
-            usuario.setNombreDeUsuario(datosRegistro.getNombreDeUsuario());
-            usuario.setEmail(datosRegistro.getEmail());
-            usuario.setTelefono(datosRegistro.getTelefono());
-            usuario.setContrasenia(datosRegistro.getContrasenia());
-            usuario.setRol(datosRegistro.getRol());
-            usuario.setDomicilio(new Domicilio());
-            usuario.getDomicilio().setCalle(datosRegistro.getCalle());
-            usuario.getDomicilio().setNumero(datosRegistro.getNumero());
-            usuario.getDomicilio().setCiudad(datosRegistro.getCiudad());
-            usuario.getDomicilio().setProvincia(datosRegistro.getProvincia());
-            usuario.getDomicilio().setCodigoPostal(datosRegistro.getCodigoPostal());
-            usuario.getDomicilio().setDepartamento(datosRegistro.getDepartamento());
-            usuario.getDomicilio().setPiso(datosRegistro.getPiso());
-
-            servicioRegistro.registrarUsuario(usuario);
-        } catch (Exception e) {
-            return devolverRegistroFallido(model, e.getMessage());
-        }
-
-        return new ModelAndView("login");
+        return new  ModelAndView("registro", model);
     }
-
 
     private ModelAndView devolverRegistroFallido(ModelMap model, String mensajeDeError) {
         model.put("error", mensajeDeError);

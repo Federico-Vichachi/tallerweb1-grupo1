@@ -6,9 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.mockito.ArgumentMatchers.any;
@@ -210,7 +207,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnEmailInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeEmailInvalidoException("El formato del email es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("email-invalido", "Juan", "Perez", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -224,7 +221,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnNombreInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeNombreOApellidoInvalidoException("El formato del nombre es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "juan123", "Perez", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -238,7 +235,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnApellidoInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeNombreOApellidoInvalidoException("El formato del apellido es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "@perez!", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -252,7 +249,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnNombreDeUsuarioInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeNombreDeUsuarioInvalidoException("El formato del nombre de usuario es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "Juan perez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -266,7 +263,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnTelefonoInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeTelefonoInvalidoException("El formato del teléfono es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "juanperez", "telefono-invalido",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -280,7 +277,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnaContraseniaInvalida_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeContraseniaInvalidoException("El formato de la contraseña es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "juanperez", "1234567890",
                 "Contrasenia-invalida", "Contrasenia-invalida", Roles.USUARIO_COMUN,
@@ -294,7 +291,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnCalleInvalida_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeCalleInvalidoException("El formato de la calle es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -308,7 +305,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnNumeroDeDomicilioInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeNumeroInvalidoException("El formato del número de domicilio es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -322,7 +319,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnaCiudadInvalida_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeCiudadInvalidoException("El formato de la ciudad es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -336,7 +333,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnCodigoPostalInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeCodigoPostalInvalidoException("El formato del código postal es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -350,7 +347,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnPisoInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDePisoInvalidoException("El formato del piso es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -364,7 +361,7 @@ public class ControladorRegistroTest {
     public void dadoQueNoExisteUnUsuarioConEseEmail_CuandoSeRegistraConUnDepartamentoInvalido_EntoncesElRegistroFalla() {
         doThrow(new FormatoDeDepartamentoInvalidoException("El formato del departamento es inválido."))
                 .when(servicioRegistroMock)
-                .registrarUsuario(any(Usuario.class));
+                .registrarUsuario(any(DatosRegistro.class));
 
         ModelAndView modelAndView = cuandoSeRegistra("test@gmail.com", "Juan", "Perez", "juanperez", "1234567890",
                 "Contrasenia@2025", "Contrasenia@2025", Roles.USUARIO_COMUN,
@@ -402,7 +399,7 @@ public class ControladorRegistroTest {
     }
 
     private void entoncesElRegistroEsExitoso(ModelAndView mav) {
-        assertThat(mav.getViewName(), equalToIgnoringCase("login"));
+        assertThat(mav.getViewName(), equalToIgnoringCase("inicio-de-sesion"));
     }
     private void entoncesElRegistroFalla(ModelAndView mav, String mensajeDeError) {
         assertThat(mav.getViewName(), equalToIgnoringCase("registro"));

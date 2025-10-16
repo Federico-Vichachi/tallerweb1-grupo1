@@ -24,5 +24,24 @@ public class DatosRegistro {
     private String departamento;
     private String piso;
 
+    public DatosRegistro(String nombre, String apellido, String nombreDeUsuario, String email, String telefono, String contrasenia, String repeticionDeContrasenia,
+                         Roles rol, String calle, String numero, String ciudad, Provincias provincia, String codigoPostal, String departamento, String piso) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.nombreDeUsuario = nombreDeUsuario;
+        this.email = email;
+        this.telefono = telefono;
+        this.contrasenia = contrasenia;
+        this.repeticionDeContrasenia = repeticionDeContrasenia;
+        this.rol = rol;
+        this.calle = calle;
+        this.numero = numero;
+        this.ciudad = ciudad;
+        this.provincia = provincia;
+        this.codigoPostal = codigoPostal;
+        this.departamento = departamento;
+        this.piso = piso;
+    }
+
     public DatosRegistro() {}
 }

@@ -20,4 +20,17 @@ public class Domicilio {
     private String codigoPostal;
     private String departamento;
     private String piso;
+
+    public Domicilio(String calle, String numero, String ciudad, Provincias provincia, String codigoPostal, String departamento, String piso) {
+        this.calle = calle;
+        this.numero = numero;
+        this.ciudad = ciudad;
+        this.provincia = provincia;
+        this.codigoPostal = codigoPostal;
+        this.departamento = departamento;
+        this.piso = piso;
+    }
+
+    public Domicilio() {
+    }
 }

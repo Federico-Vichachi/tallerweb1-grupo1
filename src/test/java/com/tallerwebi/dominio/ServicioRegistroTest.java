@@ -1,17 +1,16 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.*;
+import com.tallerwebi.presentacion.DatosRegistro;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class ServicioRegistroTest {
-
 
     private RepositorioUsuario repositorioUsuarioMock;
     private ServicioRegistro servicioRegistro;
@@ -236,26 +235,16 @@ public class ServicioRegistroTest {
         when(repositorioUsuarioMock.buscarPorTelefono("1234567890")).thenReturn(usuarioExistente);
     }
 
-    private void cuandoSeRegistra(String email, String nombre, String apellido, String nombreDeUsuario, String telefono, String contrasenia,
-                                          Roles rol, String calle, String numero, String ciudad, Provincias provincia, String codigoPostal,
-                                          String piso, String departamento) {
-        Usuario usuario = new Usuario();
-        usuario.setEmail(email);
-        usuario.setNombre(nombre);
-        usuario.setApellido(apellido);
-        usuario.setNombreDeUsuario(nombreDeUsuario);
-        usuario.setTelefono(telefono);
-        usuario.setContrasenia(contrasenia);
-        usuario.setRol(rol);
-        usuario.setDomicilio(new Domicilio());
-        usuario.getDomicilio().setCalle(calle);
-        usuario.getDomicilio().setNumero(numero);
-        usuario.getDomicilio().setCiudad(ciudad);
-        usuario.getDomicilio().setProvincia(provincia);
-        usuario.getDomicilio().setCodigoPostal(codigoPostal);
-        usuario.getDomicilio().setDepartamento(departamento);
-        usuario.getDomicilio().setPiso(piso);
+    private void cuandoSeRegistra(String email, String nombre, String apellido, String nombreDeUsuario,
+                                 String telefono, String contrasenia, Roles rol,
+                                 String calle, String numero, String ciudad, Provincias provincia,
+                                 String codigoPostal, String piso, String departamento) {
 
-        servicioRegistro.registrarUsuario(usuario);
+        DatosRegistro datosRegistro = new DatosRegistro(nombre, apellido, nombreDeUsuario, email,
+                telefono, contrasenia, contrasenia, rol,
+                calle, numero, ciudad, provincia,
+                codigoPostal, departamento, piso);
+
+        servicioRegistro.registrarUsuario(datosRegistro);
     }
 }
