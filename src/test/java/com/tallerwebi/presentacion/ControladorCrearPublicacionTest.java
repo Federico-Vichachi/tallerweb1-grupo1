@@ -1,7 +1,8 @@
 package com.tallerwebi.presentacion;
 
-
-import com.tallerwebi.dominio.ServicioCrearPublicacion;
+import com.tallerwebi.dominio.RepositorioUsuario;
+import com.tallerwebi.dominio.ServicioPublicacion;
+import com.tallerwebi.dominio.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,11 +11,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ControladorCrearPublicacionTest {
 
     private ControladorCrearPublicacion controlador;
-    private ServicioCrearPublicacion servicioMock;
+    private ServicioPublicacion servicioMock;
+    private RepositorioUsuario repositorioUsuarioMock;
+
     private DatosAdopcion datosAdopcion;
     private DatosRecaudacion datosRecaudacion;
     private DatosSalud datosSalud;
@@ -23,8 +27,10 @@ public class ControladorCrearPublicacionTest {
 
     @BeforeEach
     public void setUp() {
-        servicioMock = mock(ServicioCrearPublicacion.class);
-        controlador = new ControladorCrearPublicacion(servicioMock);
+        servicioMock = mock(ServicioPublicacion.class);
+        repositorioUsuarioMock = mock(RepositorioUsuario.class);
+        controlador = new ControladorCrearPublicacion(servicioMock, repositorioUsuarioMock);
+        when(repositorioUsuarioMock.buscarPorId(1L)).thenReturn(mock(Usuario.class));
     }
 
 
@@ -44,7 +50,7 @@ public class ControladorCrearPublicacionTest {
         datosAdopcion.setRaza("Golden Retriever");
         datosAdopcion.setTamanio(40);
         datosAdopcion.setUbicacion("CABA, Argentina");
-        datosAdopcion.setTelefono(1145123412);
+        datosAdopcion.setTelefono("1145123412");
         datosAdopcion.setEmail("firulais@mail.com");
         datosAdopcion.setEdad(2);
     }
@@ -78,7 +84,7 @@ public class ControladorCrearPublicacionTest {
         datosRecaudacion.setRaza("Mestizo");
         datosRecaudacion.setTamanio(50);
         datosRecaudacion.setUbicacion("Lanus, Argentina");
-        datosRecaudacion.setTelefono(1145332211);
+        datosRecaudacion.setTelefono("1145332211");
         datosRecaudacion.setEmail("ayuda.rocky@gmail.com");
         datosRecaudacion.setEdad(5);
         datosRecaudacion.setMeta(150000.0);
@@ -116,7 +122,7 @@ public class ControladorCrearPublicacionTest {
         datosSalud.setRaza("Siames");
         datosSalud.setTamanio(35);
         datosSalud.setUbicacion("CABA, Argentina");
-        datosSalud.setTelefono(1185262211);
+        datosSalud.setTelefono("1185262211");
         datosSalud.setEmail("ayuda.fito@gmail.com");
         datosSalud.setEdad(3);
         datosSalud.setSintomasPrincipales("Inflamación en pata delantera izquierda, disminución de apetito");
@@ -154,7 +160,7 @@ public class ControladorCrearPublicacionTest {
         datosPerdido.setRaza("Mestizo");
         datosPerdido.setTamanio(25);
         datosPerdido.setUbicacion("Merlo, Argentina");
-        datosPerdido.setTelefono(1110652113);
+        datosPerdido.setTelefono("1110652113");
         datosPerdido.setEmail("luna@gmail.com");
         datosPerdido.setFechaDesaparicion("12/10/2025");
         datosPerdido.setHoraDesaparicion("12:00");
@@ -190,7 +196,7 @@ public class ControladorCrearPublicacionTest {
         datosEncontrado.setRaza("Mestizo");
         datosEncontrado.setTamanio(35);
         datosEncontrado.setUbicacion("Ituzaingo, Argentina");
-        datosEncontrado.setTelefono(1185262211);
+        datosEncontrado.setTelefono("1185262211");
         datosEncontrado.setEmail("ayuda.manchita@gmail.com");
     }
 

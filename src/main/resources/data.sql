@@ -1,45 +1,60 @@
--- Insertar domicilio primero
+-- Domicilio y Usuario 1: Juan Perez (USUARIO_COMUN)
 INSERT INTO Domicilio(id, calle, numero, ciudad, provincia, codigoPostal, departamento, piso)
-VALUES(1, 'Av. Siempre Viva', '1234', 'Buenos Aires', 'BUENOS_AIRES', '1043', null, null);
+VALUES(1, 'Av. de Mayo', '1234', 'Ramos Mejia', 'BUENOS_AIRES', '1704', null, null);
 
--- Insertar usuario con referencia al domicilio
-INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, urlFotoDePerfil, rol, domicilio_id)
-VALUES(1, 'Juan', 'Perez', 'test@gmail.com', '123456789', 'Contrasenia@2025', 'juanperez', null, 'USUARIO_COMUN', 1);
-
+INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id)
+VALUES(1, 'Juan', 'Perez', 'juan.perez@test.com', '1122334455', 'Contrasenia@2025', 'juanperez', 'USUARIO_COMUN', 1);
 
 
--- Publicacion 1: Adopcion
-INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
-VALUES(1, 1, '2023-10-27 10:30:00', 'ADOPCION', '/images/perro.webp', 'Rocky', '2 anios', 'Ramos Mejia, Buenos Aires', 'Mestizo', 'Rocky es un perrito muy jugueton y carinioso. Busca una familia que le de mucho amor y tenga espacio para correr.', 'Jugueton,Carinioso,Mediano');
+-- Domicilio y Usuario 2: Maria Garcia (ORGANIZACION)
+INSERT INTO Domicilio(id, calle, numero, ciudad, provincia, codigoPostal, departamento, piso)
+VALUES(2, 'Belgrano', '567', 'Córdoba', 'CORDOBA', '5000', null, null);
 
--- Publicacion 2: Perdido
-INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
-VALUES(2, 1, '2023-10-26 18:00:00', 'PERDIDO', '/images/perro.webp', 'Luna', '5 anios', 'Caballito, CABA', 'Siames', 'Luna se perdio el 25 de Octubre por la zona del Parque Rivadavia. Es asustadiza pero no agresiva. Tiene un collar rojo con un cascabel.', 'Urgente,Recompensa');
+INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id)
+VALUES(2, 'Maria', 'Garcia', 'maria.garcia@test.com', '3511223344', 'Contrasenia@2025', 'mariagarcia', 'ORGANIZACION', 2);
 
--- Publicacion 3: Recaudacion
-INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
-VALUES(3, 1, '2023-10-25 12:00:00', 'RECAUDACION', '/images/perro.webp', 'Gatitos de la calle', '1 mes', 'Moron, Buenos Aires', 'Comon Europeo', 'Necesitamos ayuda para cubrir los costos veterinarios de una camada de gatitos que rescatamos. Cualquier contribucion nos ayuda a darles un futuro.', 'Ayuda,Veterinario');
 
--- Publicacion 4: Adopcion
-INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
-VALUES(4, 1, '2023-10-28 09:00:00', 'ADOPCION', '/images/perro.webp', 'Toto', '3 meses', 'Cordoba Capital', 'Mestizo (tamanio mediano)', 'Toto fue rescatado junto a sus hermanitos. Es muy activo y necesita una familia con paciencia y amor para enseniarle.', 'Cachorro,Activo,Desparasitado');
+-- Domicilio y Usuario 3: Carlos Lopez (VETERINARIO)
+INSERT INTO Domicilio(id, calle, numero, ciudad, provincia, codigoPostal, departamento, piso)
+VALUES(3, 'San Martín', '890', 'Rosario', 'SANTA_FE', '2000', null, null);
 
--- Publicacion 5: Encontrado
-INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
-VALUES(5, 1, '2023-10-27 20:15:00', 'ENCONTRADO', '/images/perro.webp', 'Desconocido (Gato gris)', 'Adulto', 'Palermo, CABA', 'Sin raza definida', 'Encontre este gato macho, muy docil, en la zona de Plaza Serrano. Parece perdido, esta bien cuidado y es muy carinioso.', 'BuscaDueño,Mimoso');
+INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id)
+VALUES(3, 'Carlos', 'Lopez', 'carlos.lopez@test.com', '3415556677', 'Contrasenia@2025', 'carloslopez', 'VETERINARIO', 3);
 
--- Publicacion 6: Salud
---INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
---VALUES(6, 1, '2023-10-27 15:45:00', 'SALUD', '/images/perro.webp', 'Brisa', 'aprox. 6 anios', 'La Plata, Buenos Aires', 'Galgo', 'Brisa necesita una consulta urgente con un traumatologo. Tiene dificultades para caminar con su pata trasera. Buscamos recomendacion.', 'Consulta,Traumatologia,Urgente');
 
--- Publicacion 7: Adopcion
-INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
-VALUES(7, 1, '2023-10-26 11:00:00', 'ADOPCION', '/images/perro.webp', 'Negra', '4 anios', 'Rosario, Santa Fe', 'Mestiza (Labrador)', 'Negra es una perra adulta muy tranquila y obediente. Es ideal para una familia con niños o personas mayores. Se lleva bien con otros perros.', 'Adulto,Tranquila,Obediente');
 
--- Publicacion 8: Perdido
-INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
-VALUES(8, 1, '2023-10-25 22:30:00', 'PERDIDO', '/images/perro.webp', 'Simon', '2 anios', 'Mar del Plata', 'Naranja atigrado', 'Simon se escapo de casa en la zona del puerto. Es un poco miedoso con extraños pero no es agresivo. Tiene una pequeña mancha blanca en el pecho.', 'Miedoso,Casero');
+-- Publicación 1: Adopción (Por Juan Perez, Usuario 1)
+INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email, usuario_id, fechaPublicacion)
+VALUES(1, 'Rocky busca un hogar amoroso', 'Perrito mestizo de 2 anios, muy jugueton y carinioso.', 'Fue rescatado de la calle y ya esta desparasitado y vacunado. Se lleva bien con ninios y otros perros. Busca una familia con espacio.', '/images/perro.webp', 'Mestizo', 25, 'Ramos Mejia, Buenos Aires', 1122334455, 'juan.perez@test.com', 1, '2023-10-27 10:30:00');
+INSERT INTO PublicacionAdopcion(id, edad)
+VALUES(1, 2);
 
--- Publicacion 9: Recaudacion
-INSERT INTO Publicacion(id, usuario_id, fechaPublicacion, tipo, urlImagen, nombreMascota, edad, ubicacion, raza, descripcion, tags)
-VALUES(9, 1, '2023-10-24 14:00:00', 'RECAUDACION', '/images/perro.webp', 'Refugio "Patitas Felices"', 'Varios', 'Mendoza', 'Varios', '¡Necesitamos ayuda para comprar alimento balanceado para los más de 50 perritos que tenemos en el refugio! Cualquier donacion suma.', 'Ayuda,Refugio,Donacion');
+-- Publicación 2: Perdido (Por Maria Garcia, Usuario 2)
+INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email, usuario_id, fechaPublicacion)
+VALUES(2, 'Se perdio Simon, gato atigrado', 'Gato macho de 3 anios, se perdio en el barrio Nueva Cordoba.', 'Es un poco asustadizo pero muy docil. Tiene una mancha blanca en el pecho. Por favor, si lo ven, contactense.', '/images/perro.webp', 'Comun Europeo Atigrado', 5, 'Nueva Cordoba, Cordoba', 3511223344, 'maria.garcia@test.com', 2, '2023-10-26 18:00:00');
+INSERT INTO PublicacionPerdido(id, fechaDesaparicion, horaDesaparicion, llevaCollar, recompensa)
+VALUES(2, '2023-10-25', '20:00', false, 'No');
+
+-- Publicación 3: Recaudación (Por Maria Garcia, Usuario 2)
+INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email, usuario_id, fechaPublicacion)
+VALUES(3, 'Ayuda para la cirugía de Luna', 'Necesitamos recaudar fondos para operar a Luna.', 'Luna fue atropellada y necesita una cirugia compleja en su cadera. Cualquier ayuda, por pequenia que sea, nos acerca a la meta. ¡Gracias!', '/images/perro.webp', 'Galgo', 20, 'Cordoba Capital', 3511223344, 'maria.garcia@test.com', 2, '2023-10-25 12:00:00');
+INSERT INTO PublicacionRecaudacion(id, edad, meta, cbu, metodoPreferido)
+VALUES(3, 4, 50000.00, 'AYUDA.LUNA.MP', 'Mercado Pago');
+
+-- Publicación 4: Salud (Por Carlos Lopez, Usuario 3)
+INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email, usuario_id, fechaPublicacion)
+VALUES(4, 'Consulta sobre comportamiento canino', 'Mi perro ladra sin parar cuando me voy.', 'Es un caniche de 5 anios y sufre de ansiedad por separacion. ¿Algun consejo o recomendacion de un especialista en comportamiento en Rosario?', '/images/perro.webp', 'Caniche', 8, 'Rosario, Santa Fe', 3415556677, 'carlos.lopez@test.com', 3, '2023-10-28 09:00:00');
+INSERT INTO PublicacionSalud(id, edad, sintomasPrincipales, diagnostico, nivelUrgencia)
+VALUES(4, 5, 'Ladridos excesivos, destructividad', 'Ansiedad por separación', 'No urgente');
+
+-- Publicación 5: Encontrado (Por Juan Perez, Usuario 1)
+INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email, usuario_id, fechaPublicacion)
+VALUES(5, 'Encontre perrita en Liniers', 'Perrita hembra encontrada cerca de la estacion.', 'Parece joven, es muy buena y se nota que es de una casa. Tiene un collar rosa pero sin chapita. Buscamos a sus duenios.', '/images/perro.webp', 'Mestiza', 15, 'Liniers, CABA', 1122334455, 'juan.perez@test.com', 1, '2023-10-27 20:15:00');
+INSERT INTO PublicacionEncontrado(id)
+VALUES(5);
+
+-- Publicación 6: Adopción (Por Maria Garcia, Usuario 2)
+INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email, usuario_id, fechaPublicacion)
+VALUES(6, 'Gatitos buscan familia responsable', 'Camada de 2 meses listos para ser adoptados.', 'Son 4 hermanitos (2 machos y 2 hembras) muy juguetones. Se entregan con compromiso de castracion a los 6 meses.', '/images/perro.webp', 'Comun Europeo', 1, 'Cordoba, Argentina', 3511223344, 'maria.garcia@test.com', 2, '2023-10-24 11:00:00');
+INSERT INTO PublicacionAdopcion(id, edad)
+VALUES(6, 0);

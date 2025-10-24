@@ -13,14 +13,14 @@ public abstract class DatosPublicacion {
     private String raza;
     private Integer tamanio;
     private String ubicacion;
-    private Integer telefono;
+    private String telefono;
     private String email;
 
     public DatosPublicacion() {
     }
 
     public DatosPublicacion(String titulo, String descripcionCorta, String descripcionDetallada, String imagen,
-                            String raza, Integer tamanio, String ubicacion, Integer telefono, String email) {
+                            String raza, Integer tamanio, String ubicacion, String telefono, String email) {
         this.titulo = titulo;
         this.descripcionCorta = descripcionCorta;
         this.descripcionDetallada = descripcionDetallada;

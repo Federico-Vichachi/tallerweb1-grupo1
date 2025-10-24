@@ -6,28 +6,25 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-public class Publicacion {
-
+public abstract class Publicacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
 
     private LocalDateTime fechaPublicacion;
-
-    @Enumerated(EnumType.STRING)
-    private TipoPublicacion tipo;
-
-    private String urlImagen;
-    private String nombreMascota;
-    private String edad;
-    private String ubicacion;
+    private String titulo;
+    private String descripcionCorta;
+    private String descripcionDetallada;
+    private String imagen;
     private String raza;
-    private String descripcion;
-    private String tags;
-
-    public Publicacion() {}
+    private Integer tamanio;
+    private String ubicacion;
+    private String telefono;
+    private String email;
 }

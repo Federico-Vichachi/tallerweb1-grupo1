@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class PublicacionPerdido extends Publicacion2 {
+public class PublicacionPerdido extends Publicacion {
     private String fechaDesaparicion;
     private String horaDesaparicion;
     private Boolean llevaCollar;

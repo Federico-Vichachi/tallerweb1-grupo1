@@ -1,7 +1,5 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.presentacion.DatosEncontrado;
-import com.tallerwebi.presentacion.DatosRecaudacion;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,10 +8,5 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class PublicacionEncontrado extends Publicacion2 {
-    public PublicacionEncontrado() {}
-
-    public PublicacionEncontrado(DatosEncontrado datosEncontrado) {
-        super(datosEncontrado.getTitulo(), datosEncontrado.getDescripcionCorta(), datosEncontrado.getDescripcionDetallada(), datosEncontrado.getImagen(), datosEncontrado.getRaza(), datosEncontrado.getTamanio(), datosEncontrado.getUbicacion(), datosEncontrado.getTelefono(), datosEncontrado.getEmail());
-    }
+public class PublicacionEncontrado extends Publicacion {
 }

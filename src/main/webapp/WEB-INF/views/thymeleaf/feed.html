@@ -22,11 +22,11 @@
                         <h4 class="subtitulo-filtros">Buscar</h4>
                         <div class="busqueda">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" name="nombre" class="busqueda-cuadro" placeholder="Buscar por nombre..." th:value="${nombreFiltro}">
+                            <input type="text" name="nombre" class="busqueda-cuadro" placeholder="Buscar por titulo..." th:value="${nombreFiltro}">
                         </div>
                     </div>
                     <!-- Seccion Categorias -->
-                    <div class="seccion-filtro">
+                    <div class="filtro-seccion">
                         <h4 class="subtitulo-filtros">Categorias</h4>
                         <div class="item-categoria">
                             <input type="radio" id="animal-adopcion" name="categoria" value="ADOPCION" th:checked="${categoriaFiltro=='ADOPCION'}">
@@ -90,29 +90,34 @@
                             <span class="user-name" th:text="${publicacion.usuario.nombre + ' ' + publicacion.usuario.apellido}"></span>
                             <div>
                                 <span class="usuario">Usuario</span>
-                                <span class="fecha" th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
+                                <span class="fecha" th:if="${publicacion.fechaPublicacion != null}" th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="tag-adopcion" th:text="${#strings.capitalize(#strings.toLowerCase(publicacion.tipo.toString()))}"></div>
+                    <div class="tag-adopcion" th:switch="${true}">
+                        <span th:case="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion)}">Adopcion</span>
+                        <span th:case="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionPerdido)}">Perdido</span>
+                        <span th:case="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionEncontrado)}">Encontrado</span>
+                        <span th:case="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionRecaudacion)}">Recaudacion</span>
+                        <span th:case="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud)}">Salud</span>
+                    </div>
                 </div>
                 <div class="card-body-custom pt-4">
                     <div class="row g-4">
                         <div class="col-lg-4 col-md-12">
-                            <img th:src="@{${publicacion.urlImagen}}" alt="Imagen de la mascota" class="imagen-animal">
+                            <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="imagen-animal">
                         </div>
                         <div class="col-lg-8 col-md-12">
-                            <h2 class="nombre-animal" th:text="${publicacion.nombreMascota}"></h2>
+                            <h2 class="nombre-animal" th:text="${publicacion.titulo}"></h2>
                             <div class="contenedor-info d-flex flex-wrap align-items-center mb-3">
-                                <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span></span>
+                                <span th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion)}">
+                                    <i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span> anios
+                                </span>
                                 <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${publicacion.ubicacion}"></span></span>
                                 <span><i class="fa-solid fa-paw"></i> <span th:text="${publicacion.raza}"></span></span>
                             </div>
-                            <p class="descripcion-animal" th:text="${publicacion.descripcion}"></p>
+                            <p class="descripcion-animal" th:text="${publicacion.descripcionCorta}"></p>
 
-                            <div class="tags mb-4" th:if="${publicacion.tags != null and !publicacion.tags.isEmpty()}">
-                                <span th:each="tag : ${publicacion.tags.split(',')}" class="tag" th:text="${tag}"></span>
-                            </div>
 
                             <div class="boton-pta d-flex flex-wrap gap-2">
                                 <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
@@ -123,8 +128,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

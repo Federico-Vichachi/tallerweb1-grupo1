@@ -16,7 +16,7 @@ public class DatosRecaudacion extends DatosPublicacion {
     }
 
     public DatosRecaudacion(String titulo, String descripcionCorta, String descripcionDetallada, String imagen,
-                            String raza, Integer tamanio, String ubicacion, Integer telefono, String email,
+                            String raza, Integer tamanio, String ubicacion, String telefono, String email,
                             Integer edad, Double meta, String cbu, String metodoPreferido) {
         super(titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email);
         this.edad = edad;

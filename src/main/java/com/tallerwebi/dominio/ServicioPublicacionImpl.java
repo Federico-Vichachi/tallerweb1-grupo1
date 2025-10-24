@@ -4,7 +4,6 @@ import com.tallerwebi.dominio.excepcion.CategoriaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -19,6 +18,11 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
     }
 
     @Override
+    public Publicacion guardar(Publicacion publicacion) {
+        return repositorioPublicacion.guardar(publicacion);
+    }
+
+    @Override
     public List<Publicacion> obtenerTodasLasPublicaciones() {
         return repositorioPublicacion.buscarTodas();
     }
@@ -29,24 +33,19 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
             return obtenerTodasLasPublicaciones();
         }
 
-        if (!validarCategoria(categoria)) {
-            throw new CategoriaInvalidaException("La categoría '" + categoria + "' no es valida.");
+        switch (categoria.toUpperCase()) {
+            case "ADOPCION":
+                return (List<Publicacion>) (List<?>) repositorioPublicacion.buscarPorTipo(PublicacionAdopcion.class);
+            case "PERDIDO":
+                return (List<Publicacion>) (List<?>) repositorioPublicacion.buscarPorTipo(PublicacionPerdido.class);
+            case "ENCONTRADO":
+                return (List<Publicacion>) (List<?>) repositorioPublicacion.buscarPorTipo(PublicacionEncontrado.class);
+            case "RECAUDACION":
+                return (List<Publicacion>) (List<?>) repositorioPublicacion.buscarPorTipo(PublicacionRecaudacion.class);
+            case "SALUD":
+                return (List<Publicacion>) (List<?>) repositorioPublicacion.buscarPorTipo(PublicacionSalud.class);
+            default:
+                throw new CategoriaInvalidaException("La categoría '" + categoria + "' no es válida.");
         }
-
-        TipoPublicacion tipo = TipoPublicacion.valueOf(categoria.toUpperCase());
-        return repositorioPublicacion.buscarPorCategoria(tipo);
-    }
-
-
-    private boolean validarCategoria(String categoria) {
-        if (categoria == null) {
-            return false;
-        }
-        for (TipoPublicacion tipo : TipoPublicacion.values()) {
-            if (tipo.name().equalsIgnoreCase(categoria)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
