@@ -1,9 +1,12 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.*;
+import com.tallerwebi.presentacion.DatosRegistro;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import static com.tallerwebi.dominio.ExpresionesRegularesParaLaValidacionDeDatosDeRegistro.*;
 
 @Service
 @Transactional
@@ -16,126 +19,96 @@ public class ServicioRegistroImpl implements ServicioRegistro {
     }
 
     @Override
-    public void registrarUsuario(Usuario usuario) {
+    public void registrarUsuario(DatosRegistro datosRegistro) {
 
-        if (!validarFormatoEmail(usuario.getEmail())) {
+        verificarFormatoDeLosDatosDeRegistro(datosRegistro);
+
+        Usuario nuevoUsuario = crearNuevoUsuario(datosRegistro);
+
+        repositorioUsuario.guardar(nuevoUsuario);
+
+    }
+
+    private Usuario crearNuevoUsuario(DatosRegistro datosRegistro) {
+        return new  Usuario(datosRegistro.getNombre(),
+                datosRegistro.getApellido(),
+                datosRegistro.getEmail(),
+                datosRegistro.getTelefono(),
+                datosRegistro.getContrasenia(),
+                datosRegistro.getNombreDeUsuario(),
+                datosRegistro.getRol(),
+                new Domicilio(
+                        datosRegistro.getCalle(),
+                        datosRegistro.getNumero(),
+                        datosRegistro.getCiudad(),
+                        datosRegistro.getProvincia(),
+                        datosRegistro.getCodigoPostal(),
+                        datosRegistro.getDepartamento(),
+                        datosRegistro.getPiso()
+                )
+        );
+    }
+
+    public void verificarFormatoDeLosDatosDeRegistro(DatosRegistro datosRegistro) {
+
+        if (!datosRegistro.getEmail().matches(FORMATO_EMAIL)) {
             throw new FormatoDeEmailInvalidoException("El formato del email es inválido.");
         }
-        if (!validarFormatoNombreOApellido(usuario.getNombre())) {
-            throw new FormatoDeNombreOApellidoInvalidoException("El formato del nombre es inválido.");
-        }
-        if (!validarFormatoNombreOApellido(usuario.getApellido())) {
-            throw new FormatoDeNombreOApellidoInvalidoException("El formato del apellido es inválido.");
-        }
-        if (!validarFormatoNombreDeUsuario(usuario.getNombreDeUsuario())) {
-            throw new FormatoDeNombreDeUsuarioInvalidoException("El formato del nombre de usuario es inválido.");
-        }
-        if (!validarFormatoTelefono(usuario.getTelefono())) {
-            throw new FormatoDeTelefonoInvalidoException("El formato del teléfono es inválido.");
-        }
-        if (!validarFormatoContrasenia(usuario.getContrasenia())) {
+
+        if (!datosRegistro.getContrasenia().matches(FORMATO_CONTRASENIA)) {
             throw new FormatoDeContraseniaInvalidoException("El formato de la contraseña es inválido.");
         }
-        if (!validarFormatoCalle(usuario.getDomicilio().getCalle())) {
+
+        if (!datosRegistro.getNombre().matches(FORMATO_NOMBRE_O_APELLIDO)) {
+            throw new FormatoDeNombreOApellidoInvalidoException("El formato del nombre es inválido.");
+        }
+
+        if (!datosRegistro.getApellido().matches(FORMATO_NOMBRE_O_APELLIDO)) {
+            throw new FormatoDeNombreOApellidoInvalidoException("El formato del apellido es inválido.");
+        }
+
+        if (!datosRegistro.getNombreDeUsuario().matches(FORMATO_NOMBRE_DE_USUARIO)) {
+            throw new FormatoDeNombreDeUsuarioInvalidoException("El formato del nombre de usuario es inválido.");
+        }
+
+        if (!datosRegistro.getTelefono().matches(FORMATO_TELEFONO)) {
+            throw new FormatoDeTelefonoInvalidoException("El formato del teléfono es inválido.");
+        }
+
+        if (!datosRegistro.getCalle().matches(FORMATO_CALLE)) {
             throw new FormatoDeCalleInvalidoException("El formato de la calle es inválido.");
         }
-        if (!validarFormatoNumero(usuario.getDomicilio().getNumero())) {
+
+        if (!datosRegistro.getNumero().matches(FORMATO_NUMERO_DE_DOMICILIO)) {
             throw new FormatoDeNumeroInvalidoException("El formato del número de domicilio es inválido.");
         }
-        if (!validarFormatoCiudad(usuario.getDomicilio().getCiudad())) {
+
+        if (!datosRegistro.getCiudad().matches(FORMATO_CIUDAD)) {
             throw new FormatoDeCiudadInvalidoException("El formato de la ciudad es inválido.");
         }
-        if (!validarFormatoCodigoPostal(usuario.getDomicilio().getCodigoPostal())) {
+
+        if (!datosRegistro.getCodigoPostal().matches(FORMATO_CODIGO_POSTAL)) {
             throw new FormatoDeCodigoPostalInvalidoException("El formato del código postal es inválido.");
         }
-        if (!validarFormatoPiso(usuario.getDomicilio().getPiso())) {
+
+        if (datosRegistro.getPiso() != null && !datosRegistro.getPiso().matches(FORMATO_PISO)) {
             throw new FormatoDePisoInvalidoException("El formato del piso es inválido.");
         }
-        if (!validarFormatoDepartamento(usuario.getDomicilio().getDepartamento())) {
+
+        if (datosRegistro.getDepartamento() != null && !datosRegistro.getDepartamento().matches(FORMATO_DEPARTAMENTO)) {
             throw new FormatoDeDepartamentoInvalidoException("El formato del departamento es inválido.");
         }
-        if (repositorioUsuario.buscarPorEmail(usuario.getEmail()) != null) {
+
+        if (repositorioUsuario.buscarPorEmail(datosRegistro.getEmail()) != null) {
             throw new EmailYaUsadoException("Ya existe un usuario registrado con ese email.");
         }
-        if (repositorioUsuario.buscarPorNombreDeUsuario(usuario.getNombreDeUsuario()) != null) {
+        if (repositorioUsuario.buscarPorNombreDeUsuario(datosRegistro.getNombreDeUsuario()) != null) {
             throw new NombreDeUsuarioYaUsadoException("Ya existe un usuario registrado con ese nombre de usuario.");
         }
-        if (repositorioUsuario.buscarPorTelefono(usuario.getTelefono()) != null) {
+        if (repositorioUsuario.buscarPorTelefono(datosRegistro.getTelefono()) != null) {
             throw new TelefonoYaUsadoException("Ya existe un usuario registrado con ese teléfono.");
         }
 
-        repositorioUsuario.guardar(usuario);
-
-    }
-
-    public static boolean validarFormatoEmail(String email) {
-        if (email == null || email.trim().isEmpty()) {
-            return false;
-        }
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-        return email.matches(emailRegex);
-    }
-
-    public static boolean validarFormatoContrasenia(String contrasenia) {
-        if (contrasenia == null || contrasenia.trim().isEmpty()) {
-            return false;
-        }
-        String contraseniaRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-        return contrasenia.matches(contraseniaRegex);
-    }
-
-    public static boolean validarFormatoNombreDeUsuario(String nombreDeUsuario) {
-        if (nombreDeUsuario == null || nombreDeUsuario.trim().isEmpty()) {
-            return false;
-        }
-        String nombreDeUsuarioRegex = "^[a-zA-Z0-9._]{3,30}$";
-        return nombreDeUsuario.matches(nombreDeUsuarioRegex);
-    }
-
-    public static boolean validarFormatoNombreOApellido(String nombreOApellido) {
-        String nombreOApellidoRegex = "^[a-zA-ZÀ-ÿ\\u00f1\\u00d1\\s]{2,50}$";
-        return nombreOApellido != null && !nombreOApellido.trim().isEmpty() && nombreOApellido.matches(nombreOApellidoRegex);
-    }
-
-    public static boolean validarFormatoTelefono(String telefono) {
-        String telefonoRegex = "^[+]?[0-9]{8,15}$";
-        return telefono != null && !telefono.trim().isEmpty() && telefono.replaceAll("[\\s-()]", "").matches(telefonoRegex);
-    }
-
-    public static boolean validarFormatoCalle(String calle) {
-        String calleRegex = "^[a-zA-ZÀ-ÿ\\u00f1\\u00d1\\s0-9.]{3,100}$";
-        return calle != null && !calle.trim().isEmpty() && calle.matches(calleRegex);
-    }
-
-    public static boolean validarFormatoNumero(String numero) {
-        String numeroRegex = "^[0-9]{1,6}$";
-        return numero != null && !numero.trim().isEmpty() && numero.matches(numeroRegex);
-    }
-
-    public static boolean validarFormatoCiudad(String ciudad) {
-        String ciudadRegex = "^[a-zA-ZÀ-ÿ\\u00f1\\u00d1\\s0-9]{2,50}$";
-        return ciudad != null && !ciudad.trim().isEmpty() && ciudad.matches(ciudadRegex);
-    }
-
-    public static boolean validarFormatoCodigoPostal(String codigoPostal) {
-        String codigoPostalRegex = "^[0-9]{4,8}$";
-        return codigoPostal != null && !codigoPostal.trim().isEmpty() && codigoPostal.matches(codigoPostalRegex);
-    }
-
-    public static boolean validarFormatoPiso(String piso) {
-        if (piso == null || piso.trim().isEmpty()) {
-            return true;
-        }
-        String pisoRegex = "^[0-9]{1,3}$";
-        return piso.matches(pisoRegex);
-    }
-
-    public static boolean validarFormatoDepartamento(String departamento) {
-        if (departamento == null || departamento.trim().isEmpty()) {
-            return true;
-        }
-        String departamentoRegex = "^[a-zA-Z0-9]{1,10}$";
-        return departamento.matches(departamentoRegex);
     }
 
 }

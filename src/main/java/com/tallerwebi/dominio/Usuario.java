@@ -24,4 +24,19 @@ public class Usuario {
     private Roles rol;
     @OneToOne(cascade = CascadeType.ALL)
     private Domicilio domicilio;
+
+    public Usuario(String nombre, String apellido, String email, String telefono, String contrasenia, String nombreDeUsuario, Roles rol, Domicilio domicilio) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.contrasenia = contrasenia;
+        this.nombreDeUsuario = nombreDeUsuario;
+        this.rol = rol;
+        this.domicilio = domicilio;
+    }
+
+    public Usuario() {
+
+    }
 }
