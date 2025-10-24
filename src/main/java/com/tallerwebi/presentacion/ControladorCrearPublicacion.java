@@ -36,22 +36,8 @@ public class ControladorCrearPublicacion {
     public ModelAndView crearPublicacionAdopcion(@ModelAttribute DatosAdopcion datosAdopcion) {
         Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
-        PublicacionAdopcion publicacionDeAdopcion = new PublicacionAdopcion();
-        publicacionDeAdopcion.setUsuario(usuario);
-        publicacionDeAdopcion.setFechaPublicacion(java.time.LocalDateTime.now());
-        publicacionDeAdopcion.setTitulo(datosAdopcion.getTitulo());
-        publicacionDeAdopcion.setDescripcionCorta(datosAdopcion.getDescripcionCorta());
-        publicacionDeAdopcion.setDescripcionDetallada(datosAdopcion.getDescripcionDetallada());
-        publicacionDeAdopcion.setImagen(datosAdopcion.getImagen());
-        publicacionDeAdopcion.setRaza(datosAdopcion.getRaza());
-        publicacionDeAdopcion.setTamanio(datosAdopcion.getTamanio());
-        publicacionDeAdopcion.setUbicacion(datosAdopcion.getUbicacion());
-        publicacionDeAdopcion.setTelefono(datosAdopcion.getTelefono());
-        publicacionDeAdopcion.setEmail(datosAdopcion.getEmail());
-        publicacionDeAdopcion.setEdad(datosAdopcion.getEdad());
-
+        PublicacionAdopcion publicacionDeAdopcion = new PublicacionAdopcion(datosAdopcion);
         servicioPublicacion.guardar(publicacionDeAdopcion);
-
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion adopcion guardada correctamente");
         model.put("datosAdopcion", datosAdopcion);
@@ -62,25 +48,8 @@ public class ControladorCrearPublicacion {
     public ModelAndView crearPublicacionRecaudacion(@ModelAttribute DatosRecaudacion datosRecaudacion) {
         Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
-        PublicacionRecaudacion publicacionDeRecaudacion = new PublicacionRecaudacion();
-        publicacionDeRecaudacion.setUsuario(usuario);
-        publicacionDeRecaudacion.setFechaPublicacion(java.time.LocalDateTime.now());
-        publicacionDeRecaudacion.setTitulo(datosRecaudacion.getTitulo());
-        publicacionDeRecaudacion.setDescripcionCorta(datosRecaudacion.getDescripcionCorta());
-        publicacionDeRecaudacion.setDescripcionDetallada(datosRecaudacion.getDescripcionDetallada());
-        publicacionDeRecaudacion.setImagen(datosRecaudacion.getImagen());
-        publicacionDeRecaudacion.setRaza(datosRecaudacion.getRaza());
-        publicacionDeRecaudacion.setTamanio(datosRecaudacion.getTamanio());
-        publicacionDeRecaudacion.setUbicacion(datosRecaudacion.getUbicacion());
-        publicacionDeRecaudacion.setTelefono(datosRecaudacion.getTelefono());
-        publicacionDeRecaudacion.setEmail(datosRecaudacion.getEmail());
-        publicacionDeRecaudacion.setEdad(datosRecaudacion.getEdad());
-        publicacionDeRecaudacion.setMeta(datosRecaudacion.getMeta());
-        publicacionDeRecaudacion.setCbu(datosRecaudacion.getCbu());
-        publicacionDeRecaudacion.setMetodoPreferido(datosRecaudacion.getMetodoPreferido());
-
+        PublicacionRecaudacion publicacionDeRecaudacion = new PublicacionRecaudacion(datosRecaudacion);
         servicioPublicacion.guardar(publicacionDeRecaudacion);
-
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion recaudacion creada correctamente");
         model.put("datosRecaudacion", datosRecaudacion);
@@ -91,25 +60,8 @@ public class ControladorCrearPublicacion {
     public ModelAndView crearPublicacionSalud(@ModelAttribute DatosSalud datosSalud) {
         Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
-        PublicacionSalud publicacionDeSalud = new PublicacionSalud();
-        publicacionDeSalud.setUsuario(usuario);
-        publicacionDeSalud.setFechaPublicacion(java.time.LocalDateTime.now());
-        publicacionDeSalud.setTitulo(datosSalud.getTitulo());
-        publicacionDeSalud.setDescripcionCorta(datosSalud.getDescripcionCorta());
-        publicacionDeSalud.setDescripcionDetallada(datosSalud.getDescripcionDetallada());
-        publicacionDeSalud.setImagen(datosSalud.getImagen());
-        publicacionDeSalud.setRaza(datosSalud.getRaza());
-        publicacionDeSalud.setTamanio(datosSalud.getTamanio());
-        publicacionDeSalud.setUbicacion(datosSalud.getUbicacion());
-        publicacionDeSalud.setTelefono(datosSalud.getTelefono());
-        publicacionDeSalud.setEmail(datosSalud.getEmail());
-        publicacionDeSalud.setEdad(datosSalud.getEdad());
-        publicacionDeSalud.setSintomasPrincipales(datosSalud.getSintomasPrincipales());
-        publicacionDeSalud.setDiagnostico(datosSalud.getDiagnostico());
-        publicacionDeSalud.setNivelUrgencia(datosSalud.getNivelUrgencia());
-
+        PublicacionSalud publicacionDeSalud = new PublicacionSalud(datosSalud);
         servicioPublicacion.guardar(publicacionDeSalud);
-
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion salud creada correctamente");
         model.put("datosSalud", datosSalud);
@@ -120,25 +72,8 @@ public class ControladorCrearPublicacion {
     public ModelAndView crearPublicacionPerdido(@ModelAttribute DatosPerdido datosPerdido) {
         Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
-        PublicacionPerdido publicacionDePerdido = new PublicacionPerdido();
-        publicacionDePerdido.setUsuario(usuario);
-        publicacionDePerdido.setFechaPublicacion(java.time.LocalDateTime.now());
-        publicacionDePerdido.setTitulo(datosPerdido.getTitulo());
-        publicacionDePerdido.setDescripcionCorta(datosPerdido.getDescripcionCorta());
-        publicacionDePerdido.setDescripcionDetallada(datosPerdido.getDescripcionDetallada());
-        publicacionDePerdido.setImagen(datosPerdido.getImagen());
-        publicacionDePerdido.setRaza(datosPerdido.getRaza());
-        publicacionDePerdido.setTamanio(datosPerdido.getTamanio());
-        publicacionDePerdido.setUbicacion(datosPerdido.getUbicacion());
-        publicacionDePerdido.setTelefono(datosPerdido.getTelefono());
-        publicacionDePerdido.setEmail(datosPerdido.getEmail());
-        publicacionDePerdido.setFechaDesaparicion(datosPerdido.getFechaDesaparicion());
-        publicacionDePerdido.setHoraDesaparicion(datosPerdido.getHoraDesaparicion());
-        publicacionDePerdido.setLlevaCollar(datosPerdido.getLlevaCollar());
-        publicacionDePerdido.setRecompensa(datosPerdido.getRecompensa());
-
+        PublicacionPerdido publicacionDePerdido = new PublicacionPerdido(datosPerdido);
         servicioPublicacion.guardar(publicacionDePerdido);
-
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion perdido creada correctamente");
         model.put("datosPerdido", datosPerdido);
@@ -149,21 +84,8 @@ public class ControladorCrearPublicacion {
     public ModelAndView crearPublicacionEncontrado(@ModelAttribute DatosEncontrado datosEncontrado) {
         Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
-        PublicacionEncontrado publicacionDeEncontrado = new PublicacionEncontrado();
-        publicacionDeEncontrado.setUsuario(usuario);
-        publicacionDeEncontrado.setFechaPublicacion(java.time.LocalDateTime.now());
-        publicacionDeEncontrado.setTitulo(datosEncontrado.getTitulo());
-        publicacionDeEncontrado.setDescripcionCorta(datosEncontrado.getDescripcionCorta());
-        publicacionDeEncontrado.setDescripcionDetallada(datosEncontrado.getDescripcionDetallada());
-        publicacionDeEncontrado.setImagen(datosEncontrado.getImagen());
-        publicacionDeEncontrado.setRaza(datosEncontrado.getRaza());
-        publicacionDeEncontrado.setTamanio(datosEncontrado.getTamanio());
-        publicacionDeEncontrado.setUbicacion(datosEncontrado.getUbicacion());
-        publicacionDeEncontrado.setTelefono(datosEncontrado.getTelefono());
-        publicacionDeEncontrado.setEmail(datosEncontrado.getEmail());
-
+        PublicacionEncontrado publicacionDeEncontrado = new PublicacionEncontrado(datosEncontrado);
         servicioPublicacion.guardar(publicacionDeEncontrado);
-
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion encontrado creada correctamente");
         model.put("datosEncontrado", datosEncontrado);

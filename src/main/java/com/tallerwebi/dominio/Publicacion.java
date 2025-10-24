@@ -27,4 +27,19 @@ public abstract class Publicacion {
     private String ubicacion;
     private String telefono;
     private String email;
+
+    public Publicacion() {}
+
+    public Publicacion(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, Integer tamanio, String ubicacion, String telefono, String email) {
+        this.titulo = titulo;
+        this.descripcionCorta = descripcionCorta;
+        this.descripcionDetallada = descripcionDetallada;
+        this.imagen = imagen;
+        this.raza = raza;
+        this.tamanio = tamanio;
+        this.ubicacion = ubicacion;
+        this.telefono = telefono;
+        this.email = email;
+    }
+
 }
