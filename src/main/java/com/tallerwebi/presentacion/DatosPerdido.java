@@ -17,7 +17,7 @@ public class DatosPerdido extends DatosPublicacion {
     }
 
     public DatosPerdido(String titulo, String descripcionCorta, String descripcionDetallada, String imagen,
-                        String raza, Integer tamanio, String ubicacion, Integer telefono, String email,
+                        String raza, Integer tamanio, String ubicacion, String telefono, String email,
                         String fechaDesaparicion, String horaDesaparicion, Boolean llevaCollar, String recompensa) {
         super(titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email);
         this.fechaDesaparicion = fechaDesaparicion;

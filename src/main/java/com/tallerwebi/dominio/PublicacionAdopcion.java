@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class PublicacionAdopcion extends Publicacion2 {
+public class PublicacionAdopcion extends Publicacion {
 
    private Integer edad;
 

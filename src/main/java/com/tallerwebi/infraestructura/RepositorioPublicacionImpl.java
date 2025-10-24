@@ -2,14 +2,10 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Publicacion;
 import com.tallerwebi.dominio.RepositorioPublicacion;
-import com.tallerwebi.dominio.TipoPublicacion;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository("repositorioPublicacion")
@@ -23,8 +19,9 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
     }
 
     @Override
-    public void guardar(Publicacion publicacion) {
+    public Publicacion guardar(Publicacion publicacion) {
         sessionFactory.getCurrentSession().save(publicacion);
+        return publicacion;
     }
 
     @Override
@@ -36,16 +33,15 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
     public List<Publicacion> buscarTodas() {
         return (List<Publicacion>) sessionFactory.getCurrentSession()
                 .createCriteria(Publicacion.class)
-                .addOrder(Order.desc("fechaPublicacion"))
+                .addOrder(Order.desc("id"))
                 .list();
     }
 
     @Override
-    public List<Publicacion> buscarPorCategoria(TipoPublicacion tipo) {
-        return (List<Publicacion>) sessionFactory.getCurrentSession()
-                .createCriteria(Publicacion.class)
-                .add(Restrictions.eq("tipo", tipo))
-                .addOrder(Order.desc("fechaPublicacion"))
+    public <T extends Publicacion> List<T> buscarPorTipo(Class<T> tipo) {
+        return (List<T>) sessionFactory.getCurrentSession()
+                .createCriteria(tipo)
+                .addOrder(Order.desc("id"))
                 .list();
     }
 }

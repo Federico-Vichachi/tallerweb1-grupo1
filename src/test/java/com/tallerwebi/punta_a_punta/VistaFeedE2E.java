@@ -84,6 +84,8 @@ public class VistaFeedE2E {
         assertThat("No se encontraron publicaciones en la página", cantidadDePublicaciones, is(greaterThan(0)));
     }
 
+
+
     private void entoncesElNombreDeLaPrimeraMascotaEs(String nombreEsperado) {
         String nombreObtenido = vistaFeed.obtenerNombreDeMascotaDeLaPrimeraPublicacion();
         assertThat("El nombre de la primera mascota no es el esperado", nombreObtenido, is(equalTo(nombreEsperado)));

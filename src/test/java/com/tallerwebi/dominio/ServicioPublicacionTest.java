@@ -3,12 +3,13 @@ package com.tallerwebi.dominio;
 import com.tallerwebi.dominio.excepcion.CategoriaInvalidaException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class ServicioPublicacionTest {
@@ -23,15 +24,11 @@ public class ServicioPublicacionTest {
     }
 
     @Test
-    public void cuandoBuscoPorCategoriaAdopcionDebeLlamarAlRepositorioConEsaCategoria() {
+    public void cuandoBuscoPorCategoriaAdopcionDebeLlamarAlRepositorioConLaClaseCorrecta() {
         // Preparacion
         String categoria = "ADOPCION";
-        TipoPublicacion tipoEnum = TipoPublicacion.ADOPCION;
-
-        Publicacion publicacionMock = mock(Publicacion.class);
-        List<Publicacion> publicacionesFalsas = Collections.singletonList(publicacionMock);
-
-        when(repositorioPublicacionMock.buscarPorCategoria(tipoEnum)).thenReturn(publicacionesFalsas);
+        List<PublicacionAdopcion> publicacionesFalsas = Collections.singletonList(mock(PublicacionAdopcion.class));
+        when(repositorioPublicacionMock.buscarPorTipo(PublicacionAdopcion.class)).thenReturn(publicacionesFalsas);
 
         // Ejecucion
         List<Publicacion> resultado = servicioPublicacion.buscarPublicacionesPorCategoria(categoria);
@@ -39,19 +36,15 @@ public class ServicioPublicacionTest {
         // Verificacion
         assertThat(resultado, is(notNullValue()));
         assertThat(resultado.size(), equalTo(1));
-        verify(repositorioPublicacionMock, times(1)).buscarPorCategoria(tipoEnum);
+        verify(repositorioPublicacionMock, times(1)).buscarPorTipo(PublicacionAdopcion.class);
     }
 
     @Test
-    public void cuandoBuscoPorCategoriaSaludDebeLlamarAlRepositorioConEsaCategoria() {
+    public void cuandoBuscoPorCategoriaSaludDebeLlamarAlRepositorioConLaClaseCorrecta() {
         // Preparacion
         String categoria = "SALUD";
-        TipoPublicacion tipoEnum = TipoPublicacion.SALUD;
-
-        Publicacion publicacionMock = mock(Publicacion.class);
-        List<Publicacion> publicacionesFalsas = Collections.singletonList(publicacionMock);
-
-        when(repositorioPublicacionMock.buscarPorCategoria(tipoEnum)).thenReturn(publicacionesFalsas);
+        List<PublicacionSalud> publicacionesFalsas = Collections.singletonList(mock(PublicacionSalud.class));
+        when(repositorioPublicacionMock.buscarPorTipo(PublicacionSalud.class)).thenReturn(publicacionesFalsas);
 
         // Ejecucion
         List<Publicacion> resultado = servicioPublicacion.buscarPublicacionesPorCategoria(categoria);
@@ -59,7 +52,7 @@ public class ServicioPublicacionTest {
         // Verificacion
         assertThat(resultado, is(notNullValue()));
         assertThat(resultado.size(), equalTo(1));
-        verify(repositorioPublicacionMock, times(1)).buscarPorCategoria(tipoEnum);
+        verify(repositorioPublicacionMock, times(1)).buscarPorTipo(PublicacionSalud.class);
     }
 
 

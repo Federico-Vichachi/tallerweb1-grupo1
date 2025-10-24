@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class PublicacionSalud extends Publicacion2 {
+public class PublicacionSalud extends Publicacion {
     private Integer edad;
     private String sintomasPrincipales;
     private String diagnostico;

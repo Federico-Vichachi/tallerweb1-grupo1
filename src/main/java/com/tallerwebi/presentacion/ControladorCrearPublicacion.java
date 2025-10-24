@@ -12,11 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControladorCrearPublicacion {
 
-    ServicioCrearPublicacion servicioCrearPublicacion;
+    private final ServicioPublicacion servicioPublicacion;
+    private final RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ControladorCrearPublicacion(ServicioCrearPublicacion servicioCrearPublicacion) {
-        this.servicioCrearPublicacion = servicioCrearPublicacion;
+    public ControladorCrearPublicacion(ServicioPublicacion servicioPublicacion, RepositorioUsuario repositorioUsuario) {
+        this.servicioPublicacion = servicioPublicacion;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @RequestMapping(value = "/crear-publicacion", method =  RequestMethod.GET)
@@ -32,8 +34,11 @@ public class ControladorCrearPublicacion {
 
     @RequestMapping(value = "/publicacion-adopcion", method = RequestMethod.POST)
     public ModelAndView crearPublicacionAdopcion(@ModelAttribute DatosAdopcion datosAdopcion) {
+        Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
         PublicacionAdopcion publicacionDeAdopcion = new PublicacionAdopcion();
+        publicacionDeAdopcion.setUsuario(usuario);
+        publicacionDeAdopcion.setFechaPublicacion(java.time.LocalDateTime.now());
         publicacionDeAdopcion.setTitulo(datosAdopcion.getTitulo());
         publicacionDeAdopcion.setDescripcionCorta(datosAdopcion.getDescripcionCorta());
         publicacionDeAdopcion.setDescripcionDetallada(datosAdopcion.getDescripcionDetallada());
@@ -45,7 +50,7 @@ public class ControladorCrearPublicacion {
         publicacionDeAdopcion.setEmail(datosAdopcion.getEmail());
         publicacionDeAdopcion.setEdad(datosAdopcion.getEdad());
 
-        servicioCrearPublicacion.guardar(publicacionDeAdopcion);
+        servicioPublicacion.guardar(publicacionDeAdopcion);
 
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion adopcion guardada correctamente");
@@ -55,8 +60,11 @@ public class ControladorCrearPublicacion {
 
     @RequestMapping(value = "/publicacion-recaudacion", method = RequestMethod.POST)
     public ModelAndView crearPublicacionRecaudacion(@ModelAttribute DatosRecaudacion datosRecaudacion) {
+        Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
         PublicacionRecaudacion publicacionDeRecaudacion = new PublicacionRecaudacion();
+        publicacionDeRecaudacion.setUsuario(usuario);
+        publicacionDeRecaudacion.setFechaPublicacion(java.time.LocalDateTime.now());
         publicacionDeRecaudacion.setTitulo(datosRecaudacion.getTitulo());
         publicacionDeRecaudacion.setDescripcionCorta(datosRecaudacion.getDescripcionCorta());
         publicacionDeRecaudacion.setDescripcionDetallada(datosRecaudacion.getDescripcionDetallada());
@@ -71,7 +79,7 @@ public class ControladorCrearPublicacion {
         publicacionDeRecaudacion.setCbu(datosRecaudacion.getCbu());
         publicacionDeRecaudacion.setMetodoPreferido(datosRecaudacion.getMetodoPreferido());
 
-        servicioCrearPublicacion.guardar(publicacionDeRecaudacion);
+        servicioPublicacion.guardar(publicacionDeRecaudacion);
 
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion recaudacion creada correctamente");
@@ -81,7 +89,11 @@ public class ControladorCrearPublicacion {
 
     @RequestMapping(value = "/publicacion-salud", method = RequestMethod.POST)
     public ModelAndView crearPublicacionSalud(@ModelAttribute DatosSalud datosSalud) {
+        Usuario usuario = repositorioUsuario.buscarPorId(1L);
+
         PublicacionSalud publicacionDeSalud = new PublicacionSalud();
+        publicacionDeSalud.setUsuario(usuario);
+        publicacionDeSalud.setFechaPublicacion(java.time.LocalDateTime.now());
         publicacionDeSalud.setTitulo(datosSalud.getTitulo());
         publicacionDeSalud.setDescripcionCorta(datosSalud.getDescripcionCorta());
         publicacionDeSalud.setDescripcionDetallada(datosSalud.getDescripcionDetallada());
@@ -96,7 +108,7 @@ public class ControladorCrearPublicacion {
         publicacionDeSalud.setDiagnostico(datosSalud.getDiagnostico());
         publicacionDeSalud.setNivelUrgencia(datosSalud.getNivelUrgencia());
 
-        servicioCrearPublicacion.guardar(publicacionDeSalud);
+        servicioPublicacion.guardar(publicacionDeSalud);
 
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion salud creada correctamente");
@@ -106,8 +118,11 @@ public class ControladorCrearPublicacion {
 
     @RequestMapping(value = "/publicacion-perdido", method = RequestMethod.POST)
     public ModelAndView crearPublicacionPerdido(@ModelAttribute DatosPerdido datosPerdido) {
+        Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
         PublicacionPerdido publicacionDePerdido = new PublicacionPerdido();
+        publicacionDePerdido.setUsuario(usuario);
+        publicacionDePerdido.setFechaPublicacion(java.time.LocalDateTime.now());
         publicacionDePerdido.setTitulo(datosPerdido.getTitulo());
         publicacionDePerdido.setDescripcionCorta(datosPerdido.getDescripcionCorta());
         publicacionDePerdido.setDescripcionDetallada(datosPerdido.getDescripcionDetallada());
@@ -122,7 +137,7 @@ public class ControladorCrearPublicacion {
         publicacionDePerdido.setLlevaCollar(datosPerdido.getLlevaCollar());
         publicacionDePerdido.setRecompensa(datosPerdido.getRecompensa());
 
-        servicioCrearPublicacion.guardar(publicacionDePerdido);
+        servicioPublicacion.guardar(publicacionDePerdido);
 
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion perdido creada correctamente");
@@ -132,8 +147,11 @@ public class ControladorCrearPublicacion {
 
     @RequestMapping(value = "/publicacion-encontrado", method = RequestMethod.POST)
     public ModelAndView crearPublicacionEncontrado(@ModelAttribute DatosEncontrado datosEncontrado) {
+        Usuario usuario = repositorioUsuario.buscarPorId(1L);
 
         PublicacionEncontrado publicacionDeEncontrado = new PublicacionEncontrado();
+        publicacionDeEncontrado.setUsuario(usuario);
+        publicacionDeEncontrado.setFechaPublicacion(java.time.LocalDateTime.now());
         publicacionDeEncontrado.setTitulo(datosEncontrado.getTitulo());
         publicacionDeEncontrado.setDescripcionCorta(datosEncontrado.getDescripcionCorta());
         publicacionDeEncontrado.setDescripcionDetallada(datosEncontrado.getDescripcionDetallada());
@@ -144,7 +162,7 @@ public class ControladorCrearPublicacion {
         publicacionDeEncontrado.setTelefono(datosEncontrado.getTelefono());
         publicacionDeEncontrado.setEmail(datosEncontrado.getEmail());
 
-        servicioCrearPublicacion.guardar(publicacionDeEncontrado);
+        servicioPublicacion.guardar(publicacionDeEncontrado);
 
         ModelMap model = new ModelMap();
         model.put("mensaje", "Publicacion encontrado creada correctamente");

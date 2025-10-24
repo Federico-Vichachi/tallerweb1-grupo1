@@ -8,5 +8,5 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class PublicacionEncontrado extends Publicacion2 {
+public class PublicacionEncontrado extends Publicacion {
 }
