@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.excepcion.ValidacionPublicacionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -34,61 +35,92 @@ public class ControladorCrearPublicacion {
 
     @RequestMapping(value = "/publicacion-adopcion", method = RequestMethod.POST)
     public ModelAndView crearPublicacionAdopcion(@ModelAttribute DatosAdopcion datosAdopcion) {
-        Usuario usuario = repositorioUsuario.buscarPorId(1L);
+            ModelMap model = new ModelMap();
 
-        PublicacionAdopcion publicacionDeAdopcion = new PublicacionAdopcion(datosAdopcion);
-        servicioPublicacion.guardar(publicacionDeAdopcion);
-        ModelMap model = new ModelMap();
-        model.put("mensaje", "Publicacion adopcion guardada correctamente");
-        model.put("datosAdopcion", datosAdopcion);
-        return new ModelAndView("publicacion-adopcion", model);
+        try {
+            Usuario usuario = repositorioUsuario.buscarPorId(1L);
+            PublicacionAdopcion publicacionDeAdopcion = new PublicacionAdopcion(datosAdopcion);
+            publicacionDeAdopcion.setUsuario(usuario);
+            servicioPublicacion.guardar(publicacionDeAdopcion);
+
+            model.put("mensaje", "Publicacion adopcion guardada correctamente");
+            model.put("datosAdopcion", datosAdopcion);
+            return new ModelAndView("publicacion-adopcion", model);
+        }catch(ValidacionPublicacionException e){
+            model.put("error", e.getMessage());
+            return new ModelAndView("publicacion-adopcion", model);
+        }
     }
+
 
     @RequestMapping(value = "/publicacion-recaudacion", method = RequestMethod.POST)
     public ModelAndView crearPublicacionRecaudacion(@ModelAttribute DatosRecaudacion datosRecaudacion) {
-        Usuario usuario = repositorioUsuario.buscarPorId(1L);
+            ModelMap model = new ModelMap();
+        try {
+            Usuario usuario = repositorioUsuario.buscarPorId(1L);
+            PublicacionRecaudacion publicacionDeRecaudacion = new PublicacionRecaudacion(datosRecaudacion);
+            publicacionDeRecaudacion.setUsuario(usuario);
+            servicioPublicacion.guardar(publicacionDeRecaudacion);
 
-        PublicacionRecaudacion publicacionDeRecaudacion = new PublicacionRecaudacion(datosRecaudacion);
-        servicioPublicacion.guardar(publicacionDeRecaudacion);
-        ModelMap model = new ModelMap();
-        model.put("mensaje", "Publicacion recaudacion creada correctamente");
-        model.put("datosRecaudacion", datosRecaudacion);
-        return new ModelAndView("publicacion-recaudacion", model);
+            model.put("mensaje", "Publicacion recaudacion creada correctamente");
+            model.put("datosRecaudacion", datosRecaudacion);
+            return new ModelAndView("publicacion-recaudacion", model);
+        }catch(ValidacionPublicacionException e){
+            model.put("error", e.getMessage());
+            return new ModelAndView("publicacion-recaudacion", model);
+        }
     }
 
     @RequestMapping(value = "/publicacion-salud", method = RequestMethod.POST)
     public ModelAndView crearPublicacionSalud(@ModelAttribute DatosSalud datosSalud) {
-        Usuario usuario = repositorioUsuario.buscarPorId(1L);
-
-        PublicacionSalud publicacionDeSalud = new PublicacionSalud(datosSalud);
-        servicioPublicacion.guardar(publicacionDeSalud);
         ModelMap model = new ModelMap();
+    try {
+        Usuario usuario = repositorioUsuario.buscarPorId(1L);
+        PublicacionSalud publicacionDeSalud = new PublicacionSalud(datosSalud);
+        publicacionDeSalud.setUsuario(usuario);
+        servicioPublicacion.guardar(publicacionDeSalud);
         model.put("mensaje", "Publicacion salud creada correctamente");
         model.put("datosSalud", datosSalud);
         return new ModelAndView("publicacion-salud", model);
+    }catch (ValidacionPublicacionException e){
+        model.put("error", e.getMessage());
+        return new ModelAndView("publicacion-salud", model);
+        }
     }
 
     @RequestMapping(value = "/publicacion-perdido", method = RequestMethod.POST)
     public ModelAndView crearPublicacionPerdido(@ModelAttribute DatosPerdido datosPerdido) {
-        Usuario usuario = repositorioUsuario.buscarPorId(1L);
-
-        PublicacionPerdido publicacionDePerdido = new PublicacionPerdido(datosPerdido);
-        servicioPublicacion.guardar(publicacionDePerdido);
         ModelMap model = new ModelMap();
+    try {
+        Usuario usuario = repositorioUsuario.buscarPorId(1L);
+        PublicacionPerdido publicacionDePerdido = new PublicacionPerdido(datosPerdido);
+        publicacionDePerdido.setUsuario(usuario);
+        servicioPublicacion.guardar(publicacionDePerdido);
+
         model.put("mensaje", "Publicacion perdido creada correctamente");
         model.put("datosPerdido", datosPerdido);
         return new ModelAndView("publicacion-perdido", model);
+
+    }catch (ValidacionPublicacionException e){
+        model.put("error", e.getMessage());
+        return new ModelAndView("publicacion-perdido", model);
+        }
     }
 
     @RequestMapping(value = "/publicacion-encontrado", method = RequestMethod.POST)
     public ModelAndView crearPublicacionEncontrado(@ModelAttribute DatosEncontrado datosEncontrado) {
-        Usuario usuario = repositorioUsuario.buscarPorId(1L);
-
-        PublicacionEncontrado publicacionDeEncontrado = new PublicacionEncontrado(datosEncontrado);
-        servicioPublicacion.guardar(publicacionDeEncontrado);
         ModelMap model = new ModelMap();
+    try {
+        Usuario usuario = repositorioUsuario.buscarPorId(1L);
+        PublicacionEncontrado publicacionDeEncontrado = new PublicacionEncontrado(datosEncontrado);
+        publicacionDeEncontrado.setUsuario(usuario);
+        servicioPublicacion.guardar(publicacionDeEncontrado);
         model.put("mensaje", "Publicacion encontrado creada correctamente");
         model.put("datosEncontrado", datosEncontrado);
         return new ModelAndView("publicacion-encontrado", model);
+    }catch (ValidacionPublicacionException e){
+        model.put("error", e.getMessage());
+        return new ModelAndView("publicacion-encontrado", model);
+        }
     }
 }
