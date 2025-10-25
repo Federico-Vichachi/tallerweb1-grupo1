@@ -52,7 +52,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
             throw new ValidacionPublicacionException("La ubicación es inválida.");
         }
 
-        if (publicacion.getTelefono() != null && !publicacion.getTelefono().matches(TELEFONO)) {
+        if (publicacion.getTelefono() != null && !publicacion.getTelefono().matches(FORMATO_TELEFONO)) {
             throw new ValidacionPublicacionException("El teléfono es inválido.");
         }
 

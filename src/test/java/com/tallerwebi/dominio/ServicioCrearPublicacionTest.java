@@ -123,7 +123,7 @@ public class ServicioCrearPublicacionTest {
     @Test
     public void siLosDatosDeLaPublicacionPerdidoSonCorrectosLaCreacionEsExitosa(){
         givenNoExistePublicacionPerdido();
-        Publicacion publicacionPerdido = whenCreoUnaPublicacionPerdidoCon("Se perdio Luna", "Ayudanos a encontrarla.", "Luna es una gatita mestiza de tamaño mediano, juguetona y muy amigable. Se escapó de su casa y necesitamos localizarla lo antes posible.", "Luna.jpg", "Mestizo", 25, "Merlo, Argentina", "1110652113", "luna@gmail.com", "luna@gmail.com", "12:00", true, "Si" );
+        Publicacion publicacionPerdido = whenCreoUnaPublicacionPerdidoCon("Se perdio Luna", "Ayudanos a encontrarla.", "Luna es una gatita mestiza de tamaño mediano, juguetona y muy amigable. Se escapó de su casa y necesitamos localizarla lo antes posible.", "Luna.jpg", "Mestizo", 25, "Merlo, Argentina", "1110652113", "luna@gmail.com", "2025-10-21", "12:00", true, "Si" );
         thenLaCreacionDePublicacionPerdidoEsExitosa(publicacionPerdido);
     }
 
@@ -158,7 +158,7 @@ public class ServicioCrearPublicacionTest {
     @Test
     public void siLosDatosDeLaPublicacionEncontradoSonCorrectosLaCreacionEsExitosa(){
         givenNoExistePublicacionEncontrado();
-        Publicacion publicacionEncontrado = whenCreoUnaPublicacionEncontradoCon("Perrito encontrado", "Se encontro un cachorro desorientado cerca de la plaza", "Cachorro mestizo de tamaño pequeño-mediano, aproximadamente 2 años. Muy juguetón y dócil. No tiene collar y parecía perdido desde hace unas horas. Se busca al dueño para poder devolverlo a su hogar.", "Mancha.jpg", "Mestizo", 35, "Ituzaingo, Argentina", "1185262211", "ayuda.manchita@gmail.com");
+        Publicacion publicacionEncontrado = whenCreoUnaPublicacionEncontradoCon("Perrito encontrado", "Se encontro un cachorro desorientado cerca de la plaza", "Cachorro mestizo de tamaño pequeño, mediano, aproximadamente 2 años. Muy juguetón y dócil. No tiene collar y parecía perdido desde hace unas horas. Se busca al dueño para poder devolverlo a su hogar.", "Mancha.jpg", "Mestizo", 35, "Ituzaingo, Argentina", "1185262211", "ayuda.manchita@gmail.com");
         thenLaCreacionDePublicacionEncotradoEsExitosa(publicacionEncontrado);
     }
 
