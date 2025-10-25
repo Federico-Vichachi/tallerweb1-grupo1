@@ -1,5 +1,5 @@
 package com.tallerwebi.dominio;
 
 public interface ServicioInicioDeSesion {
-    void iniciarSesion(String email, String contrasenia);
+    Usuario iniciarSesion(String email, String contrasenia);
 }

@@ -11,13 +11,17 @@ public class ServicioInicioDeSesionImpl implements ServicioInicioDeSesion {
 
     RepositorioUsuario repositorioUsuario;
 
-    @Override
-    public void iniciarSesion(String email, String contrasenia) {
+    public ServicioInicioDeSesionImpl(RepositorioUsuario repositorioUsuario) {
+        this.repositorioUsuario = repositorioUsuario;
+    }
 
-        if (repositorioUsuario.buscarPorEmail(email) == null
-        || !repositorioUsuario.buscarPorEmail(email).getContrasenia().equals(contrasenia)) {
+    @Override
+    public Usuario iniciarSesion(String email, String contrasenia) {
+        Usuario usuario = repositorioUsuario.buscarPorEmail(email);
+        if (usuario == null || !usuario.getContrasenia().equals(contrasenia)) {
             throw new DatosDeInicioDeSesionIncorrectosException("El email o la contraseña son incorrectos.");
         }
-
+        return usuario;
     }
+
 }

@@ -399,7 +399,7 @@ public class ControladorRegistroTest {
     }
 
     private void entoncesElRegistroEsExitoso(ModelAndView mav) {
-        assertThat(mav.getViewName(), equalToIgnoringCase("inicio-de-sesion"));
+        assertThat(mav.getViewName(), equalToIgnoringCase("redirect:/inicio-de-sesion"));
     }
     private void entoncesElRegistroFalla(ModelAndView mav, String mensajeDeError) {
         assertThat(mav.getViewName(), equalToIgnoringCase("registro"));

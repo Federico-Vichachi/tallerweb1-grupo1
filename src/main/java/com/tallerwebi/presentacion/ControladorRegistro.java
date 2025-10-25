@@ -43,7 +43,7 @@ public class ControladorRegistro {
             return devolverRegistroFallido(model, e.getMessage());
         }
 
-        return new ModelAndView("inicio-de-sesion");
+        return new ModelAndView("redirect:/inicio-de-sesion");
     }
 
 

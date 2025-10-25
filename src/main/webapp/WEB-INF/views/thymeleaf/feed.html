@@ -63,8 +63,10 @@
                         <h2 class="titulo-publicacion">Publicaciones</h2>
                         <p class="subtitulo-publicacion">Explora las ultimas publicaciones de la comunidad</p>
                     </div>
-                    <a th:href="@{/crear-publicacion}" class="btn btn-nueva-publicacion">
-                        <span class="fa-solid fa-plus"></span> Nueva Publicacion
+                    <a
+                        th:if="${usuarioLogueado != null}"
+                        th:href="@{/crear-publicacion}" class="btn btn-nueva-publicacion">
+                        <span class="fa-solid fa-plus"></span> Crear Publicación
                     </a>
                 </div>
             </div>

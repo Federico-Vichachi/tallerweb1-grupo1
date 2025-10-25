@@ -91,11 +91,13 @@ public class ServicioRegistroImpl implements ServicioRegistro {
             throw new FormatoDeCodigoPostalInvalidoException("El formato del código postal es inválido.");
         }
 
-        if (datosRegistro.getPiso() != null && !datosRegistro.getPiso().matches(FORMATO_PISO)) {
+        if (datosRegistro.getPiso() != null && !datosRegistro.getPiso().isEmpty()
+                && !datosRegistro.getPiso().matches(FORMATO_PISO)) {
             throw new FormatoDePisoInvalidoException("El formato del piso es inválido.");
         }
 
-        if (datosRegistro.getDepartamento() != null && !datosRegistro.getDepartamento().matches(FORMATO_DEPARTAMENTO)) {
+        if (datosRegistro.getDepartamento() != null && !datosRegistro.getDepartamento().isEmpty()
+                && !datosRegistro.getDepartamento().matches(FORMATO_DEPARTAMENTO)) {
             throw new FormatoDeDepartamentoInvalidoException("El formato del departamento es inválido.");
         }
 

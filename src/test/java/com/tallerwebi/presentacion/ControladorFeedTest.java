@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -19,11 +21,17 @@ public class ControladorFeedTest {
 
     private ControladorFeed controladorFeed;
     private ServicioPublicacion servicioPublicacionMock;
+    private HttpServletRequest requestMock;
+    private HttpSession sessionMock;
 
     @BeforeEach
     public void init() {
         servicioPublicacionMock = mock(ServicioPublicacion.class);
         controladorFeed = new ControladorFeed(servicioPublicacionMock);
+        requestMock = mock(HttpServletRequest.class);
+        sessionMock = mock(HttpSession.class);
+
+        when(requestMock.getSession()).thenReturn(sessionMock);
     }
 
     @Test
@@ -33,7 +41,7 @@ public class ControladorFeedTest {
         when(servicioPublicacionMock.buscarPublicacionesPorCategoria(null)).thenReturn(publicacionesFalsas);
 
         // Ejecucion
-        ModelAndView modelAndView = controladorFeed.irAFeed(null, null, null, null, null);
+        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock,null, null, null, null, null);
 
         // Validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("feed"));
@@ -50,7 +58,7 @@ public class ControladorFeedTest {
         when(servicioPublicacionMock.buscarPublicacionesPorCategoria(categoriaFiltro)).thenReturn(publicacionesFiltradasFalsas);
 
         // Ejecucion
-        ModelAndView modelAndView = controladorFeed.irAFeed(categoriaFiltro, null, null, null, null);
+        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock, categoriaFiltro, null, null, null, null);
 
         // Validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("feed"));
@@ -66,7 +74,7 @@ public class ControladorFeedTest {
         when(servicioPublicacionMock.buscarPublicacionesPorCategoria(null)).thenReturn(Collections.emptyList());
 
         // Ejecucion
-        ModelAndView modelAndView = controladorFeed.irAFeed(null, null, null, null, null);
+        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock, null, null, null, null, null);
 
         // Validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("feed"));

@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Publicacion;
 import com.tallerwebi.dominio.ServicioPublicacion;
+import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.CategoriaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class ControladorFeed {
 
     @RequestMapping(path = "/feed", method = RequestMethod.GET)
     public ModelAndView irAFeed(
+            HttpServletRequest request,
             @RequestParam(required = false) String categoria,
             @RequestParam(required = false) String nombre,
             @RequestParam(required = false) Integer provincia,
@@ -33,6 +36,9 @@ public class ControladorFeed {
             @RequestParam(required = false) List<String> tags) {
 
         ModelMap model = new ModelMap();
+
+        Usuario usuarioLogueado = (Usuario) request.getSession().getAttribute("usuarioLogueado");
+        model.put("usuarioLogueado", usuarioLogueado);
 
         model.put("categoriaFiltro", categoria);
         model.put("nombreFiltro", nombre);
