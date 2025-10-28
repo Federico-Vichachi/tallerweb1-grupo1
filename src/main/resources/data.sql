@@ -2,24 +2,24 @@
 INSERT INTO Domicilio(id, calle, numero, ciudad, provincia, codigoPostal, departamento, piso)
 VALUES(1, 'Av. de Mayo', '1234', 'Ramos Mejia', 'BUENOS_AIRES', '1704', null, null);
 
-INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id)
-VALUES(1, 'Juan', 'Perez', 'juan.perez@test.com', '1122334455', 'Contrasenia@2025', 'juanperez', 'USUARIO_COMUN', 1);
+INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, urlFotoDePerfil, rol, domicilio_id, puntos)
+VALUES(1, 'Juan', 'Perez', 'juan.perez@test.com', '1122334455', 'Contrasenia@2025', 'juanperez', '/images/user.jpg', 'USUARIO_COMUN', 1, 0);
 
 
 -- Domicilio y Usuario 2: Maria Garcia (ORGANIZACION)
 INSERT INTO Domicilio(id, calle, numero, ciudad, provincia, codigoPostal, departamento, piso)
 VALUES(2, 'Belgrano', '567', 'Córdoba', 'CORDOBA', '5000', null, null);
 
-INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id)
-VALUES(2, 'Maria', 'Garcia', 'maria.garcia@test.com', '3511223344', 'Contrasenia@2025', 'mariagarcia', 'ORGANIZACION', 2);
+INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, urlFotoDePerfil, rol, domicilio_id, puntos)
+VALUES(2, 'Maria', 'Garcia', 'maria.garcia@test.com', '3511223344', 'Contrasenia@2025', 'mariagarcia', '/images/user.jpg', 'ORGANIZACION', 2, 0);
 
 
 -- Domicilio y Usuario 3: Carlos Lopez (VETERINARIO)
 INSERT INTO Domicilio(id, calle, numero, ciudad, provincia, codigoPostal, departamento, piso)
 VALUES(3, 'San Martín', '890', 'Rosario', 'SANTA_FE', '2000', null, null);
 
-INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id)
-VALUES(3, 'Carlos', 'Lopez', 'carlos.lopez@test.com', '3415556677', 'Contrasenia@2025', 'carloslopez', 'VETERINARIO', 3);
+INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, urlFotoDePerfil, rol, domicilio_id, puntos)
+VALUES(3, 'Carlos', 'Lopez', 'carlos.lopez@test.com', '3415556677', 'Contrasenia@2025', 'carloslopez', '/images/user.jpg', 'VETERINARIO', 3, 0);
 
 
 
@@ -58,3 +58,4 @@ INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imag
 VALUES(6, 'Gatitos buscan familia responsable', 'Camada de 2 meses listos para ser adoptados.', 'Son 4 hermanitos (2 machos y 2 hembras) muy juguetones. Se entregan con compromiso de castracion a los 6 meses.', '/images/perro.webp', 'Comun Europeo', 1, 'Cordoba, Argentina', 3511223344, 'maria.garcia@test.com', 2, '2023-10-24 11:00:00');
 INSERT INTO PublicacionAdopcion(id, edad)
 VALUES(6, 0);
+
