@@ -375,22 +375,8 @@ public class ControladorRegistroTest {
     private ModelAndView cuandoSeRegistra(String email, String nombre, String apellido, String nombreDeUsuario, String telefono, String contrasenia,
                                           String repeticionDeContrasenia, Roles rol, String calle, String numero, String ciudad,  Provincias provincia, String codigoPostal,
                                           String piso, String departamento) {
-        DatosRegistro datosRegistro = new DatosRegistro();
-        datosRegistro.setEmail(email);
-        datosRegistro.setNombre(nombre);
-        datosRegistro.setApellido(apellido);
-        datosRegistro.setNombreDeUsuario(nombreDeUsuario);
-        datosRegistro.setTelefono(telefono);
-        datosRegistro.setContrasenia(contrasenia);
-        datosRegistro.setRepeticionDeContrasenia(repeticionDeContrasenia);
-        datosRegistro.setRol(rol);
-        datosRegistro.setCalle(calle);
-        datosRegistro.setNumero(numero);
-        datosRegistro.setCiudad(ciudad);
-        datosRegistro.setProvincia(provincia);
-        datosRegistro.setCodigoPostal(codigoPostal);
-        datosRegistro.setPiso(piso);
-        datosRegistro.setDepartamento(departamento);
+        DatosRegistro datosRegistro = new DatosRegistro(nombre, apellido, nombreDeUsuario, email, telefono, contrasenia,
+                repeticionDeContrasenia, rol, calle, numero, ciudad, provincia, codigoPostal, departamento, piso);
         return controladorRegistro.registrar(datosRegistro);
     }
 

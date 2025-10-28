@@ -34,6 +34,7 @@ public class Usuario {
         this.nombreDeUsuario = nombreDeUsuario;
         this.rol = rol;
         this.domicilio = domicilio;
+        this.urlFotoDePerfil = "/images/user.jpg";
     }
 
     public Usuario() {
