@@ -11,176 +11,194 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
+        <div class="container-perfil">
             <a class="navbar-brand d-flex align-items-center" th:href="@{/home}">
                 <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
                 <span class="logo-text fs-3 fw-bold">Rescate Amigos</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="ms-auto d-flex gap-3 navbar-buttons">
+                <a th:href="@{/feed}" class="btn btn-primary">
+                    <i class="fa-solid fa-share-from-square"></i>
+                    <span class="btn-text">Volver al Feed</span>
+                </a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/feed}">Feed</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/perfil}">Mi Perfil</a>
-                    </li>
-                </ul>
+                <a th:href="@{/tienda}" class="btn btn-secondary">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="btn-text">Ir a la Tienda</span>
+                </a>
 
-                <div class="d-flex gap-2">
-                    <a th:href="@{/perfil}" class="btn btn-primary">
-                        <i class="fa-solid fa-user"></i>
-                        <span th:text="${usuario != null ? usuario.nombreDeUsuario : 'Usuario'}"></span>
-                    </a>
-                </div>
+                <a th:href="@{/logout}" class="btn btn-outline-danger">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="btn-text">Cerrar Sesión</span>
+                </a>
             </div>
         </div>
     </nav>
 </header>
 
-<!-- MAIN CONTENT -->
 <main class="perfil-container">
     <div th:if="${usuario != null}">
-        <!-- PERFIL HEADER -->
         <div class="perfil-header">
-            <div class="avatar-container text-center">
-                <div class="avatar-perfil">
-                    <img th:src="@{${usuario.urlFotoDePerfil}}" alt="Foto de perfil" class="img-fluid rounded-circle">
+            <div class="avatar-container">
+                <div class="perfil-left">
+                    <div class="avatar-perfil">
+                        <img th:src="@{${usuario.urlFotoDePerfil}}" alt="Foto de perfil" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="perfil-info-header">
+                        <h1 class="perfil-nombre" th:text="${usuario.nombre + ' ' + usuario.apellido}"></h1>
+                        <p class="perfil-usuario">
+                            <i class="fa-solid fa-at"></i>
+                            <span th:text="${usuario.nombreDeUsuario}"></span>
+                        </p>
+                    </div>
                 </div>
-                <h1 class="perfil-nombre" th:text="${usuario.nombre + ' ' + usuario.apellido}">Nombre Usuario</h1>
-                <p class="perfil-usuario">
-                    <i class="fa-solid fa-at"></i>
-                    <span th:text="${usuario.nombreDeUsuario}">nombreusuario</span>
-                </p>
-                <span class="perfil-rol">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span th:text="${usuario.rol}">ROL</span>
-                </span>
+
+                <div class="perfil-center">
+                    <span class="perfil-rol">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span th:text="${usuario.rol}"></span>
+                    </span>
+                </div>
+
+                <div class="perfil-right">
+                    <div class="perfil-puntos">
+                        <span class="puntos-label">Puntos</span>
+                        <i class="fa-solid fa-star"></i>
+                        <div class="puntos-info">
+                            <span class="puntos-valor" th:text="${usuario.puntos != null ? usuario.puntos : 0}"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- PERFIL BODY -->
-        <div class="perfil-body">
-            <!-- Información Personal -->
-            <section class="mb-4">
+        <div class="perfil-body-wrapper">
+            <div class="publicaciones-container">
                 <h2 class="seccion-titulo">
-                    <i class="fa-solid fa-user"></i>
-                    Información Personal
+                    <i class="fa-solid fa-images"></i>
+                    Mis Publicaciones
                 </h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-id-card"></i>
-                            Nombre Completo
-                        </div>
-                        <div class="info-valor" th:text="${usuario.nombre + ' ' + usuario.apellido}">Nombre Apellido</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-envelope"></i>
-                            Email
-                        </div>
-                        <div class="info-valor" th:text="${usuario.email}">email@ejemplo.com</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-phone"></i>
-                            Teléfono
-                        </div>
-                        <div class="info-valor" th:text="${usuario.telefono}">123456789</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-user-tag"></i>
-                            Nombre de Usuario
-                        </div>
-                        <div class="info-valor" th:text="${usuario.nombreDeUsuario}">nombreusuario</div>
+                <div class="publicaciones-lista">
+                    <div th:if="${publicaciones == null || #lists.isEmpty(publicaciones)}" class="no-publicaciones">
+                        <i class="fa-solid fa-inbox fa-3x mb-3"></i>
+                        <h3>No tenes publicaciones creadas</h3>
+                        <a th:href="@{/crear-publicacion}" class="btn btn-primary mt-3">
+                            <i class="fa-solid fa-plus"></i>
+                            Crear Publicación
+                        </a>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- Información de Domicilio -->
-            <section th:if="${usuario.domicilio != null}">
-                <h2 class="seccion-titulo">
-                    <i class="fa-solid fa-location-dot"></i>
-                    Domicilio
-                </h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-road"></i>
-                            Calle
+            <div class="perfil-body">
+                <section class="mb-4">
+                    <h2 class="seccion-titulo">
+                        <i class="fa-solid fa-user"></i>
+                        Información Personal
+                    </h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-id-card"></i>
+                                Nombre Completo:
+                            </div>
+                            <div class="info-valor" th:text="${usuario.nombre + ' ' + usuario.apellido}"></div>
                         </div>
-                        <div class="info-valor" th:text="${usuario.domicilio.calle}">Calle</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-hashtag"></i>
-                            Número
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-envelope"></i>
+                                Email:
+                            </div>
+                            <div class="info-valor" th:text="${usuario.email}"></div>
                         </div>
-                        <div class="info-valor" th:text="${usuario.domicilio.numero}">123</div>
-                    </div>
-                    <div class="info-item" th:if="${usuario.domicilio.piso != null && !#strings.isEmpty(usuario.domicilio.piso)}">
-                        <div class="info-label">
-                            <i class="fa-solid fa-building"></i>
-                            Piso
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-phone"></i>
+                                Teléfono:
+                            </div>
+                            <div class="info-valor" th:text="${usuario.telefono}"></div>
                         </div>
-                        <div class="info-valor" th:text="${usuario.domicilio.piso}">1</div>
-                    </div>
-                    <div class="info-item" th:if="${usuario.domicilio.departamento != null && !#strings.isEmpty(usuario.domicilio.departamento)}">
-                        <div class="info-label">
-                            <i class="fa-solid fa-door-open"></i>
-                            Departamento
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-user-tag"></i>
+                                Nombre de Usuario:
+                            </div>
+                            <div class="info-valor" th:text="${usuario.nombreDeUsuario}"></div>
                         </div>
-                        <div class="info-valor" th:text="${usuario.domicilio.departamento}">A</div>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-city"></i>
-                            Ciudad
+                </section>
+
+                <section th:if="${usuario.domicilio != null}">
+                    <h2 class="seccion-titulo">
+                        <i class="fa-solid fa-house"></i>
+                        Domicilio
+                    </h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-road"></i>
+                                Calle:
+                            </div>
+                            <div class="info-valor" th:text="${usuario.domicilio.calle}"></div>
                         </div>
-                        <div class="info-valor" th:text="${usuario.domicilio.ciudad}">Ciudad</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-map"></i>
-                            Provincia
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-hashtag"></i>
+                                Número:
+                            </div>
+                            <div class="info-valor" th:text="${usuario.domicilio.numero}"></div>
                         </div>
-                        <div class="info-valor" th:text="${usuario.domicilio.provincia}">Provincia</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-mailbox"></i>
-                            Código Postal
+                        <div class="info-item" th:if="${usuario.domicilio.piso != null && !#strings.isEmpty(usuario.domicilio.piso)}">
+                            <div class="info-label">
+                                <i class="fa-solid fa-building"></i>
+                                Piso:
+                            </div>
+                            <div class="info-valor" th:text="${usuario.domicilio.piso}">1</div>
                         </div>
-                        <div class="info-valor" th:text="${usuario.domicilio.codigoPostal}">1234</div>
+                        <div class="info-item" th:if="${usuario.domicilio.departamento != null && !#strings.isEmpty(usuario.domicilio.departamento)}">
+                            <div class="info-label">
+                                <i class="fa-solid fa-door-open"></i>
+                                Departamento:
+                            </div>
+                            <div class="info-valor" th:text="${usuario.domicilio.departamento}"></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-city"></i>
+                                Ciudad
+                            </div>
+                            <div class="info-valor" th:text="${usuario.domicilio.ciudad}"></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-map"></i>
+                                Provincia
+                            </div>
+                            <div class="info-valor" th:text="${usuario.domicilio.provincia}"></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fa-solid fa-location-dot"></i>
+                                Código Postal
+                            </div>
+                            <div class="info-valor" th:text="${usuario.domicilio.codigoPostal}"></div>
+                        </div>
                     </div>
+                </section>
+
+                <div class="d-flex justify-content-center mt-4 flex-wrap">
+                    <button class="btn btn-primary">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        Editar Perfil
+                    </button>
                 </div>
-            </section>
-
-            <!-- Botones de Acción -->
-            <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
-                <button class="btn btn-editar-perfil">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    Editar Perfil
-                </button>
-                <a th:href="@{/feed}" class="btn btn-volver">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    Volver al Feed
-                </a>
             </div>
         </div>
     </div>
 
-    <!-- Si no hay usuario logueado -->
     <div th:if="${usuario == null}" class="text-center py-5">
         <div class="alert alert-warning" role="alert">
             <i class="fa-solid fa-triangle-exclamation fa-3x mb-3"></i>
