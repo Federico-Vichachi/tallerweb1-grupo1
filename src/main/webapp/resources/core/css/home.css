@@ -49,11 +49,40 @@ header {
     color: var(--color-secundario);
 }
 
+/* Padding adicional para header en móviles */
+@media (max-width: 790px) {
+    header .container-fluid {
+        padding-bottom: 1.5rem;
+    }
+}
+
 /* ===== HERO SECTION ===== */
 .hero-section {
     height: 75vh;
     min-height: 500px;
     overflow: hidden;
+}
+
+/* Ajuste para pantallas con poca altura (como Nest Hub) */
+@media (max-height: 700px) {
+    .hero-section {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .hero-content {
+        padding: 3rem 0;
+    }
+
+    .hero-title {
+        font-size: 2rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .hero-description {
+        font-size: 1rem !important;
+        margin-bottom: 2rem !important;
+    }
 }
 
 .hero-background {
