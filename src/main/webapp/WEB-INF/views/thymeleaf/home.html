@@ -19,7 +19,6 @@
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
-                <!--                <img src="/webapp/resources/core/images/isotipo.svg" alt="Isotipo" height="60" class="me-2">-->
                 <span class="logo-text fs-3 fw-bold">Rescate Amigos</span>
             </a>
 
@@ -45,7 +44,7 @@
                 </ul>
 
                 <div class="d-flex gap-2">
-                    <a href="#" class="btn btn-primary">Iniciar Sesión</a>
+                    <a th:href="@{/inicio-de-sesion}" class="btn btn-primary">Iniciar Sesión</a>
                     <a th:href="@{/registro}" class="btn btn-secondary">Registrarse</a>
                 </div>
             </div>
