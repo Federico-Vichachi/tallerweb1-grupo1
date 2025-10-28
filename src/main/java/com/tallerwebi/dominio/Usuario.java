@@ -24,6 +24,7 @@ public class Usuario {
     private Roles rol;
     @OneToOne(cascade = CascadeType.ALL)
     private Domicilio domicilio;
+    private int puntos;
 
     public Usuario(String nombre, String apellido, String email, String telefono, String contrasenia, String nombreDeUsuario, Roles rol, Domicilio domicilio) {
         this.nombre = nombre;
@@ -35,9 +36,23 @@ public class Usuario {
         this.rol = rol;
         this.domicilio = domicilio;
         this.urlFotoDePerfil = "/images/user.jpg";
+        this.puntos = 0;
     }
 
     public Usuario() {
 
     }
+
+    public void sumarPuntos(int cantidad){
+        this.puntos += cantidad;
+    }
+
+    public boolean gastarPuntos(int cantidad){
+        if(this.puntos >= cantidad){
+            this.puntos -= cantidad;
+            return true;
+        }
+        return false;
+    }
+
 }

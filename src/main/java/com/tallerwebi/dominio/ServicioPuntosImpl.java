@@ -18,7 +18,7 @@ public class ServicioPuntosImpl implements ServicioPuntos {
     @Override
     public void sumarPuntos(Usuario usuario, Publicacion publicacion) {
         int puntos = publicacion.puntosPorCreacion();
-        usuario.setPuntos(usuario.getPuntos() + puntos);
+        usuario.sumarPuntos(puntos);
         repositorioUsuario.guardar(usuario);
     }
 }
