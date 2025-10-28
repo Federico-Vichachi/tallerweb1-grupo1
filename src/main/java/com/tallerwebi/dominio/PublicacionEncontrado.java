@@ -17,5 +17,9 @@ public class PublicacionEncontrado extends Publicacion {
         super(datosEncontrado.getTitulo(), datosEncontrado.getDescripcionCorta(), datosEncontrado.getDescripcionDetallada(), datosEncontrado.getImagen(), datosEncontrado.getRaza(), datosEncontrado.getTamanio(), datosEncontrado.getUbicacion(), datosEncontrado.getTelefono(), datosEncontrado.getEmail());
     }
 
+    @Override
+    public int puntosPorCreacion() {
+        return 10;
+    }
 
 }

@@ -19,5 +19,9 @@ public class PublicacionAdopcion extends Publicacion {
        this.edad = datosAdopcion.getEdad();
    }
 
+   @Override
+    public int puntosPorCreacion(){
+       return 15;
+   }
 
 }

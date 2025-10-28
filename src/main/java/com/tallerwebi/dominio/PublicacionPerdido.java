@@ -25,4 +25,10 @@ public class PublicacionPerdido extends Publicacion {
         this.llevaCollar = datosPerdido.getLlevaCollar();
         this.recompensa = datosPerdido.getRecompensa();
     }
+
+    @Override
+    public int puntosPorCreacion() {
+        return 10;
+    }
+
 }

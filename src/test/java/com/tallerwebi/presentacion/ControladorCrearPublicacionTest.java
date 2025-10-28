@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioPublicacion;
+import com.tallerwebi.dominio.ServicioPuntos;
 import com.tallerwebi.dominio.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ public class ControladorCrearPublicacionTest {
     private ControladorCrearPublicacion controlador;
     private ServicioPublicacion servicioMock;
     private RepositorioUsuario repositorioUsuarioMock;
+    private ServicioPuntos servicioPuntosMock;
 
     private DatosAdopcion datosAdopcion;
     private DatosRecaudacion datosRecaudacion;
@@ -29,7 +31,8 @@ public class ControladorCrearPublicacionTest {
     public void setUp() {
         servicioMock = mock(ServicioPublicacion.class);
         repositorioUsuarioMock = mock(RepositorioUsuario.class);
-        controlador = new ControladorCrearPublicacion(servicioMock, repositorioUsuarioMock);
+        servicioPuntosMock = mock(ServicioPuntos.class);
+        controlador = new ControladorCrearPublicacion(servicioMock, repositorioUsuarioMock, servicioPuntosMock);
         when(repositorioUsuarioMock.buscarPorId(1L)).thenReturn(mock(Usuario.class));
     }
 
@@ -210,4 +213,8 @@ public class ControladorCrearPublicacionTest {
         assertThat(mav.getModel().get("datosEncontrado"), is(notNullValue()));
         assertThat(mav.getModel().get("datosEncontrado"), is(datosEncontrado));
     }
+
+
+
+
 }

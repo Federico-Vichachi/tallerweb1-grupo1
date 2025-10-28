@@ -42,4 +42,7 @@ public abstract class Publicacion {
         this.email = email;
     }
 
+
+    public abstract int puntosPorCreacion();
+
 }

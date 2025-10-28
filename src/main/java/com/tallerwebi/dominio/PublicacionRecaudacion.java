@@ -25,4 +25,9 @@ public class PublicacionRecaudacion extends Publicacion {
         this.cbu = datosRecaudacion.getCbu();
         this.metodoPreferido = datosRecaudacion.getMetodoPreferido();
     }
+
+    @Override
+    public int puntosPorCreacion() {
+        return 20;
+    }
 }

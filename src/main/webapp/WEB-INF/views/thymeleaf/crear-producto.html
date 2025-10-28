@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Crear Producto</title>
+
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    </head>
+    <body>
+        <h1>Crear Producto</h1>
+
+        <form th:action="@{/producto}" th:object="${datosProducto}" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" th:field="*{nombre}" id="nombre" required /><br/><br/>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea th:field="*{descripcion}" id="descripcion" required></textarea><br/><br/>
+
+            <label for="precioEnCentavos">Precio (centavos):</label>
+            <input type="number" th:field="*{precioEnCentavos}" id="precioEnCentavos" required /><br/><br/>
+
+            <label for="precioEnPuntos">Precio en puntos:</label>
+            <input type="number" th:field="*{precioEnPuntos}" id="precioEnPuntos" required /><br/><br/>
+
+            <label for="stock">Stock:</label>
+            <input type="number" th:field="*{stock}" id="stock" required /><br/><br/>
+
+            <label for="imagen">URL de imagen:</label>
+            <input type="text" th:field="*{imagen}" id="imagen" /><br/><br/>
+
+            <button type="submit">Crear Producto</button>
+        </form>
+    </body>
+</html>
