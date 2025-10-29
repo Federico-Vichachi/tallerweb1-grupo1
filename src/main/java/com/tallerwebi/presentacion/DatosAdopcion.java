@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Provincias;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,9 +14,9 @@ public class DatosAdopcion extends DatosPublicacion {
     }
 
     public DatosAdopcion(String titulo, String descripcionCorta, String descripcionDetallada, String imagen,
-                         String raza, Integer tamanio, String ubicacion, String telefono, String email,
+                         String raza, Integer tamanio, Provincias provincia, String localidad, String telefono, String email,
                          Integer edad) {
-        super(titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email);
+        super(titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, provincia,localidad, telefono, email);
         this.edad = edad;
     }
 

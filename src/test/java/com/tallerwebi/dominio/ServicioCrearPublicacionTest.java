@@ -23,7 +23,7 @@ public class ServicioCrearPublicacionTest {
     @Test
     public void siLosDatosDeLaPublicacionAdopcionSonCorrectosLaCreacionEsExitosa(){
         givenNoExistePublicacionAdopcion();
-        Publicacion publicacionAdopcion = whenCreoUnaPublicacionAdopcionCon("Adopto a Firulais", "Perro juguetón busca familia", "Firulais es un Golden Retriever de 3 años, muy cariñoso y activo. Ideal para familias con niños.", "firulais.jpg", "Golden Retriever", 40, "CABA, Argentina", "1145123412", "firulais@mail.com", 3 );
+        Publicacion publicacionAdopcion = whenCreoUnaPublicacionAdopcionCon("Adopto a Firulais", "Perro juguetón busca familia", "Firulais es un Golden Retriever de 3 años, muy cariñoso y activo. Ideal para familias con niños.", "firulais.jpg", "Golden Retriever", 40, Provincias.CORDOBA,"Lanus", "1145123412", "firulais@mail.com", 3 );
         thenLaCreacionDePublicacionAdopcionEsExitosa(publicacionAdopcion);
     }
 
@@ -31,7 +31,7 @@ public class ServicioCrearPublicacionTest {
     private void givenNoExistePublicacionAdopcion() {
     }
 
-    private Publicacion whenCreoUnaPublicacionAdopcionCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, String ubicacion, String telefono, String email, int edad) {
+    private Publicacion whenCreoUnaPublicacionAdopcionCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, Provincias provincia ,String localidad, String telefono, String email, int edad) {
         PublicacionAdopcion publicacion = new PublicacionAdopcion();
         publicacion.setTitulo(titulo);
         publicacion.setDescripcionCorta(descripcionCorta);
@@ -39,7 +39,8 @@ public class ServicioCrearPublicacionTest {
         publicacion.setImagen(imagen);
         publicacion.setRaza(raza);
         publicacion.setTamanio(tamanio);
-        publicacion.setUbicacion(ubicacion);
+        publicacion.setProvincia(provincia);
+        publicacion.setLocalidad(localidad);
         publicacion.setTelefono(telefono);
         publicacion.setEmail(email);
         publicacion.setEdad(edad);
@@ -54,7 +55,7 @@ public class ServicioCrearPublicacionTest {
     @Test
     public void siLosDatosDeLaPublicacionRecaudacionSonCorrectosLaCreacionEsExitosa(){
         givenNoExistePublicacionRecaudacion();
-        Publicacion publicacionRecaudacion = whenCreoUnaPublicacionRecaudacionCon("Campaña para operar a Pelusa", "Ayudanos a que Pelusa vuelva a correr.", "Pelusa es un perrito mestizo de 5 años que fue atropellado y necesita una cirugía urgente en su patita trasera.", "Pelusa.jpg", "Mestizo",50 , "Lanus, Argentina", "1145332211", "ayuda.rocky@gmail.com", 5, 150000.0, "0000003100035478292345", "Transferencia bancaria");
+        Publicacion publicacionRecaudacion = whenCreoUnaPublicacionRecaudacionCon("Campaña para operar a Pelusa", "Ayudanos a que Pelusa vuelva a correr.", "Pelusa es un perrito mestizo de 5 años que fue atropellado y necesita una cirugía urgente en su patita trasera.", "Pelusa.jpg", "Mestizo",50 , Provincias.BUENOS_AIRES, "Moron","1145332211", "ayuda.rocky@gmail.com", 5, 150000.0, "0000003100035478292345", "Transferencia bancaria");
         thenLaCreacionDePublicacionRecaudacionEsExitosa(publicacionRecaudacion);
     }
 
@@ -62,7 +63,7 @@ public class ServicioCrearPublicacionTest {
     private void givenNoExistePublicacionRecaudacion() {
     }
 
-    private Publicacion whenCreoUnaPublicacionRecaudacionCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, String ubicacion, String telefono, String email, int edad, double meta, String cbu, String metodoPreferido) {
+    private Publicacion whenCreoUnaPublicacionRecaudacionCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, Provincias provincia ,String localidad, String telefono, String email, int edad, double meta, String cbu, String metodoPreferido) {
         PublicacionRecaudacion publicacion = new PublicacionRecaudacion();
         publicacion.setTitulo(titulo);
         publicacion.setDescripcionCorta(descripcionCorta);
@@ -70,7 +71,8 @@ public class ServicioCrearPublicacionTest {
         publicacion.setImagen(imagen);
         publicacion.setRaza(raza);
         publicacion.setTamanio(tamanio);
-        publicacion.setUbicacion(ubicacion);
+        publicacion.setProvincia(provincia);
+        publicacion.setLocalidad(localidad);
         publicacion.setTelefono(telefono);
         publicacion.setEmail(email);
         publicacion.setEdad(edad);
@@ -88,7 +90,7 @@ public class ServicioCrearPublicacionTest {
     @Test
     public void siLosDatosDeLaPublicacionSaludSonCorrectosLaCreacionEsExitosa(){
         givenNoExistePublicacionSalud();
-        Publicacion publicacionSalud = whenCreoUnaPublicacionSaludCon("Fito", "Informe veterinario.", "Se observan signos de letargo y cojera en la pata trasera derecha .Se realizaron radiografías que muestran fractura parcial, y se recomienda reposo y control médico constante.", "Fito.jpg", "Siames", 35, "CABA, Argentina", "1185262211", "ayuda.fito@gmail.com", 3, "Inflamación en pata delantera izquierda, disminución de apetito", "Inflamación leve en articulación; posible deficiencia nutricional", "Prioritario");
+        Publicacion publicacionSalud = whenCreoUnaPublicacionSaludCon("Fito", "Informe veterinario.", "Se observan signos de letargo y cojera en la pata trasera derecha .Se realizaron radiografías que muestran fractura parcial, y se recomienda reposo y control médico constante.", "Fito.jpg", "Siames", 35, Provincias.CATAMARCA, "San Telmo","1185262211", "ayuda.fito@gmail.com", 3, "Inflamación en pata delantera izquierda, disminución de apetito", "Inflamación leve en articulación; posible deficiencia nutricional", "Prioritario");
         thenLaCreacionDePublicacionSaludEsExitosa(publicacionSalud);
     }
 
@@ -96,7 +98,7 @@ public class ServicioCrearPublicacionTest {
     private void givenNoExistePublicacionSalud() {
     }
 
-    private Publicacion whenCreoUnaPublicacionSaludCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, String ubicacion, String telefono, String email, int edad, String sintomasPrincipales, String diagnostico, String nivelUrgencia) {
+    private Publicacion whenCreoUnaPublicacionSaludCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, Provincias provincia ,String localidad, String telefono, String email, int edad, String sintomasPrincipales, String diagnostico, String nivelUrgencia) {
         PublicacionSalud publicacion = new PublicacionSalud();
         publicacion.setTitulo(titulo);
         publicacion.setDescripcionCorta(descripcionCorta);
@@ -104,7 +106,8 @@ public class ServicioCrearPublicacionTest {
         publicacion.setImagen(imagen);
         publicacion.setRaza(raza);
         publicacion.setTamanio(tamanio);
-        publicacion.setUbicacion(ubicacion);
+        publicacion.setProvincia(provincia);
+        publicacion.setLocalidad(localidad);
         publicacion.setTelefono(telefono);
         publicacion.setEmail(email);
         publicacion.setEdad(edad);
@@ -123,7 +126,7 @@ public class ServicioCrearPublicacionTest {
     @Test
     public void siLosDatosDeLaPublicacionPerdidoSonCorrectosLaCreacionEsExitosa(){
         givenNoExistePublicacionPerdido();
-        Publicacion publicacionPerdido = whenCreoUnaPublicacionPerdidoCon("Se perdio Luna", "Ayudanos a encontrarla.", "Luna es una gatita mestiza de tamaño mediano, juguetona y muy amigable. Se escapó de su casa y necesitamos localizarla lo antes posible.", "Luna.jpg", "Mestizo", 25, "Merlo, Argentina", "1110652113", "luna@gmail.com", "2025-10-21", "12:00", true, "Si" );
+        Publicacion publicacionPerdido = whenCreoUnaPublicacionPerdidoCon("Se perdio Luna", "Ayudanos a encontrarla.", "Luna es una gatita mestiza de tamaño mediano, juguetona y muy amigable. Se escapó de su casa y necesitamos localizarla lo antes posible.", "Luna.jpg", "Mestizo", 25, Provincias.BUENOS_AIRES,"La Matanza", "1110652113", "luna@gmail.com", "2025-10-21", "12:00", true, "Si" );
         thenLaCreacionDePublicacionPerdidoEsExitosa(publicacionPerdido);
     }
 
@@ -131,7 +134,7 @@ public class ServicioCrearPublicacionTest {
     private void givenNoExistePublicacionPerdido() {
     }
 
-    private Publicacion whenCreoUnaPublicacionPerdidoCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, String ubicacion, String telefono, String email, String fechaDesaparicion, String horaDesaparicion, boolean llevaCollar, String recompensa) {
+    private Publicacion whenCreoUnaPublicacionPerdidoCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, Provincias provincia ,String localidad, String telefono, String email, String fechaDesaparicion, String horaDesaparicion, boolean llevaCollar, String recompensa) {
         PublicacionPerdido publicacion = new PublicacionPerdido();
         publicacion.setTitulo(titulo);
         publicacion.setDescripcionCorta(descripcionCorta);
@@ -139,7 +142,8 @@ public class ServicioCrearPublicacionTest {
         publicacion.setImagen(imagen);
         publicacion.setRaza(raza);
         publicacion.setTamanio(tamanio);
-        publicacion.setUbicacion(ubicacion);
+        publicacion.setProvincia(provincia);
+        publicacion.setLocalidad(localidad);
         publicacion.setTelefono(telefono);
         publicacion.setEmail(email);
         publicacion.setFechaDesaparicion(fechaDesaparicion);
@@ -158,7 +162,7 @@ public class ServicioCrearPublicacionTest {
     @Test
     public void siLosDatosDeLaPublicacionEncontradoSonCorrectosLaCreacionEsExitosa(){
         givenNoExistePublicacionEncontrado();
-        Publicacion publicacionEncontrado = whenCreoUnaPublicacionEncontradoCon("Perrito encontrado", "Se encontro un cachorro desorientado cerca de la plaza", "Cachorro mestizo de tamaño pequeño, mediano, aproximadamente 2 años. Muy juguetón y dócil. No tiene collar y parecía perdido desde hace unas horas. Se busca al dueño para poder devolverlo a su hogar.", "Mancha.jpg", "Mestizo", 35, "Ituzaingo, Argentina", "1185262211", "ayuda.manchita@gmail.com");
+        Publicacion publicacionEncontrado = whenCreoUnaPublicacionEncontradoCon("Perrito encontrado", "Se encontro un cachorro desorientado cerca de la plaza", "Cachorro mestizo de tamaño pequeño, mediano, aproximadamente 2 años. Muy juguetón y dócil. No tiene collar y parecía perdido desde hace unas horas. Se busca al dueño para poder devolverlo a su hogar.", "Mancha.jpg", "Mestizo", 35, Provincias.CHUBUT,"Villa Crespo", "1185262211", "ayuda.manchita@gmail.com");
         thenLaCreacionDePublicacionEncotradoEsExitosa(publicacionEncontrado);
     }
 
@@ -166,7 +170,7 @@ public class ServicioCrearPublicacionTest {
     private void givenNoExistePublicacionEncontrado() {
     }
 
-    private Publicacion whenCreoUnaPublicacionEncontradoCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, String ubicacion, String telefono, String email) {
+    private Publicacion whenCreoUnaPublicacionEncontradoCon(String titulo, String descripcionCorta, String descripcionDetallada, String imagen, String raza, int tamanio, Provincias provincia ,String localidad, String telefono, String email) {
         PublicacionEncontrado publicacion = new PublicacionEncontrado();
         publicacion.setTitulo(titulo);
         publicacion.setDescripcionCorta(descripcionCorta);
@@ -174,7 +178,8 @@ public class ServicioCrearPublicacionTest {
         publicacion.setImagen(imagen);
         publicacion.setRaza(raza);
         publicacion.setTamanio(tamanio);
-        publicacion.setUbicacion(ubicacion);
+        publicacion.setProvincia(provincia);
+        publicacion.setLocalidad(localidad);
         publicacion.setTelefono(telefono);
         publicacion.setEmail(email);
         servicioCrearPublicacion.guardar(publicacion);

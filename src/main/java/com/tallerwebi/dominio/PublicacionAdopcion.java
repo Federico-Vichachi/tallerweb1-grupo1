@@ -15,7 +15,7 @@ public class PublicacionAdopcion extends Publicacion {
    public PublicacionAdopcion() {}
 
    public PublicacionAdopcion(DatosAdopcion datosAdopcion) {
-       super(datosAdopcion.getTitulo(), datosAdopcion.getDescripcionCorta(), datosAdopcion.getDescripcionDetallada(), datosAdopcion.getImagen(), datosAdopcion.getRaza(), datosAdopcion.getTamanio(), datosAdopcion.getUbicacion(), datosAdopcion.getTelefono(), datosAdopcion.getEmail());
+       super(datosAdopcion.getTitulo(), datosAdopcion.getDescripcionCorta(), datosAdopcion.getDescripcionDetallada(), datosAdopcion.getImagen(), datosAdopcion.getRaza(), datosAdopcion.getTamanio(), datosAdopcion.getTelefono(),datosAdopcion.getEmail(), datosAdopcion.getProvincia(), datosAdopcion.getLocalidad());
        this.edad = datosAdopcion.getEdad();
    }
 

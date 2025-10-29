@@ -40,8 +40,20 @@
                 <label>Tamaño<input th:field="*{tamanio}" id="tamanio-adopcion" type="number" min="0" class="form-control" required/></label>
             </div>
             <div>
-                <label>Raza<input th:field="*{raza}" id="raza-adopcion" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
-                <label>Ubicacion<input th:field="*{ubicacion}" id="ubicacion-adopcion" type="text" class="form-control" required/></label>
+                <label>Provincia</label>
+                <select th:field="*{provincia}" class="form-select" required>
+                    <option value="">Seleccione una provincia</option>
+                    <option th:each="p : ${provincias}"
+                            th:value="${p}"
+                            th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label>Ciudad / Localidad</label>
+                <input th:field="*{localidad}" type="text" class="form-control" placeholder="Ej: Ramos Mejía" required/>
+
+                </select>
             </div>
             <h5>Información de contacto</h5>
             <div>
@@ -89,6 +101,24 @@
                     <option value="paypal">PayPal</option>
                 </select>
             </div>
+
+            <div>
+                <label>Provincia</label>
+                <select th:field="*{provincia}" class="form-select" required>
+                    <option value="">Seleccione una provincia</option>
+                    <option th:each="p : ${provincias}"
+                            th:value="${p}"
+                            th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label>Ciudad / Localidad</label>
+                <input th:field="*{localidad}" type="text" class="form-control" placeholder="Ej: Ramos Mejía" required/>
+
+                </select>
+            </div>
+
             <h5>Información de contacto</h5>
             <div>
                 <label>Telefono<input th:field="*{telefono}" id="telefono-recaudacion" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>
@@ -119,8 +149,20 @@
                 <label>Tamaño<input th:field="*{tamanio}" id="tamanio-salud" type="number" min="0" class="form-control" required/></label>
             </div>
             <div>
-                <label>Raza<input th:field="*{raza}" id="raza-salud" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
-                <label>Ubicacion<input th:field="*{ubicacion}" id="ubicacion-salud" type="text" class="form-control" required/></label>
+                <div>
+                    <label>Provincia</label>
+                    <select th:field="*{provincia}" class="form-select" required>
+                        <option value="">Seleccione una provincia</option>
+                        <option th:each="p : ${provincias}"
+                                th:value="${p}"
+                                th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}">
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label>Ciudad / Localidad</label>
+                    <input th:field="*{localidad}" type="text" class="form-control" placeholder="Ej: Ramos Mejía" required/>
+                </div>
             </div>
             <div>
                 <label>Sintomas principales<input th:field="*{sintomasPrincipales}" id="sintomas-salud" type="text" placeholder="Ej: Vomitos" class="form-control" required/></label>
@@ -158,7 +200,20 @@
                 <label>Tamaño<input th:field="*{tamanio}" id="tamanio-perdido" type="number" min="0" class="form-control" required/></label>
             </div>
             <div>
-                <label>Ultima ubicacion vista<input th:field="*{ubicacion}" id="ubicacion-perdido" type="text" class="form-control" required/></label>
+                <div>
+                    <label>Provincia</label>
+                    <select th:field="*{provincia}" class="form-select" required>
+                        <option value="">Seleccione una provincia</option>
+                        <option th:each="p : ${provincias}"
+                                th:value="${p}"
+                                th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}">
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label>Última ciudad / localidad vista</label>
+                    <input th:field="*{localidad}" type="text" class="form-control" placeholder="Ej: Morón" required/>
+                </div>
                 <label>Fecha de desaparición<input th:field="*{fechaDesaparicion}" id="fecha-desaparicion" type="date" class="form-control" required/></label>
                 <label>Hora de desaparición<input th:field="*{horaDesaparicion}" id="hora-desaparicion" type="time" class="form-control" required/></label>
             </div>
@@ -195,6 +250,24 @@
                 <label>Raza<input th:field="*{raza}" id="raza-encontrado" type="text" placeholder="Ej: Siames" class="form-control" required/></label>
                 <label>Tamaño<input th:field="*{tamanio}" id="tamanio-encontrado" type="number" min="0" class="form-control" required/></label>
             </div>
+
+            <div>
+                <label>Provincia</label>
+                <select th:field="*{provincia}" class="form-select" required>
+                    <option value="">Seleccione una provincia</option>
+                    <option th:each="p : ${provincias}"
+                            th:value="${p}"
+                            th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label>Ciudad / Localidad</label>
+                <input th:field="*{localidad}" type="text" class="form-control" placeholder="Ej: Ramos Mejía" required/>
+
+                </select>
+            </div>
+
             <h5>Información de contacto</h5>
             <div>
                 <label>Telefono<input th:field="*{telefono}" id="telefono-encontrado" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>

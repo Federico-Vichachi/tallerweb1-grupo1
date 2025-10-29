@@ -1,6 +1,8 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.DatosFiltro;
 import com.tallerwebi.dominio.Publicacion;
+import com.tallerwebi.dominio.Provincias;
 import com.tallerwebi.dominio.ServicioPublicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,16 +40,18 @@ public class ControladorFeedTest {
     public void siPidoElFeedSinFiltrosDeberiaMostrarTodasLasPublicaciones() {
         // Preparacion
         List<Publicacion> publicacionesFalsas = Arrays.asList(mock(Publicacion.class), mock(Publicacion.class));
-        when(servicioPublicacionMock.buscarPublicacionesPorCategoria(null)).thenReturn(publicacionesFalsas);
+        DatosFiltro filtroEsperado = new DatosFiltro();
+
+        when(servicioPublicacionMock.buscarPublicacionesConFiltros(filtroEsperado)).thenReturn(publicacionesFalsas);
 
         // Ejecucion
-        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock,null, null, null, null, null);
+        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock,null, null, null, null);
 
         // Validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("feed"));
         List<Publicacion> publicacionesEnModelo = (List<Publicacion>) modelAndView.getModel().get("publicaciones");
         assertThat(publicacionesEnModelo, hasSize(2));
-        verify(servicioPublicacionMock, times(1)).buscarPublicacionesPorCategoria(null);
+        verify(servicioPublicacionMock, times(1)).buscarPublicacionesConFiltros(filtroEsperado);
     }
 
     @Test
@@ -55,30 +59,36 @@ public class ControladorFeedTest {
         // Preparacion
         String categoriaFiltro = "Adopcion";
         List<Publicacion> publicacionesFiltradasFalsas = Collections.singletonList(mock(Publicacion.class));
-        when(servicioPublicacionMock.buscarPublicacionesPorCategoria(categoriaFiltro)).thenReturn(publicacionesFiltradasFalsas);
+
+        DatosFiltro filtroEsperado = new DatosFiltro();
+        filtroEsperado.setCategoria(categoriaFiltro);
+
+        when(servicioPublicacionMock.buscarPublicacionesConFiltros(filtroEsperado)).thenReturn(publicacionesFiltradasFalsas);
 
         // Ejecucion
-        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock, categoriaFiltro, null, null, null, null);
+        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock, categoriaFiltro, null, null, null);
 
         // Validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("feed"));
         List<Publicacion> publicacionesEnModelo = (List<Publicacion>) modelAndView.getModel().get("publicaciones");
         assertThat(publicacionesEnModelo, hasSize(1));
         assertThat((String) modelAndView.getModel().get("categoriaFiltro"), equalToIgnoringCase(categoriaFiltro));
-        verify(servicioPublicacionMock, times(1)).buscarPublicacionesPorCategoria(categoriaFiltro);
+        verify(servicioPublicacionMock, times(1)).buscarPublicacionesConFiltros(filtroEsperado);
     }
 
     @Test
     public void siElServicioNoEncuentraPublicacionesElFeedDeberiaMostrarUnaListaVacia() {
         // Preparacion
-        when(servicioPublicacionMock.buscarPublicacionesPorCategoria(null)).thenReturn(Collections.emptyList());
+        DatosFiltro filtroEsperado = new DatosFiltro();
+        when(servicioPublicacionMock.buscarPublicacionesConFiltros(filtroEsperado)).thenReturn(Collections.emptyList());
 
         // Ejecucion
-        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock, null, null, null, null, null);
+        ModelAndView modelAndView = controladorFeed.irAFeed(requestMock, null, null, null, null);
 
         // Validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("feed"));
         List<Publicacion> publicacionesEnModelo = (List<Publicacion>) modelAndView.getModel().get("publicaciones");
         assertThat(publicacionesEnModelo, is(empty()));
+        verify(servicioPublicacionMock, times(1)).buscarPublicacionesConFiltros(filtroEsperado);
     }
 }

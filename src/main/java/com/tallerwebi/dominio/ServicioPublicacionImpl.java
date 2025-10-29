@@ -5,7 +5,8 @@ import com.tallerwebi.dominio.excepcion.ValidacionPublicacionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.tallerwebi.dominio.ExpresionesRegularesParaLaValidacionDeDatosDePublicacion.*;
 
@@ -23,6 +24,14 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
     @Override
     public Publicacion guardar(Publicacion publicacion) {
         verificarFormatoDeLosDatosDePublicacion(publicacion);
+
+        if(publicacion instanceof PublicacionPerdido || publicacion instanceof PublicacionEncontrado){
+            if(publicacion.getLatitud()==null){
+                publicacion.setLatitud(-34.60 + (Math.random()-0.5)*0.1);
+                publicacion.setLongitud(-34.60 + (Math.random()-0.5)*0.1);
+            }
+        }
+
         return repositorioPublicacion.guardar(publicacion);
     }
 
@@ -45,11 +54,11 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         }
 
         if (publicacion.getImagen() != null && !publicacion.getImagen().matches(FORMATO_IMAGEN)) {
-            throw new ValidacionPublicacionException("La imagen es valida");
+            throw new ValidacionPublicacionException("La imagen es valida"); // No deberia ser invalida?
         }
 
-        if (publicacion.getUbicacion() != null && !publicacion.getUbicacion().matches(FORMATO_RAZA_UBICACION)) {
-            throw new ValidacionPublicacionException("La ubicación es inválida.");
+        if (publicacion.getLocalidad() == null || publicacion.getLocalidad().trim().isEmpty() || !publicacion.getLocalidad().matches(FORMATO_RAZA_UBICACION)) {
+            throw new ValidacionPublicacionException("La localidad es inválida o está vacía.");
         }
 
         if (publicacion.getTelefono() != null && !publicacion.getTelefono().matches(FORMATO_TELEFONO)) {
@@ -73,7 +82,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         if (publicacion instanceof PublicacionRecaudacion) {
             PublicacionRecaudacion recaudacion = (PublicacionRecaudacion) publicacion;
 
-           //METODO PREFERIDO.
+            //METODO PREFERIDO.
 
             if (recaudacion.getEdad() == null || recaudacion.getEdad() < 0) {
                 throw new ValidacionPublicacionException("La edad del animal es obligatoria y no puede ser negativa.");
@@ -127,4 +136,91 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
                 throw new CategoriaInvalidaException("La categoría '" + categoria + "' no es válida.");
         }
     }
+
+    @Override
+    public List<Publicacion> buscarPorNombre(String nombre){
+        return repositorioPublicacion.buscarPorNombre(nombre);
+    }
+
+    @Override
+    public List<Publicacion> buscarPorProvincia(Provincias provincia){
+        return repositorioPublicacion.buscarPorProvincia(provincia);
+    }
+
+    @Override
+    public List<Publicacion> buscarPorLocalidad(String localidad){
+        return repositorioPublicacion.buscarPorLocalidad(localidad);
+    }
+
+
+    @Override
+    public List<Publicacion> buscarPublicacionesCercanas(Double latitudUsuario, Double longitudUsuario, Double radioKm) {
+        if (latitudUsuario == null || longitudUsuario == null || radioKm == null) {
+            return new ArrayList<>();
+        }
+
+        List<Class<? extends Publicacion>> tiposConCoordenadas = Arrays.asList(PublicacionPerdido.class, PublicacionEncontrado.class);
+        List<Publicacion> candidatas = repositorioPublicacion.buscarPorTipos(tiposConCoordenadas);
+
+        List<Publicacion> resultado = new ArrayList<>();
+
+        for (Publicacion publicacion : candidatas) {
+            if (publicacion.getLatitud() != null && publicacion.getLongitud() != null) {
+                double distancia = calcularDistancia(latitudUsuario, longitudUsuario, publicacion.getLatitud(), publicacion.getLongitud());
+
+                if (distancia <= radioKm) {
+                    resultado.add(publicacion);
+                }
+            }
+        }
+        return resultado;
+    }
+
+    private double calcularDistancia(Double latitud1, Double longitud1, Double latitud2, Double longitud2) {
+
+        final double RADIO_TIERRA_KM = 6371;
+        double dLat = Math.toRadians(latitud2 - latitud1);
+        double dLon = Math.toRadians(longitud2 - longitud1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(latitud1)) * Math.cos(Math.toRadians(latitud2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return RADIO_TIERRA_KM * c;
+    }
+
+    @Override
+    public List<Publicacion> buscarPublicacionesConFiltros(DatosFiltro datosFiltro) {
+        Set<Publicacion> resultadosUnicos = new HashSet<>();
+        boolean seAplicoAlgunFiltro = false;
+
+        if (datosFiltro != null) {
+            if (datosFiltro.getCategoria() != null && !datosFiltro.getCategoria().trim().isEmpty()) {
+                resultadosUnicos.addAll(this.buscarPublicacionesPorCategoria(datosFiltro.getCategoria()));
+                seAplicoAlgunFiltro = true;
+            }
+
+            if (datosFiltro.getNombre() != null && !datosFiltro.getNombre().trim().isEmpty()) {
+                resultadosUnicos.addAll(this.buscarPorNombre(datosFiltro.getNombre()));
+                seAplicoAlgunFiltro = true;
+            }
+
+            if (datosFiltro.getProvincia() != null) {
+                resultadosUnicos.addAll(this.buscarPorProvincia(datosFiltro.getProvincia()));
+                seAplicoAlgunFiltro = true;
+            }
+
+            if (datosFiltro.getLocalidad() != null && !datosFiltro.getLocalidad().trim().isEmpty()) {
+                resultadosUnicos.addAll(this.buscarPorLocalidad(datosFiltro.getLocalidad()));
+                seAplicoAlgunFiltro = true;
+            }
+        }
+        if (!seAplicoAlgunFiltro) {
+            return this.obtenerTodasLasPublicaciones();
+        }
+
+        return resultadosUnicos.stream()
+                .sorted((p1, p2) -> p2.getId().compareTo(p1.getId()))
+                .collect(Collectors.toList());
+    }
+
 }

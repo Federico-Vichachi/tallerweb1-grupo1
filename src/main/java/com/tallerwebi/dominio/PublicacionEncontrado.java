@@ -14,7 +14,7 @@ public class PublicacionEncontrado extends Publicacion {
     public PublicacionEncontrado() {}
 
     public PublicacionEncontrado(DatosEncontrado datosEncontrado) {
-        super(datosEncontrado.getTitulo(), datosEncontrado.getDescripcionCorta(), datosEncontrado.getDescripcionDetallada(), datosEncontrado.getImagen(), datosEncontrado.getRaza(), datosEncontrado.getTamanio(), datosEncontrado.getUbicacion(), datosEncontrado.getTelefono(), datosEncontrado.getEmail());
+        super(datosEncontrado.getTitulo(), datosEncontrado.getDescripcionCorta(), datosEncontrado.getDescripcionDetallada(), datosEncontrado.getImagen(), datosEncontrado.getRaza(), datosEncontrado.getTamanio(), datosEncontrado.getTelefono(),datosEncontrado.getEmail(), datosEncontrado.getProvincia(), datosEncontrado.getLocalidad());
     }
 
     @Override

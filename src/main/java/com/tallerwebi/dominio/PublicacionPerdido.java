@@ -19,7 +19,7 @@ public class PublicacionPerdido extends Publicacion {
     public  PublicacionPerdido() {}
 
     public  PublicacionPerdido(DatosPerdido datosPerdido) {
-        super(datosPerdido.getTitulo(), datosPerdido.getDescripcionCorta(), datosPerdido.getDescripcionDetallada(), datosPerdido.getImagen(), datosPerdido.getRaza(), datosPerdido.getTamanio(), datosPerdido.getUbicacion(), datosPerdido.getTelefono(), datosPerdido.getEmail());
+        super(datosPerdido.getTitulo(), datosPerdido.getDescripcionCorta(), datosPerdido.getDescripcionDetallada(), datosPerdido.getImagen(), datosPerdido.getRaza(), datosPerdido.getTamanio(), datosPerdido.getTelefono(),datosPerdido.getEmail(), datosPerdido.getProvincia(), datosPerdido.getLocalidad());
         this.fechaDesaparicion = datosPerdido.getFechaDesaparicion();
         this.horaDesaparicion = datosPerdido.getHoraDesaparicion();
         this.llevaCollar = datosPerdido.getLlevaCollar();

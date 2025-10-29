@@ -19,7 +19,7 @@ public class PublicacionRecaudacion extends Publicacion {
     public  PublicacionRecaudacion() {}
 
     public PublicacionRecaudacion(DatosRecaudacion datosRecaudacion) {
-        super(datosRecaudacion.getTitulo(), datosRecaudacion.getDescripcionCorta(), datosRecaudacion.getDescripcionDetallada(), datosRecaudacion.getImagen(), datosRecaudacion.getRaza(), datosRecaudacion.getTamanio(), datosRecaudacion.getUbicacion(), datosRecaudacion.getTelefono(), datosRecaudacion.getEmail());
+        super(datosRecaudacion.getTitulo(), datosRecaudacion.getDescripcionCorta(), datosRecaudacion.getDescripcionDetallada(), datosRecaudacion.getImagen(), datosRecaudacion.getRaza(), datosRecaudacion.getTamanio(), datosRecaudacion.getTelefono(),datosRecaudacion.getEmail(), datosRecaudacion.getProvincia(), datosRecaudacion.getLocalidad());
         this.edad = datosRecaudacion.getEdad();
         this.meta = datosRecaudacion.getMeta();
         this.cbu = datosRecaudacion.getCbu();

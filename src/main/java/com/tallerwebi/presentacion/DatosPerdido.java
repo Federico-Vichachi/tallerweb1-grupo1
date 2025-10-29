@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Provincias;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,9 +18,9 @@ public class DatosPerdido extends DatosPublicacion {
     }
 
     public DatosPerdido(String titulo, String descripcionCorta, String descripcionDetallada, String imagen,
-                        String raza, Integer tamanio, String ubicacion, String telefono, String email,
+                        String raza, Integer tamanio, String localidad, Provincias provincia, String telefono, String email,
                         String fechaDesaparicion, String horaDesaparicion, Boolean llevaCollar, String recompensa) {
-        super(titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, ubicacion, telefono, email);
+        super(titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, provincia,localidad, telefono, email);
         this.fechaDesaparicion = fechaDesaparicion;
         this.horaDesaparicion = horaDesaparicion;
         this.llevaCollar = llevaCollar;
