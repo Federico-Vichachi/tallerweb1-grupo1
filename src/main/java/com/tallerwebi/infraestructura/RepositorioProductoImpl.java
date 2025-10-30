@@ -30,4 +30,9 @@ public class RepositorioProductoImpl implements RepositorioProducto {
                 .addOrder(Order.desc("id"))
                 .list();
     }
+
+    @Override
+    public Producto buscarPorId(Long id) {
+        return sessionFactory.getCurrentSession().get(Producto.class, id);
+    }
 }

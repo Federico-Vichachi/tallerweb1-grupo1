@@ -18,9 +18,9 @@
             <p>Stock: <span th:text="${producto.stock}"></span></p>
             <img th:src="@{${producto.imagenUrl}}" alt="Imagen producto" width="150"/>
 
-            <form th:action="@{/comprar}" method="post">
-                <input type="hidden" th:name="productoId" th:value="${producto.id}"/>
-                <button type="submit">Comprar</button>
+            <form th:action="@{/canjear-producto}" method="post">
+                <input type="hidden" th:name="id" th:value="${producto.id}"/>
+                <button type="submit">Canjear</button>
             </form>
         </li>
     </ul>

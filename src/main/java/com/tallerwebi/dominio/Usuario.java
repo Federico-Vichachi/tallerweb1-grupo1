@@ -47,13 +47,13 @@ public class Usuario {
         this.puntos += cantidad;
     }
 
-    /* NO TOCAR POR EL MOMENTO.
-        public boolean gastarPuntos(int cantidad){
+
+    public boolean gastarPuntos(int cantidad){
         if(this.puntos >= cantidad){
             this.puntos -= cantidad;
             return true;
         }
         return false;
     }
-    */
+
 }

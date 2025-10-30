@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioProducto;
+import com.tallerwebi.dominio.ServicioPuntos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,13 +16,16 @@ public class ControladorProductoTest {
 
     private ControladorProducto controladorProducto;
     private ServicioProducto servicioProducto;
-
+    private ServicioPuntos servicioPuntos;
     private DatosProducto datosProducto;
 
     @BeforeEach
     public void setUp() {
-        servicioProducto = mock(ServicioProducto.class);
-        controladorProducto = new ControladorProducto(servicioProducto);
+        servicioProducto= mock(ServicioProducto.class);
+        servicioPuntos = mock(ServicioPuntos.class);
+        RepositorioUsuario repositorioUsuarioMock = mock(RepositorioUsuario.class);
+
+        controladorProducto = new ControladorProducto(servicioProducto, servicioPuntos, repositorioUsuarioMock);
     }
 
 

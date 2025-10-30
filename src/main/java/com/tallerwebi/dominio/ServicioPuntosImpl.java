@@ -21,4 +21,14 @@ public class ServicioPuntosImpl implements ServicioPuntos {
         usuario.sumarPuntos(puntos);
         repositorioUsuario.guardar(usuario);
     }
+
+    @Override
+    public boolean gastarPuntos(Usuario usuario, Producto producto) {
+        int puntos = producto.getPrecioEnPuntos();
+        boolean pudoGastar = usuario.gastarPuntos(puntos);
+        if (pudoGastar) {
+            repositorioUsuario.guardar(usuario);
+        }
+        return pudoGastar;
+    }
 }
