@@ -7,5 +7,10 @@ public interface RepositorioPublicacion {
     Publicacion buscarPorId(Long id);
     List<Publicacion> buscarTodas();
     <T extends Publicacion> List<T> buscarPorTipo(Class<T> tipo);
+    List<Publicacion> buscarPorNombre(String nombre);
+    List<Publicacion> buscarPorProvincia(Provincias provincia);
+    List<Publicacion> buscarPorLocalidad(String localidad);
+    List<Publicacion> buscarPorTipos(List<Class<? extends Publicacion>> tipos);
+
 
 }

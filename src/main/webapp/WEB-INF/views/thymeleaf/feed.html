@@ -5,86 +5,159 @@
     <title>Feed de Publicaciones</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <link rel="stylesheet" th:href="@{/css/variables.css}"/>
     <link rel="stylesheet" th:href="@{/css/footer.css}"/>
     <link rel="stylesheet" th:href="@{/css/feed.css}"/>
+    <script th:inline="javascript">
+        const contextPath = /*[[@{/}]]*/ '';
+    </script>
 </head>
 <body>
 
 <div class="container my-5">
     <div class="row g-4">
-        <!-- Columna de filtros -->
+        <!-- COLUMNA DE FILTROS Y MAPA -->
         <div class="col-lg-4 col-xl-3">
-            <form th:action="@{/feed}" method="GET" id="form-filtros">
-                <aside class="filtro-columna">
-                    <h3 class="titulo-filtros"><i class="fa-solid fa-filter"></i> Filtros</h3>
-                    <!-- Seccion Buscar -->
-                    <div class="filtro-seccion">
-                        <h4 class="subtitulo-filtros">Buscar</h4>
-                        <div class="busqueda">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" name="nombre" class="busqueda-cuadro" placeholder="Buscar por titulo..." th:value="${nombreFiltro}">
+            <aside class="filtro-columna">
+                <!-- Botones para alternar vista -->
+                <div class="vista-toggle-container">
+                    <button id="btn-mostrar-filtros" class="vista-toggle-btn active">
+                        <i class="fa-solid fa-filter"></i> Filtros
+                    </button>
+                    <button id="btn-mostrar-mapa" class="vista-toggle-btn">
+                        <i class="fa-solid fa-map-location-dot"></i> Mapa
+                    </button>
+                </div>
+
+                <!-- Contenedor de Filtros -->
+                <div id="contenedor-filtros">
+                    <form th:action="@{/feed}" method="GET" id="form-filtros">
+                        <h3 class="titulo-filtros"><i class="fa-solid fa-filter"></i> Filtros</h3>
+                        <!-- Seccion Buscar -->
+                        <div class="filtro-seccion">
+                            <h4 class="subtitulo-filtros">Buscar</h4>
+                            <div class="busqueda">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" name="nombre" class="busqueda-cuadro" placeholder="Buscar por titulo..." th:value="${nombreFiltro}">
+                            </div>
                         </div>
-                    </div>
-                    <!-- Seccion Categorias -->
-                    <div class="filtro-seccion">
-                        <h4 class="subtitulo-filtros">Categorias</h4>
-                        <div class="item-categoria">
-                            <input type="radio" id="animal-adopcion" name="categoria" value="ADOPCION" th:checked="${categoriaFiltro=='ADOPCION'}">
-                            <label for="animal-adopcion">Adopcion</label>
+                        <!-- Seccion Categorias -->
+                        <div class="filtro-seccion">
+                            <h4 class="subtitulo-filtros">Categorias</h4>
+                            <div class="item-categoria">
+                                <input type="radio" id="animal-adopcion" name="categoria" value="ADOPCION" th:checked="${categoriaFiltro=='ADOPCION'}">
+                                <label for="animal-adopcion">Adopcion</label>
+                            </div>
+                            <div class="item-categoria">
+                                <input type="radio" id="animal-perdido" name="categoria" value="PERDIDO" th:checked="${categoriaFiltro=='PERDIDO'}">
+                                <label for="animal-perdido">Perdido</label>
+                            </div>
+                            <div class="item-categoria">
+                                <input type="radio" id="animal-encontrado" name="categoria" value="ENCONTRADO" th:checked="${categoriaFiltro=='ENCONTRADO'}">
+                                <label for="animal-encontrado">Encontrado</label>
+                            </div>
+                            <div class="item-categoria">
+                                <input type="radio" id="animal-salud" name="categoria" value="SALUD" th:checked="${categoriaFiltro=='SALUD'}">
+                                <label for="animal-salud">Salud</label>
+                            </div>
+                            <div class="item-categoria">
+                                <input type="radio" id="animal-recaudacion" name="categoria" value="RECAUDACION" th:checked="${categoriaFiltro=='RECAUDACION'}">
+                                <label for="animal-recaudacion">Recaudacion</label>
+                            </div>
                         </div>
-                        <div class="item-categoria">
-                            <input type="radio" id="animal-perdido" name="categoria" value="PERDIDO" th:checked="${categoriaFiltro=='PERDIDO'}">
-                            <label for="animal-perdido">Perdido</label>
+
+                        <!-- Seccion Provincia y Localidad -->
+                        <div class="filtro-seccion mb-4">
+                            <h4 class="subtitulo-filtros">Ubicacion</h4>
+                            <div class="mb-2">
+                                <label for="provincia" class="form-label" style="font-weight: 500;">Provincia</label>
+                                <select id="provincia" name="provincia" class="form-select">
+                                    <option value="">Todas</option>
+                                    <option th:each="p : ${provincias}"
+                                            th:value="${p}"
+                                            th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}"
+                                            th:selected="${p == provinciaFiltro}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="localidad" class="form-label" style="font-weight: 500;">Ciudad / Localidad</label>
+                                <input type="text" id="localidad" name="localidad" class="form-control" placeholder="Ej: La Plata" th:value="${localidadFiltro}">
+                            </div>
                         </div>
-                        <div class="item-categoria">
-                            <input type="radio" id="animal-encontrado" name="categoria" value="ENCONTRADO" th:checked="${categoriaFiltro=='ENCONTRADO'}">
-                            <label for="animal-encontrado">Encontrado</label>
-                        </div>
-                        <div class="item-categoria">
-                            <input type="radio" id="animal-salud" name="categoria" value="SALUD" th:checked="${categoriaFiltro=='SALUD'}">
-                            <label for="animal-salud">Salud</label>
-                        </div>
-                        <div class="item-categoria">
-                            <input type="radio" id="animal-recaudacion" name="categoria" value="RECAUDACION" th:checked="${categoriaFiltro=='RECAUDACION'}">
-                            <label for="animal-recaudacion">Recaudacion</label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 mt-4">Aplicar Filtros</button>
-                    <a th:href="@{/feed}" class="limpiar-filtros-btn">Limpiar</a>
-                </aside>
-            </form>
+
+                        <button type="submit" class="btn btn-primary w-100 mt-4">Aplicar Filtros</button>
+                        <a th:href="@{/feed}" class="limpiar-filtros-btn">Limpiar</a>
+                    </form>
+                </div>
+
+                <!-- MAPA -->
+                <div id="contenedor-mapa" style="display: none;">
+                    <h4 class="subtitulo-filtros" style="margin-top: 15px;">Mascotas cerca de ti</h4>
+                    <div id="map"></div>
+                </div>
+            </aside>
         </div>
 
-        <!--  COLUMNA DE PUBLICACIONES  -->
+        <!-- COLUMNA DE PUBLICACIONES -->
         <div class="col-lg-8 col-xl-9">
             <div class="publicaciones-container">
-                <div class="d-flex justify-content-between align-items-center mb-4 gap-3">
+                <div class="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap">
                     <div>
                         <h2 class="titulo-publicacion">Publicaciones</h2>
                         <p class="subtitulo-publicacion">Explora las ultimas publicaciones de la comunidad</p>
                     </div>
-                    <a
-                        th:if="${usuarioLogueado != null}"
-                        th:href="@{/crear-publicacion}"  class="btn btn-primary">
-                        <span class="fa-solid fa-plus"></span>
-                        Crear Publicación
-                    </a>
 
-                    <a
-                        th:if="${usuarioLogueado != null}"
-                        th:href="@{/perfil}"  class="btn btn-primary">
-                        <i class="fa-solid fa-user" style="color: #ffffff;"></i>
-                        Perfil
-                    </a>
+                    <!-- BOTONES -->
+                    <div class="d-flex gap-2 flex-wrap">
+                        <!-- Boton Volver al Home -->
+                        <a th:href="@{/home}" class="btn btn-secondary">
+                            <i class="fa-solid fa-arrow-left"></i> Volver al Home
+                        </a>
 
+                        <!-- Boton Crear Publicacion  -->
+                        <a th:if="${usuarioLogueado != null}" th:href="@{/crear-publicacion}" class="btn btn-primary">
+                            <span class="fa-solid fa-plus"></span>
+                            Crear Publicacion
+                        </a>
+
+                        <!-- Boton Perfil  -->
+                        <a th:if="${usuarioLogueado != null}" th:href="@{/perfil}" class="btn btn-primary">
+                            <i class="fa-solid fa-user" style="color: #ffffff;"></i>
+                            Perfil
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <!-- MENSAJE ERROR -->
+            <!-- MENSAJE DE ERROR -->
             <div th:if="${error}" class="alert alert-warning mt-3" role="alert">
                 <i class="fa-solid fa-triangle-exclamation me-2"></i>
                 <span th:text="${error}"></span>
+            </div>
+
+            <!-- MENSAJE PARA CUANDO NO HAY PUBLICACIONES -->
+            <div th:if="${error == null and publicaciones.isEmpty()}" class="alert alert-info mt-3" role="alert">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                <!-- Mensaje si se aplico un filtro y no hubo resultados -->
+                <span th:if="${
+                        not #strings.isEmpty(nombreFiltro) or
+                        not #strings.isEmpty(categoriaFiltro) or
+                        provinciaFiltro != null or
+                        not #strings.isEmpty(localidadFiltro)
+                      }">
+                    No se encontraron publicaciones que coincidan con tu busqueda.
+                </span>
+                <!-- Mensaje si NO se aplico ningun filtro -->
+                <span th:if="${
+                        #strings.isEmpty(nombreFiltro) and
+                        #strings.isEmpty(categoriaFiltro) and
+                        provinciaFiltro == null and
+                        #strings.isEmpty(localidadFiltro)
+                      }">
+                    Aun no hay publicaciones.
+                </span>
             </div>
 
             <!-- MENSAJE  -->
@@ -93,7 +166,7 @@
                 <span th:text="${mensaje}"></span>
             </div>
 
-            <!-- BUCLE -->
+            <!-- BUCLE PARA MOSTRAR LAS PUBLICACIONES -->
             <div class="carta-adopcion mb-4" th:each="publicacion : ${publicaciones}">
                 <div class="card-header-custom d-flex justify-content-between align-items-center">
                     <div class="user-info d-flex align-items-center">
@@ -125,12 +198,10 @@
                                 <span th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion)}">
                                     <i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span> anios
                                 </span>
-                                <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${publicacion.ubicacion}"></span></span>
+                                <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${publicacion.localidad}"></span></span>
                                 <span><i class="fa-solid fa-paw"></i> <span th:text="${publicacion.raza}"></span></span>
                             </div>
                             <p class="descripcion-animal" th:text="${publicacion.descripcionCorta}"></p>
-
-
                             <div class="boton-pta d-flex flex-wrap gap-2">
                                 <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
                                 <button class="btn btn-consult">Consultar</button>
@@ -144,12 +215,13 @@
     </div>
 </div>
 
-<footer class="footer">
+<footer class="footer"></footer>
 
-</footer>
-
-<script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/filtros.js}"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script th:src="@{/js/mapa.js}" charset="UTF-8"></script>
+<script th:src="@{/js/feed-toggle.js}" charset="UTF-8"></script>
 
 </body>
 </html>

@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.RepositorioUsuario;
-import com.tallerwebi.dominio.ServicioPublicacion;
-import com.tallerwebi.dominio.ServicioPuntos;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,7 +49,8 @@ public class ControladorCrearPublicacionTest {
         datosAdopcion.setImagen("firulais.jpg");
         datosAdopcion.setRaza("Golden Retriever");
         datosAdopcion.setTamanio(40);
-        datosAdopcion.setUbicacion("CABA, Argentina");
+        datosAdopcion.setProvincia(Provincias.CORRIENTES);
+        datosAdopcion.setLocalidad("La matanza");
         datosAdopcion.setTelefono("1145123412");
         datosAdopcion.setEmail("firulais@mail.com");
         datosAdopcion.setEdad(2);
@@ -86,7 +84,8 @@ public class ControladorCrearPublicacionTest {
         datosRecaudacion.setImagen("Pelusa.jpg");
         datosRecaudacion.setRaza("Mestizo");
         datosRecaudacion.setTamanio(50);
-        datosRecaudacion.setUbicacion("Lanus, Argentina");
+        datosRecaudacion.setProvincia(Provincias.ENTRE_RIOS);
+        datosRecaudacion.setLocalidad("Merlo");
         datosRecaudacion.setTelefono("1145332211");
         datosRecaudacion.setEmail("ayuda.rocky@gmail.com");
         datosRecaudacion.setEdad(5);
@@ -124,7 +123,8 @@ public class ControladorCrearPublicacionTest {
         datosSalud.setImagen("Fito.jpg");
         datosSalud.setRaza("Siames");
         datosSalud.setTamanio(35);
-        datosSalud.setUbicacion("CABA, Argentina");
+        datosSalud.setProvincia(Provincias.CATAMARCA);
+        datosSalud.setLocalidad("CABA");
         datosSalud.setTelefono("1185262211");
         datosSalud.setEmail("ayuda.fito@gmail.com");
         datosSalud.setEdad(3);
@@ -162,7 +162,8 @@ public class ControladorCrearPublicacionTest {
         datosPerdido.setImagen("Luna.jpg");
         datosPerdido.setRaza("Mestizo");
         datosPerdido.setTamanio(25);
-        datosPerdido.setUbicacion("Merlo, Argentina");
+        datosPerdido.setProvincia(Provincias.FORMOSA);
+        datosPerdido.setLocalidad("Merlo");
         datosPerdido.setTelefono("1110652113");
         datosPerdido.setEmail("luna@gmail.com");
         datosPerdido.setFechaDesaparicion("12/10/2025");
@@ -198,7 +199,8 @@ public class ControladorCrearPublicacionTest {
         datosEncontrado.setImagen("Mancha.jpg");
         datosEncontrado.setRaza("Mestizo");
         datosEncontrado.setTamanio(35);
-        datosEncontrado.setUbicacion("Ituzaingo, Argentina");
+        datosEncontrado.setProvincia(Provincias.CORDOBA);
+        datosEncontrado.setLocalidad("Ituzaingo");
         datosEncontrado.setTelefono("1185262211");
         datosEncontrado.setEmail("ayuda.manchita@gmail.com");
     }

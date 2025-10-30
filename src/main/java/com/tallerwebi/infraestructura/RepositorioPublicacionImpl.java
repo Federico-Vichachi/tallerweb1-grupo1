@@ -1,9 +1,11 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.Provincias;
 import com.tallerwebi.dominio.Publicacion;
 import com.tallerwebi.dominio.RepositorioPublicacion;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -41,6 +43,42 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
     public <T extends Publicacion> List<T> buscarPorTipo(Class<T> tipo) {
         return (List<T>) sessionFactory.getCurrentSession()
                 .createCriteria(tipo)
+                .addOrder(Order.desc("id"))
+                .list();
+    }
+
+    @Override
+    public List<Publicacion> buscarPorNombre(String nombre) {
+        return (List<Publicacion>) sessionFactory.getCurrentSession()
+                .createCriteria(Publicacion.class)
+                .add(Restrictions.ilike("titulo", "%" + nombre + "%"))
+                .addOrder(Order.desc("id"))
+                .list();
+    }
+
+    @Override
+    public List<Publicacion> buscarPorProvincia(Provincias provincia) {
+        return (List<Publicacion>) sessionFactory.getCurrentSession()
+                .createCriteria(Publicacion.class)
+                .add(Restrictions.eq("provincia", provincia))
+                .addOrder(Order.desc("id"))
+                .list();
+    }
+
+    @Override
+    public List<Publicacion> buscarPorLocalidad(String localidad) {
+        return (List<Publicacion>) sessionFactory.getCurrentSession()
+                .createCriteria(Publicacion.class)
+                .add(Restrictions.ilike("localidad", "%" + localidad + "%"))
+                .addOrder(Order.desc("id"))
+                .list();
+    }
+
+    @Override
+    public List<Publicacion> buscarPorTipos(List<Class<? extends Publicacion>> tipos){
+        return (List<Publicacion>) sessionFactory.getCurrentSession()
+                .createCriteria(Publicacion.class)
+                .add(Restrictions.in("class", tipos))
                 .addOrder(Order.desc("id"))
                 .list();
     }

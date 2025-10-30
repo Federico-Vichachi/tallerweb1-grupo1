@@ -18,7 +18,7 @@ public class PublicacionSalud extends Publicacion {
     public  PublicacionSalud() {}
 
     public PublicacionSalud(DatosSalud datosSalud) {
-        super(datosSalud.getTitulo(), datosSalud.getDescripcionCorta(), datosSalud.getDescripcionDetallada(), datosSalud.getImagen(), datosSalud.getRaza(), datosSalud.getTamanio(), datosSalud.getUbicacion(), datosSalud.getTelefono(), datosSalud.getEmail());
+        super(datosSalud.getTitulo(), datosSalud.getDescripcionCorta(), datosSalud.getDescripcionDetallada(), datosSalud.getImagen(), datosSalud.getRaza(), datosSalud.getTamanio(), datosSalud.getTelefono(),datosSalud.getEmail(), datosSalud.getProvincia(), datosSalud.getLocalidad());
         this.edad = datosSalud.getEdad();
         this.sintomasPrincipales = datosSalud.getSintomasPrincipales();
         this.diagnostico = datosSalud.getDiagnostico();

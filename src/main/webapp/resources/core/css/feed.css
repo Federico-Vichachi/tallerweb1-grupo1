@@ -373,3 +373,9 @@ gap: 8px;
     color: white;
 }
 
+#map {
+    height: 400px;  /* ¡Esta es la línea más importante! */
+    width: 100%;
+    border-radius: 8px; /* Opcional, para que se vea mejor */
+    border: 1px solid #ccc; /* Opcional, para ver el borde */
+}
