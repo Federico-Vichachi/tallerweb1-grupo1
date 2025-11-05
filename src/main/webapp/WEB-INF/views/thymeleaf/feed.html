@@ -20,14 +20,21 @@
         <!-- COLUMNA DE FILTROS Y MAPA -->
         <div class="col-lg-4 col-xl-3">
             <aside class="filtro-columna">
-                <!-- SECCION FILTROS -->
+                <!-- Botones para alternar vista -->
                 <div class="vista-toggle-container">
-                    <button id="btn-mostrar-filtros" class="vista-toggle-btn active"><i class="fa-solid fa-filter"></i> Filtros</button>
-                    <button id="btn-mostrar-mapa" class="vista-toggle-btn"><i class="fa-solid fa-map-location-dot"></i> Mapa</button>
+                    <button id="btn-mostrar-filtros" class="vista-toggle-btn active">
+                        <i class="fa-solid fa-filter"></i> Filtros
+                    </button>
+                    <button id="btn-mostrar-mapa" class="vista-toggle-btn">
+                        <i class="fa-solid fa-map-location-dot"></i> Mapa
+                    </button>
                 </div>
+
+                <!-- Contenedor de Filtros -->
                 <div id="contenedor-filtros">
                     <form th:action="@{/feed}" method="GET" id="form-filtros">
                         <h3 class="titulo-filtros"><i class="fa-solid fa-filter"></i> Filtros</h3>
+                        <!-- Seccion Buscar -->
                         <div class="filtro-seccion">
                             <h4 class="subtitulo-filtros">Buscar</h4>
                             <div class="busqueda">
@@ -35,6 +42,7 @@
                                 <input type="text" name="nombre" class="busqueda-cuadro" placeholder="Buscar por titulo..." th:value="${nombreFiltro}">
                             </div>
                         </div>
+                        <!-- Seccion Categorias -->
                         <div class="filtro-seccion">
                             <h4 class="subtitulo-filtros">Categorias</h4>
                             <div class="item-categoria"><input type="radio" id="animal-adopcion" name="categoria" value="ADOPCION" th:checked="${categoriaFiltro=='ADOPCION'}"><label for="animal-adopcion">Adopcion</label></div>
@@ -43,6 +51,7 @@
                             <div class="item-categoria"><input type="radio" id="animal-salud" name="categoria" value="SALUD" th:checked="${categoriaFiltro=='SALUD'}"><label for="animal-salud">Salud</label></div>
                             <div class="item-categoria"><input type="radio" id="animal-recaudacion" name="categoria" value="RECAUDACION" th:checked="${categoriaFiltro=='RECAUDACION'}"><label for="animal-recaudacion">Recaudacion</label></div>
                         </div>
+                        <!-- Seccion Provincia y Localidad -->
                         <div class="filtro-seccion mb-4">
                             <h4 class="subtitulo-filtros">Ubicacion</h4>
                             <div class="mb-2"><label for="provincia" class="form-label" style="font-weight: 500;">Provincia</label><select id="provincia" name="provincia" class="form-select"><option value="">Todas</option><option th:each="p : ${provincias}" th:value="${p}" th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}" th:selected="${p == provinciaFiltro}"></option></select></div>
@@ -52,20 +61,23 @@
                         <a th:href="@{/feed}" class="limpiar-filtros-btn">Limpiar</a>
                     </form>
                 </div>
-                <div id="contenedor-mapa" style="display: none;"><h4 class="subtitulo-filtros" style="margin-top: 15px;">Mascotas cerca de ti</h4><div id="map"></div></div>
+                <!-- MAPA -->
+                <div id="contenedor-mapa" style="display: none;">
+                    <h4 class="subtitulo-filtros" style="margin-top: 15px;">Mascotas cerca de ti</h4>
+                    <div id="map"></div>
+                </div>
             </aside>
         </div>
 
         <!-- COLUMNA DE PUBLICACIONES -->
         <div class="col-lg-8 col-xl-9">
-
             <div class="publicaciones-container">
                 <div class="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap">
                     <div><h2 class="titulo-publicacion">Publicaciones</h2><p class="subtitulo-publicacion">Explora las ultimas publicaciones de la comunidad</p></div>
                     <div class="d-flex gap-2 flex-wrap"><a th:href="@{/home}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver al Home</a><a th:if="${usuarioLogueado != null}" th:href="@{/crear-publicacion}" class="btn btn-primary"><span class="fa-solid fa-plus"></span> Crear Publicacion</a><a th:if="${usuarioLogueado != null}" th:href="@{/perfil}" class="btn btn-primary"><i class="fa-solid fa-user" style="color: #ffffff;"></i> Perfil</a></div>
                 </div>
             </div>
-            <!-- MENSAJES ERROR -->
+            <!-- MENSAJES -->
             <div th:if="${error}" class="alert alert-warning mt-3" role="alert"><i class="fa-solid fa-triangle-exclamation me-2"></i><span th:text="${error}"></span></div>
             <div th:if="${error == null and publicaciones.isEmpty()}" class="alert alert-info mt-3" role="alert"><i class="fa-solid fa-circle-info me-2"></i><span th:if="${not #strings.isEmpty(nombreFiltro) or not #strings.isEmpty(categoriaFiltro) or provinciaFiltro != null or not #strings.isEmpty(localidadFiltro)}">No se encontraron publicaciones que coincidan con tu busqueda.</span><span th:if="${#strings.isEmpty(nombreFiltro) and #strings.isEmpty(categoriaFiltro) and provinciaFiltro == null and #strings.isEmpty(localidadFiltro)}">Aun no hay publicaciones.</span></div>
             <div th:if="${mensaje}" class="alert alert-info mt-3" role="alert"><i class="fa-solid fa-circle-info me-2"></i><span th:text="${mensaje}"></span></div>
@@ -74,7 +86,7 @@
             <div th:each="publicacion : ${publicaciones}">
                 <div th:switch="${publicacion.class.simpleName}" class="carta-adopcion">
 
-                    <!-- PUBLICACIÓN DE RECAUDACIÓN -->
+
                     <div th:case="'PublicacionRecaudacion'">
                         <div class="card-header-custom d-flex justify-content-between align-items-center">
                             <div class="user-info d-flex align-items-center">
@@ -100,30 +112,34 @@
                                             <span class="recaudado">Recaudado: <span class="fw-bold" th:text="${publicacion.montoActual}"></span></span>
                                         </div>
                                         <div class="progress mt-1" style="height: 10px;">
-                                            <div class="progress-bar" role="progressbar" th:style="'width: ' + (${publicacion.meta > 0 ? (publicacion.montoActual / publicacion.meta * 100) : 0}) + '%;'" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" th:style="'width: ' + (${publicacion.montoActual != null and publicacion.meta > 0 ? (publicacion.montoActual / publicacion.meta * 100) : 0}) + '%;'" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
-
                                     <p class="descripcion-animal" th:text="${publicacion.descripcionCorta}"></p>
-                                    <div class="boton-pta d-flex flex-wrap gap-2 mt-auto">
 
-                                        <form th:action="@{/donar}" method="POST" style="display: inline;">
-                                            <input type="hidden" name="id" th:value="${publicacion.id}" />
-                                            <input type="number" name="monto" step="0.01" min="0">
+                                    <form th:action="@{/donar}" method="POST" class="mt-auto">
+                                        <input type="hidden" name="id" th:value="${publicacion.id}" />
+
+                                        <div class="boton-pta d-flex flex-wrap gap-2 align-items-center">
+                                            <div style="min-width: 120px;">
+                                                <input type="number" name="monto" class="form-control form-control-sm" placeholder="Monto" required min="100" />
+                                            </div>
+
                                             <button type="submit" class="btn btn-donar">
                                                 <i class="fa-solid fa-dollar-sign"></i> Donar
                                             </button>
-                                        </form>
-                                        <button class="btn btn-compartir">Compartir</button>
-                                        <a th:href="@{'/post/' + ${publicacion.id}}" class="btn btn-more-info">Mas info</a>
-                                    </div>
+
+                                            <button type="button" class="btn btn-compartir">Compartir</button>
+                                            <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-more-info">Mas info</a>
+                                        </div>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
-                    <!-- ADOPCION, PERDIDO, SALUD, ENCONTRADO, HAY QUE CAMBIAR -->
+                    <!-- CASO POR DEFECTO PARA OTROS TIPOS DE PUBLICACIÓN -->
                     <div th:case="*">
                         <div class="card-header-custom d-flex justify-content-between align-items-center">
                             <div class="user-info d-flex align-items-center">
@@ -136,12 +152,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- COLORES DE LOS TAGS-->
                             <div class="tag-adopcion"
-                                 th:classappend="${publicacion.class.simpleName == 'PublicacionAdopcion' ? 'tag-adopcion' :
-                                                 (publicacion.class.simpleName == 'PublicacionPerdido' ? 'tag-perdido' :
-                                                 (publicacion.class.simpleName == 'PublicacionEncontrado' ? 'tag-encontrado' :
-                                                 (publicacion.class.simpleName == 'PublicacionSalud' ? 'tag-salud' : '')))}"
+                                 th:classappend="${publicacion.class.simpleName == 'PublicacionAdopcion' ? 'tag-adopcion' : (publicacion.class.simpleName == 'PublicacionPerdido' ? 'tag-perdido' : (publicacion.class.simpleName == 'PublicacionEncontrado' ? 'tag-encontrado' : (publicacion.class.simpleName == 'PublicacionSalud' ? 'tag-salud' : '')))}"
                                  th:text="${#strings.capitalize(publicacion.class.simpleName.replace('Publicacion',''))}">
                             </div>
                         </div>
@@ -152,8 +164,8 @@
                                     <h2 class="nombre-animal" th:text="${publicacion.titulo}"></h2>
                                     <div class="contenedor-info d-flex flex-wrap align-items-center mb-3">
                                         <span th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion) or publicacion instanceof T(com.tallerwebi.dominio.PublicacionRecaudacion) or publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud)}">
-    <i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span> anios
-</span>
+                                            <i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span> anios
+                                        </span>
                                         <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${publicacion.localidad}"></span></span>
                                         <span><i class="fa-solid fa-paw"></i> <span th:text="${publicacion.raza}"></span></span>
                                     </div>
@@ -161,7 +173,7 @@
                                     <div class="boton-pta d-flex flex-wrap gap-2 mt-auto">
                                         <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
                                         <button class="btn btn-consult">Consultar</button>
-                                        <a th:href="@{'/post/' + ${publicacion.id}}" class="btn btn-more-info">Mas info</a>
+                                        <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-more-info">Mas info</a>
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +182,6 @@
 
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -182,7 +193,6 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script th:src="@{/js/mapa.js}" charset="UTF-8"></script>
 <script th:src="@{/js/feed-toggle.js}" charset="UTF-8"></script>
-
 
 </body>
 </html>

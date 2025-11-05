@@ -11,6 +11,6 @@ public interface RepositorioPublicacion {
     List<Publicacion> buscarPorProvincia(Provincias provincia);
     List<Publicacion> buscarPorLocalidad(String localidad);
     List<Publicacion> buscarPorTipos(List<Class<? extends Publicacion>> tipos);
-
+    List<Publicacion> buscarPublicacionesPorFiltros(String categoria, String nombre, Provincias provincia, String localidad);
     void actualizar(Publicacion publicacion);
 }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${publicacion.titulo}">Detalle de Publicacion</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/feed.css}"/>
+    <style>
+        body { background-color: #fdf5e6; }
+        .detalle-container { max-width: 900px; margin: 40px auto; }
+        .imagen-detalle { width: 100%; height: 500px; object-fit: cover; border-radius: 15px; }
+        .descripcion-detallada { font-size: 1.1rem; line-height: 1.7; }
+    </style>
+</head>
+<body>
+
+
+
+<div class="container detalle-container">
+    <div class="carta-adopcion" th:if="${publicacion != null}">
+
+        <a th:href="@{/feed}" class="btn btn-secondary mb-4"><i class="fa-solid fa-arrow-left"></i> Volver al Feed</a>
+
+        <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="imagen-detalle mb-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="nombre-animal" th:text="${publicacion.titulo}"></h1>
+            <div class="tag-adopcion"
+                 th:classappend="${publicacion.class.simpleName == 'PublicacionAdopcion' ? 'tag-adopcion' :
+                                 (publicacion.class.simpleName == 'PublicacionRecaudacion' ? 'tag-recaudacion' : 'tag-default')}"
+                 th:text="${#strings.capitalize(publicacion.class.simpleName.replace('Publicacion',''))}">
+            </div>
+        </div>
+
+        <div class="contenedor-info d-flex flex-wrap align-items-center mb-4">
+            <span th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion) or publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud)}"><i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span> años</span>
+            <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${publicacion.localidad + ', ' + publicacion.provincia}"></span></span>
+            <span><i class="fa-solid fa-paw"></i> <span th:text="${publicacion.raza}"></span></span>
+        </div>
+
+        <div th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionRecaudacion)}" class="recaudacion-progreso mb-4">
+            <div class="d-flex justify-content-between">
+                <span>Meta: <span class="fw-bold" th:text="${publicacion.meta}"></span></span>
+                <span class="recaudado">Recaudado: <span class="fw-bold" th:text="${publicacion.montoActual}"></span></span>
+            </div>
+            <div class="progress mt-1" style="height: 10px;"><div class="progress-bar" role="progressbar" th:style="'width: ' + (${publicacion.montoActual / publicacion.meta * 100}) + '%;'"></div></div>
+        </div>
+
+        <h4 class="mb-2">Sobre <span th:text="${publicacion.titulo}"></span></h4>
+        <p class="descripcion-detallada" th:text="${publicacion.descripcionDetallada}"></p>
+
+        <hr class="my-4">
+        <div class="boton-pta d-flex flex-wrap gap-2">
+            <button class="btn btn-consult">Contactar</button>
+        </div>
+
+    </div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+</div>
+
+</body>
+</html>

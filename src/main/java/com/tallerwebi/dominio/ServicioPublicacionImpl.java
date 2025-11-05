@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.CategoriaInvalidaException;
+import com.tallerwebi.dominio.excepcion.PublicacionNoEncontradaException;
 import com.tallerwebi.dominio.excepcion.ValidacionPublicacionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,6 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
     @Override
     public Publicacion guardar(Publicacion publicacion) {
         verificarFormatoDeLosDatosDePublicacion(publicacion);
-
-        if(publicacion instanceof PublicacionPerdido || publicacion instanceof PublicacionEncontrado){
-            if(publicacion.getLatitud()==null){
-                publicacion.setLatitud(-34.60 + (Math.random()-0.5)*0.1);
-                publicacion.setLongitud(-34.60 + (Math.random()-0.5)*0.1);
-            }
-        }
 
         return repositorioPublicacion.guardar(publicacion);
     }
@@ -188,39 +182,46 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         return RADIO_TIERRA_KM * c;
     }
 
+
+
     @Override
-    public List<Publicacion> buscarPublicacionesConFiltros(DatosFiltro datosFiltro) {
-        Set<Publicacion> resultadosUnicos = new HashSet<>();
-        boolean seAplicoAlgunFiltro = false;
+    public List<Publicacion> buscarPublicacionesConFiltros(String categoria, String nombre, Provincias provincia, String localidad) {
 
-        if (datosFiltro != null) {
-            if (datosFiltro.getCategoria() != null && !datosFiltro.getCategoria().trim().isEmpty()) {
-                resultadosUnicos.addAll(this.buscarPublicacionesPorCategoria(datosFiltro.getCategoria()));
-                seAplicoAlgunFiltro = true;
-            }
-
-            if (datosFiltro.getNombre() != null && !datosFiltro.getNombre().trim().isEmpty()) {
-                resultadosUnicos.addAll(this.buscarPorNombre(datosFiltro.getNombre()));
-                seAplicoAlgunFiltro = true;
-            }
-
-            if (datosFiltro.getProvincia() != null) {
-                resultadosUnicos.addAll(this.buscarPorProvincia(datosFiltro.getProvincia()));
-                seAplicoAlgunFiltro = true;
-            }
-
-            if (datosFiltro.getLocalidad() != null && !datosFiltro.getLocalidad().trim().isEmpty()) {
-                resultadosUnicos.addAll(this.buscarPorLocalidad(datosFiltro.getLocalidad()));
-                seAplicoAlgunFiltro = true;
+        if (categoria != null && !categoria.trim().isEmpty()) {
+            switch (categoria.toUpperCase()) {
+                case "ADOPCION":
+                case "PERDIDO":
+                case "ENCONTRADO":
+                case "RECAUDACION":
+                case "SALUD":
+                    break;
+                default:
+                    throw new CategoriaInvalidaException("La categoria '" + categoria + "' no es valida.");
             }
         }
+
+        boolean seAplicoAlgunFiltro =
+                (categoria != null && !categoria.trim().isEmpty()) ||
+                        (nombre != null && !nombre.trim().isEmpty()) ||
+                        (provincia != null) ||
+                        (localidad != null && !localidad.trim().isEmpty());
+
         if (!seAplicoAlgunFiltro) {
             return this.obtenerTodasLasPublicaciones();
         }
 
-        return resultadosUnicos.stream()
-                .sorted((p1, p2) -> p2.getId().compareTo(p1.getId()))
-                .collect(Collectors.toList());
+        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, nombre, provincia, localidad);
+    }
+
+
+    @Override
+    public Publicacion buscarPorId(Long id) {
+        Publicacion publicacion = repositorioPublicacion.buscarPorId(id);
+        if (publicacion == null){
+            throw new PublicacionNoEncontradaException("No se encontro la publicacion con el  ID: " + id);
+        }
+
+        return publicacion;
     }
 
     @Override
