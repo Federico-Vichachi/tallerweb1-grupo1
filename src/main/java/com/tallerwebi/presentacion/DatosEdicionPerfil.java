@@ -17,7 +17,6 @@ public class DatosEdicionPerfil {
     private String nombreDeUsuario;
     private String email;
     private String telefono;
-    private File fotoDePerfil;
     private String calle;
     private String numero;
     private String piso;
@@ -46,21 +45,4 @@ public class DatosEdicionPerfil {
         this.codigoPostal = codigoPostal;
     }
 
-    public DatosEdicionPerfil(String nombre, String apellido, String nombreDeUsuario, String email,
-                              String telefono, File fotoDePerfil, String calle, String numero, String piso,
-                              String departamento, String ciudad, Provincias provincia, String codigoPostal) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.nombreDeUsuario = nombreDeUsuario;
-        this.email = email;
-        this.telefono = telefono;
-        this.fotoDePerfil = fotoDePerfil;
-        this.calle = calle;
-        this.numero = numero;
-        this.piso = piso;
-        this.departamento = departamento;
-        this.ciudad = ciudad;
-        this.provincia = provincia;
-        this.codigoPostal = codigoPostal;
-    }
 }

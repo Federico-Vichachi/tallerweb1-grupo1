@@ -11,6 +11,10 @@ public interface RepositorioUsuario {
     Usuario buscarPorTelefono(String telefono);
     void eliminar(Usuario usuario);
     void guardarCambiosPerfil(DatosEdicionPerfil datosEdicionPerfil);
+    Usuario buscarPorEmailExcluyendoUsuario(String email, Long idUsuario);
+    Usuario buscarPorNombreDeUsuarioExcluyendoUsuario(String nombreDeUsuario, Long idUsuario);
+    Usuario buscarPorTelefonoExcluyendoUsuario(String telefono, Long idUsuario);
+
 
 }
 

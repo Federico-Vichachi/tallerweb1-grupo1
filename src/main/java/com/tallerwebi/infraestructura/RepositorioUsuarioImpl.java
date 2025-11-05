@@ -44,6 +44,34 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
+    public Usuario buscarPorEmailExcluyendoUsuario(String email, Long idUsuario) {
+        return (Usuario) sessionFactory.getCurrentSession()
+                .createCriteria(Usuario.class)
+                .add(Restrictions.eq("email", email))
+                .add(Restrictions.ne("id", idUsuario))
+                .uniqueResult();
+    }
+
+    @Override
+    public Usuario buscarPorNombreDeUsuarioExcluyendoUsuario(String nombreDeUsuario, Long idUsuario) {
+        return (Usuario) sessionFactory.getCurrentSession()
+                .createCriteria(Usuario.class)
+                .add(Restrictions.eq("nombreDeUsuario", nombreDeUsuario))
+                .add(Restrictions.ne("id", idUsuario))
+                .uniqueResult();
+    }
+
+    @Override
+    public Usuario buscarPorTelefonoExcluyendoUsuario(String telefono, Long idUsuario) {
+        return (Usuario) sessionFactory.getCurrentSession()
+                .createCriteria(Usuario.class)
+                .add(Restrictions.eq("telefono", telefono))
+                .add(Restrictions.ne("id", idUsuario))
+                .uniqueResult();
+    }
+
+
+    @Override
     public void eliminar(Usuario usuario) {
         sessionFactory.getCurrentSession().delete(usuario);
     }

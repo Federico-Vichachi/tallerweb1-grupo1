@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-import static com.tallerwebi.dominio.ExpresionesRegularesParaLaValidacionDeDatosDeRegistro.*;
+import static com.tallerwebi.dominio.ExpresionesRegularesParaLaValidacionDeDatosDeUsuario.*;
 
 @Service
 @Transactional

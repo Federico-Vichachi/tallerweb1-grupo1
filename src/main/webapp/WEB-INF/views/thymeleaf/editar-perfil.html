@@ -26,7 +26,7 @@
                     <span class="btn-text">Volver al Perfil</span>
                 </a>
 
-                <a th:href="@{/logout}" class="btn btn-outline-danger">
+                <a th:href="@{/perfil/cerrar-sesion}" class="btn btn-outline-danger">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span class="btn-text">Cerrar Sesión</span>
                 </a>
@@ -55,13 +55,13 @@
         </div>
 
         <form th:action="@{/perfil/editar/guardar}" method="POST" th:object="${datosEdicionPerfil}">
-            <div class="text-center mb-4">
-                <div class="avatar-preview">
-                    <img th:src="@{${usuario.urlFotoDePerfil}}"
-                         alt="Foto de perfil"
-                         id="avatarPreview">
-                </div>
-            </div>
+<!--            <div class="text-center mb-4">-->
+<!--                <div class="avatar-preview">-->
+<!--                    <img th:src="@{${usuario.urlFotoDePerfil}}"-->
+<!--                         alt="Foto de perfil"-->
+<!--                         id="avatarPreview">-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="form-section">
                 <h2 class="section-title">
@@ -134,17 +134,17 @@
                                required>
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label for="urlFotoDePerfil" class="form-label">
-                            <i class="fa-solid fa-image"></i>
-                            Foto de Perfil
-                        </label>
-                        <input type="file"
-                               class="form-control"
-                               id="urlFotoDePerfil"
-                               name="urlFotoDePerfil"
-                               accept="image/*">
-                    </div>
+<!--                    <div class="col-md-6 mb-3">-->
+<!--                        <label for="urlFotoDePerfil" class="form-label">-->
+<!--                            <i class="fa-solid fa-image"></i>-->
+<!--                            Foto de Perfil-->
+<!--                        </label>-->
+<!--                        <input type="file"-->
+<!--                               class="form-control"-->
+<!--                               id="urlFotoDePerfil"-->
+<!--                               name="urlFotoDePerfil"-->
+<!--                               accept="image/*">-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -227,30 +227,11 @@
                         <select class="form-select"
                                 id="provincia"
                                 th:field="*{provincia}">
-                            <option value="CAPITAL_FEDERAL">Capital Federal</option>
-                            <option value="BUENOS_AIRES">Buenos Aires</option>
-                            <option value="CATAMARCA">Catamarca</option>
-                            <option value="CHACO">Chaco</option>
-                            <option value="CHUBUT">Chubut</option>
-                            <option value="CORDOBA">Córdoba</option>
-                            <option value="CORRIENTES">Corrientes</option>
-                            <option value="ENTRE_RIOS">Entre Ríos</option>
-                            <option value="FORMOSA">Formosa</option>
-                            <option value="JUJUY">Jujuy</option>
-                            <option value="LA_PAMPA">La Pampa</option>
-                            <option value="LA_RIOJA">La Rioja</option>
-                            <option value="MENDOZA">Mendoza</option>
-                            <option value="MISIONES">Misiones</option>
-                            <option value="NEUQUEN">Neuquén</option>
-                            <option value="RIO_NEGRO">Río Negro</option>
-                            <option value="SALTA">Salta</option>
-                            <option value="SAN_JUAN">San Juan</option>
-                            <option value="SAN_LUIS">San Luis</option>
-                            <option value="SANTA_CRUZ">Santa Cruz</option>
-                            <option value="SANTA_FE">Santa Fe</option>
-                            <option value="SANTIAGO_DEL_ESTERO">Santiago del Estero</option>
-                            <option value="TIERRA_DEL_FUEGO">Tierra del Fuego</option>
-                            <option value="TUCUMAN">Tucumán</option>
+                            <option value="">Seleccione una provincia</option>
+                            <option th:each="provincia : ${provincias}"
+                                    th:value="${provincia}"
+                                    th:text="${#strings.replace(#strings.replace(#strings.capitalize(#strings.toLowerCase(provincia)), '_', ' '), 'Del ', 'del ')}">
+                            </option>
                         </select>
                     </div>
 

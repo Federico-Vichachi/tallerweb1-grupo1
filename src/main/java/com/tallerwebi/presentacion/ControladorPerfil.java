@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioPerfil;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.Provincias;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,6 +71,7 @@ public class ControladorPerfil {
 
         model.put("usuario", usuario);
         model.put("datosEdicionPerfil", datosEdicionPerfil);
+        model.put("provincias", Provincias.values());
 
         return new ModelAndView("editar-perfil", model);
     }
@@ -85,9 +87,19 @@ public class ControladorPerfil {
             return new ModelAndView("redirect:/inicio-de-sesion");
         }
 
+        ModelMap model = new ModelMap();
+        ModelAndView camposObligatoriosVacios = verficarCamposObligatoriosVacios(datosEdicionPerfil, model);
+        if (camposObligatoriosVacios.getModelMap().containsKey("error")) {
+            return camposObligatoriosVacios;
+        }
+
         datosEdicionPerfil.setId(usuario.getId());
 
-        servicioPerfil.guardarCambiosPerfil(datosEdicionPerfil);
+        try {
+            servicioPerfil.guardarCambiosPerfil(datosEdicionPerfil);
+        } catch (Exception e) {
+            return devolverEdicionFallida(model, e.getMessage());
+        }
 
         Usuario usuarioActualizado = servicioPerfil.buscarPorId(usuario.getId());
         session.setAttribute("usuarioLogueado", usuarioActualizado);
@@ -95,5 +107,50 @@ public class ControladorPerfil {
         return new ModelAndView("redirect:/perfil");
     }
 
+    @RequestMapping(path = "perfil/cerrar-sesion", method = RequestMethod.GET)
+    public ModelAndView cerrarSesion(HttpServletRequest requestMock) {
+        HttpSession session = requestMock.getSession();
+        session.invalidate();
+        return new ModelAndView("redirect:/inicio-de-sesion");
+    }
 
+    private ModelAndView verficarCamposObligatoriosVacios(DatosEdicionPerfil datosEdicionPerfil, ModelMap model) {
+        if (datosEdicionPerfil.getNombre() == null || datosEdicionPerfil.getNombre().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "El nombre es obligatorio.");
+        }
+        if (datosEdicionPerfil.getApellido() == null || datosEdicionPerfil.getApellido().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "El apellido es obligatorio.");
+        }
+        if (datosEdicionPerfil.getNombreDeUsuario() == null || datosEdicionPerfil.getNombreDeUsuario().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "El nombre de usuario es obligatorio.");
+        }
+        if (datosEdicionPerfil.getEmail() == null || datosEdicionPerfil.getEmail().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "El email es obligatorio.");
+        }
+        if (datosEdicionPerfil.getTelefono() == null || datosEdicionPerfil.getTelefono().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "El teléfono es obligatorio.");
+        }
+        if (datosEdicionPerfil.getCalle() == null || datosEdicionPerfil.getCalle().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "La calle es obligatoria.");
+        }
+        if (datosEdicionPerfil.getNumero() == null || datosEdicionPerfil.getNumero().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "El número de domicilio es obligatorio.");
+        }
+        if (datosEdicionPerfil.getCiudad() == null || datosEdicionPerfil.getCiudad().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "La ciudad es obligatoria.");
+        }
+        if (datosEdicionPerfil.getProvincia() == null) {
+            return devolverEdicionFallida(model, "La provincia es obligatoria.");
+        }
+        if (datosEdicionPerfil.getCodigoPostal() == null || datosEdicionPerfil.getCodigoPostal().trim().isEmpty()) {
+            return devolverEdicionFallida(model, "El código postal es obligatorio.");
+        }
+        return new ModelAndView("editar-perfil", model);
+    }
+
+    private ModelAndView devolverEdicionFallida(ModelMap model, String mensaje) {
+        model.put("error", mensaje);
+        model.put("provincias", Provincias.values());
+        return new ModelAndView("editar-perfil", model);
+    }
 }

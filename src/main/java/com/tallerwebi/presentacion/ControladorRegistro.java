@@ -1,8 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioRegistro;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.dominio.Domicilio;
+import com.tallerwebi.dominio.Provincias;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,6 +24,7 @@ public class ControladorRegistro {
     public ModelAndView irAlRegistro() {
         ModelMap model = new ModelMap();
         model.put("datosRegistro", new DatosRegistro());
+        model.put("provincias", Provincias.values());
         return new ModelAndView("registro", model);
     }
 
@@ -95,6 +95,7 @@ public class ControladorRegistro {
 
     private ModelAndView devolverRegistroFallido(ModelMap model, String mensajeDeError) {
         model.put("error", mensajeDeError);
+        model.put("provincias", Provincias.values());
         return new ModelAndView("registro", model);
     }
 

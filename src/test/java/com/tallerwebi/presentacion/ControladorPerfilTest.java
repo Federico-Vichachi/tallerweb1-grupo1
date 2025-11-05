@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.Domicilio;
 import com.tallerwebi.dominio.Provincias;
 import com.tallerwebi.dominio.ServicioPerfil;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,8 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class ControladorPerfilTest {
 
@@ -76,6 +77,270 @@ public class ControladorPerfilTest {
         entoncesSeActualizaElPerfil(modelAndView);
     }
 
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnNombreVacio_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El nombre es obligatorio.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnApellidoVacio_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El apellido es obligatorio.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnNombreDeUsuarioVacio_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El nombre de usuario es obligatorio.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnEmailVacio_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El email es obligatorio.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnTelefonoVacio_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El teléfono es obligatorio.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnaCalleVacia_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "La calle es obligatoria.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnNumeroDeDomicilioVacio_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El número de domicilio es obligatorio.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnaCiudadVacia_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "La ciudad es obligatoria.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnaProvinciaVacia_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", null, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "La provincia es obligatoria.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoEditoElPerfilConUnCodigoPostalVacio_entocesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El código postal es obligatorio.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnNombreInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeNombreOApellidoInvalidoException("El formato del nombre es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan123", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del nombre es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnApellidoInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeNombreOApellidoInvalidoException("El formato del apellido es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez1234", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del apellido es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnNombreDeUsuarioInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeNombreDeUsuarioInvalidoException("El formato del nombre de usuario es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del nombre de usuario es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnEmailInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeEmailInvalidoException("El formato del email es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "emailsinarroba.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del email es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnTelefonoInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeTelefonoInvalidoException("El formato del teléfono es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "telefonoinvalido", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del teléfono es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnaCalleInvalida_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeCalleInvalidoException("El formato de la calle es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "avenda Invalida@-+", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato de la calle es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnNumeroDeDomicilioInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeNumeroInvalidoException("El formato del número de domicilio es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "numeroINVALIDO", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del número de domicilio es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnPisoInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDePisoInvalidoException("El formato del piso es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "piso#?", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del piso es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnDepartamentoInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeDepartamentoInvalidoException("El formato del departamento es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "dep??", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del departamento es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnaCiudadInvalida_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeCiudadInvalidoException("El formato de la ciudad es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ciudad 123@", Provincias.BUENOS_AIRES, "1704");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato de la ciudad es inválido.");
+    }
+
+    @Test
+    public void dadoQueHayUnaCuentaInciada_CuandoEditoElPerfilConUnCodigoPostalInvalido_entoncesLaActualizacionDelPerfilFalla() {
+        dadoQueHayUnaCuentaIniciada();
+
+        doThrow(new FormatoDeCodigoPostalInvalidoException("El formato del código postal es inválido."))
+                .when(servicioPerfilMock)
+                .guardarCambiosPerfil(any(DatosEdicionPerfil.class));
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "12AB");
+
+        entocesLaActualizacionDelPerfilFalla(modelAndView, "El formato del código postal es inválido.");
+    }
+
+
+    @Test
+    public void dadoQueHayUnaCuentaIniciada_cuandoCierroSesion_entoncesSeCierraLaSesionYSeRedirigeAlInicio() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = controladorPerfil.cerrarSesion(requestMock);
+
+        entoncesSeCierraLaSesionYSeRedirigeAlInicio(modelAndView);
+    }
+
     private void dadoQueHayUnaCuentaIniciada() {
         usuario.setEmail("juan.perez@test.com");
         usuario.setNombre("Juan");
@@ -118,6 +383,15 @@ public class ControladorPerfilTest {
 
     private void entoncesSeActualizaElPerfil(ModelAndView modelAndView) {
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil"));
+    }
+
+    private void entocesLaActualizacionDelPerfilFalla(ModelAndView modelAndView, String mensajeDeError) {
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("editar-perfil"));
+        assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase(mensajeDeError));
+    }
+
+    private void entoncesSeCierraLaSesionYSeRedirigeAlInicio(ModelAndView modelAndView) {
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/inicio-de-sesion"));
     }
 
 }
