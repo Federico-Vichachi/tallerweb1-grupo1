@@ -1,11 +1,14 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.RepositorioUsuario;
+import com.tallerwebi.dominio.ServicioPago;
 import com.tallerwebi.dominio.ServicioProducto;
 import com.tallerwebi.dominio.ServicioPuntos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.math.BigDecimal;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -17,15 +20,16 @@ public class ControladorProductoTest {
     private ControladorProducto controladorProducto;
     private ServicioProducto servicioProducto;
     private ServicioPuntos servicioPuntos;
+    private ServicioPago servicioPago;
     private DatosProducto datosProducto;
 
     @BeforeEach
     public void setUp() {
         servicioProducto= mock(ServicioProducto.class);
         servicioPuntos = mock(ServicioPuntos.class);
-        RepositorioUsuario repositorioUsuarioMock = mock(RepositorioUsuario.class);
+        servicioPago = mock(ServicioPago.class);
 
-        controladorProducto = new ControladorProducto(servicioProducto, servicioPuntos, repositorioUsuarioMock);
+        controladorProducto = new ControladorProducto(servicioProducto, servicioPuntos,servicioPago);
     }
 
 
@@ -40,7 +44,7 @@ public class ControladorProductoTest {
         datosProducto = new DatosProducto();
         datosProducto.setNombre("Voraz 10kg");
         datosProducto.setDescripcion("Bolsa de 10kg calidad economica, para perros adultos");
-        datosProducto.setPrecioEnCentavos(12000);
+        datosProducto.setPrecio(BigDecimal.valueOf(12000));
         datosProducto.setPrecioEnPuntos(122);
         datosProducto.setStock(5);
         datosProducto.setImagen("Alimento.jpg");
@@ -55,9 +59,7 @@ public class ControladorProductoTest {
 
     private void thenSeMuestraLaVistaDeTienda(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("tienda"));
-        assertThat(mav.getModel().get("datosProducto"), is(notNullValue()));
-        assertThat(mav.getModel().get("datosProducto"), is(datosProducto));
+        assertThat(mav.getViewName(), is("redirect:/tienda"));
     }
 
 }

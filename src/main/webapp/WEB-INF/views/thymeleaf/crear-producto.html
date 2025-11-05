@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Crear Producto</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Crear Producto</title>
 
-        <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-    </head>
-    <body>
-        <h1>Crear Producto</h1>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/variables.css}"/>
+    <link rel="stylesheet" th:href="@{/css/crear-producto.css}" />
+</head>
+<body>
+
+<div id="formularios">
+    <div class="mainbox">
+        <h1 class="text-center mb-4">Crear Producto</h1>
 
         <form th:action="@{/producto}" th:object="${datosProducto}" method="post">
+
             <label for="nombre">Nombre:</label>
-            <input type="text" th:field="*{nombre}" id="nombre" required /><br/><br/>
+            <input type="text" class="form-control" th:field="*{nombre}" id="nombre" required />
 
             <label for="descripcion">Descripción:</label>
-            <textarea th:field="*{descripcion}" id="descripcion" required></textarea><br/><br/>
+            <textarea class="form-control" th:field="*{descripcion}" id="descripcion" required></textarea>
 
-            <label for="precioEnCentavos">Precio (centavos):</label>
-            <input type="number" th:field="*{precioEnCentavos}" id="precioEnCentavos" required /><br/><br/>
+            <label for="precio">Precio:</label>
+            <input class="form-control" type="number" step="0.01" th:field="*{precio}" id="precio" required min="0.01"/>
 
             <label for="precioEnPuntos">Precio en puntos:</label>
-            <input type="number" th:field="*{precioEnPuntos}" id="precioEnPuntos" required /><br/><br/>
+            <input class="form-control" type="number" th:field="*{precioEnPuntos}" id="precioEnPuntos" required min="0"/>
 
             <label for="stock">Stock:</label>
-            <input type="number" th:field="*{stock}" id="stock" required /><br/><br/>
+            <input class="form-control" type="number" th:field="*{stock}" id="stock" required min="0"/>
 
-            <label for="imagen">URL de imagen:</label>
-            <input type="text" th:field="*{imagen}" id="imagen" /><br/><br/>
+            <label for="imagen">Imagen:</label>
+            <input class="form-control" type="file" th:field="*{imagen}" id="imagen" required />
 
             <button type="submit">Crear Producto</button>
+
+            <p th:if="${error != null}" class="alert alert-danger mt-3" th:text="'Error ' + ${error}"></p>
+
         </form>
-    </body>
+    </div>
+</div>
+
+</body>
 </html>

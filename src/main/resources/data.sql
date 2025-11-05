@@ -31,8 +31,8 @@ VALUES(2, '2023-10-25', '20:00', false, 'No');
 -- Publicacion 3: Recaudacion
 INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, provincia, localidad, telefono, email, usuario_id, fechaPublicacion)
 VALUES(3, 'Ayuda para la cirugia de Luna', 'Necesitamos recaudar fondos para operar a Luna.', 'Luna fue atropellada y necesita una cirugia compleja en su cadera. Cualquier ayuda, por pequenia que sea, nos acerca a la meta. ¡Gracias!', '/images/perro.webp', 'Galgo', 20, 'CORDOBA','Capital', 3511223344, 'maria.garcia@test.com', 2, '2023-10-25 12:00:00');
-INSERT INTO PublicacionRecaudacion(id, edad, meta, cbu, metodoPreferido)
-VALUES(3, 4, 50000.00, 'AYUDA.LUNA.MP', 'Mercado Pago');
+INSERT INTO PublicacionRecaudacion(id, edad, meta, montoActual, cbu, metodoPreferido)
+VALUES(3, 4, 50000.00, 5000.00, 'AYUDA.LUNA.MP', 'Mercado Pago');
 
 -- Publicacion 4: Salud
 INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, provincia, localidad, telefono, email, usuario_id, fechaPublicacion)

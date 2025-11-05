@@ -82,4 +82,9 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
                 .addOrder(Order.desc("id"))
                 .list();
     }
+
+    @Override
+    public void actualizar(Publicacion publicacion) {
+        sessionFactory.getCurrentSession().update(publicacion);
+    }
 }

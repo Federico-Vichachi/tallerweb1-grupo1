@@ -223,4 +223,9 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void actualizar(Publicacion publicacion) {
+        repositorioPublicacion.actualizar(publicacion);
+    }
+
 }

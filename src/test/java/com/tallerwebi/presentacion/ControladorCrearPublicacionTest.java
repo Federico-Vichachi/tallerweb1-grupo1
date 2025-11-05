@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -15,8 +17,9 @@ public class ControladorCrearPublicacionTest {
 
     private ControladorCrearPublicacion controlador;
     private ServicioPublicacion servicioMock;
-    private RepositorioUsuario repositorioUsuarioMock;
     private ServicioPuntos servicioPuntosMock;
+    private HttpSession sessionMock;
+    private Usuario usuarioMock;
 
     private DatosAdopcion datosAdopcion;
     private DatosRecaudacion datosRecaudacion;
@@ -27,10 +30,11 @@ public class ControladorCrearPublicacionTest {
     @BeforeEach
     public void setUp() {
         servicioMock = mock(ServicioPublicacion.class);
-        repositorioUsuarioMock = mock(RepositorioUsuario.class);
         servicioPuntosMock = mock(ServicioPuntos.class);
-        controlador = new ControladorCrearPublicacion(servicioMock, repositorioUsuarioMock, servicioPuntosMock);
-        when(repositorioUsuarioMock.buscarPorId(1L)).thenReturn(mock(Usuario.class));
+        controlador = new ControladorCrearPublicacion(servicioMock, servicioPuntosMock);
+        sessionMock = mock(HttpSession.class);
+        usuarioMock = mock(Usuario.class);
+        when(sessionMock.getAttribute("usuarioLogeado")).thenReturn(usuarioMock);
     }
 
 
@@ -57,12 +61,12 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionAdopcion() {
-        return controlador.crearPublicacionAdopcion(datosAdopcion);
+        return controlador.crearPublicacionAdopcion(datosAdopcion, sessionMock);
     }
 
     private void thenSeMuestraLaVistaDeAdopcion(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("publicacion-adopcion"));
+        assertThat(mav.getViewName(), is("feed"));
         assertThat(mav.getModel().get("datosAdopcion"), is(notNullValue()));
         assertThat(mav.getModel().get("datosAdopcion"), is(datosAdopcion));
     }
@@ -96,12 +100,12 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionRecaudacion() {
-        return controlador.crearPublicacionRecaudacion(datosRecaudacion);
+        return controlador.crearPublicacionRecaudacion(datosRecaudacion,sessionMock);
     }
 
     private void thenSeMuestraLaVistaDeRecaudacion(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("publicacion-recaudacion"));
+        assertThat(mav.getViewName(), is("feed"));
         assertThat(mav.getModel().get("datosRecaudacion"), is(notNullValue()));
         assertThat(mav.getModel().get("datosRecaudacion"), is(datosRecaudacion));
     }
@@ -134,12 +138,12 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionSalud() {
-        return controlador.crearPublicacionSalud(datosSalud);
+        return controlador.crearPublicacionSalud(datosSalud,sessionMock);
     }
 
     private void thenSeMuestraLaVistaDeSalud(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("publicacion-salud"));
+        assertThat(mav.getViewName(), is("feed"));
         assertThat(mav.getModel().get("datosSalud"), is(notNullValue()));
         assertThat(mav.getModel().get("datosSalud"), is(datosSalud));
     }
@@ -173,12 +177,13 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionPerdido() {
-        return controlador.crearPublicacionPerdido(datosPerdido);
+
+        return controlador.crearPublicacionPerdido(datosPerdido, sessionMock);
     }
 
     private void thenSeMuestraLaVistaDePerdido(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("publicacion-perdido"));
+        assertThat(mav.getViewName(), is("feed"));
         assertThat(mav.getModel().get("datosPerdido"), is(notNullValue()));
         assertThat(mav.getModel().get("datosPerdido"), is(datosPerdido));
     }
@@ -206,12 +211,12 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionEncontrado() {
-        return controlador.crearPublicacionEncontrado(datosEncontrado);
+        return controlador.crearPublicacionEncontrado(datosEncontrado, sessionMock);
     }
 
     private void thenSeMuestraLaVistaDeEncontrado(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("publicacion-encontrado"));
+        assertThat(mav.getViewName(), is("feed"));
         assertThat(mav.getModel().get("datosEncontrado"), is(notNullValue()));
         assertThat(mav.getModel().get("datosEncontrado"), is(datosEncontrado));
     }

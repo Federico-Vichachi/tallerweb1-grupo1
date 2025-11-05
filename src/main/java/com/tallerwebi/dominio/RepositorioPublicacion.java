@@ -12,5 +12,5 @@ public interface RepositorioPublicacion {
     List<Publicacion> buscarPorLocalidad(String localidad);
     List<Publicacion> buscarPorTipos(List<Class<? extends Publicacion>> tipos);
 
-
+    void actualizar(Publicacion publicacion);
 }

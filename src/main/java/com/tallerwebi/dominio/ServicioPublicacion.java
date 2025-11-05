@@ -13,4 +13,5 @@ public interface ServicioPublicacion {
     List<Publicacion> buscarPorLocalidad(String localidad);
     List<Publicacion> buscarPublicacionesCercanas(Double latitud, Double longitud, Double radioKm);
     List<Publicacion> buscarPublicacionesConFiltros (DatosFiltro datosFiltro);
+    void actualizar(Publicacion publicacion);
 }

@@ -374,8 +374,80 @@ gap: 8px;
 }
 
 #map {
-    height: 400px;  /* ¡Esta es la línea más importante! */
+    height: 400px;
     width: 100%;
-    border-radius: 8px; /* Opcional, para que se vea mejor */
-    border: 1px solid #ccc; /* Opcional, para ver el borde */
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+
+
+.tag-recaudacion {
+    background-color: #aed6f1;
+    color: #2e86c1;
+}
+
+.tag-perdido {
+    background-color: #f5b7b1;
+    color: #c0392b;
+}
+
+.tag-encontrado {
+    background-color: #a3e4d7;
+    color: #16a085;
+}
+
+.tag-salud {
+    background-color: #f9e79f;
+    color: #f1c40f;
+}
+
+
+.recaudacion-progreso {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.recaudacion-progreso .recaudado {
+    color: #28a745;
+}
+
+.recaudacion-progreso .progress {
+    background-color: #e9ecef;
+    border-radius: 20px;
+}
+
+.recaudacion-progreso .progress-bar {
+    background-color: #f39c12;
+    border-radius: 20px;
+}
+
+.tags-especificos {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tags-especificos .tag-item {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    background-color: #f5b041;
+    color: #784212;
+}
+
+.tags-especificos .tag-urgente {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-donar {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-compartir {
+    background-color: #f39c12;
+    color: white;
 }

@@ -4,10 +4,8 @@ import com.tallerwebi.presentacion.DatosProducto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -20,7 +18,8 @@ public class Producto {
 
     private String nombre;
     private String descripcion;
-    private int precioEnCentavos;
+    @Column(nullable = false)
+    private BigDecimal precio;
     private int precioEnPuntos;
     private int stock;
     private String imagen;
@@ -30,7 +29,7 @@ public class Producto {
     public Producto(DatosProducto datosProducto) {
         this.nombre = datosProducto.getNombre();
         this.descripcion = datosProducto.getDescripcion();
-        this.precioEnCentavos = datosProducto.getPrecioEnCentavos();
+        this.precio = datosProducto.getPrecio();
         this.precioEnPuntos = datosProducto.getPrecioEnPuntos();
         this.stock = datosProducto.getStock();
         this.imagen = datosProducto.getImagen();

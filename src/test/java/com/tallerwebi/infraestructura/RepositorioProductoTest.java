@@ -14,6 +14,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
 
+import java.math.BigDecimal;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -39,11 +41,11 @@ public class RepositorioProductoTest {
         thenSePuedeGuardarCorrectamenteElProducto(producto);
     }
 
-    private Producto givenTengoUnproducto(String nombre, String descripcion, int precioEnCentavos, int precioEnPuntos, int stock ,String imagen) {
+    private Producto givenTengoUnproducto(String nombre, String descripcion, double precio, int precioEnPuntos, int stock ,String imagen) {
         Producto producto = new Producto();
         producto.setNombre(nombre);
         producto.setDescripcion(descripcion);
-        producto.setPrecioEnCentavos(precioEnCentavos);
+        producto.setPrecio(BigDecimal.valueOf(precio));
         producto.setPrecioEnPuntos(precioEnPuntos);
         producto.setStock(stock);
         producto.setImagen(imagen);

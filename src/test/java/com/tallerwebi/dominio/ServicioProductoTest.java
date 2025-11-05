@@ -3,6 +3,8 @@ package com.tallerwebi.dominio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
@@ -28,11 +30,11 @@ public class ServicioProductoTest {
     private void givenNoExisteProducto() {
     }
 
-    private Producto whenCreoElProductoCon(String nombre, String descripcion, int precioEnCentavos, int precioEnPuntos, int stock ,String imagen) {
+    private Producto whenCreoElProductoCon(String nombre, String descripcion, int precio, int precioEnPuntos, int stock ,String imagen) {
         Producto producto = new Producto();
         producto.setNombre(nombre);
         producto.setDescripcion(descripcion);
-        producto.setPrecioEnCentavos(precioEnCentavos);
+        producto.setPrecio(BigDecimal.valueOf(precio));
         producto.setPrecioEnPuntos(precioEnPuntos);
         producto.setStock(stock);
         producto.setImagen(imagen);
