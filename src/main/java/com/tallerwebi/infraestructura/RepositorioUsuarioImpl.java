@@ -2,7 +2,7 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.Usuario;
-import org.hibernate.Session;
+import com.tallerwebi.presentacion.DatosEdicionPerfil;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +46,36 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public void eliminar(Usuario usuario) {
         sessionFactory.getCurrentSession().delete(usuario);
+    }
+
+    @Override
+    public void guardarCambiosPerfil(DatosEdicionPerfil datosEdicionPerfil) {
+        Usuario usuario = (Usuario) sessionFactory.getCurrentSession()
+                .createCriteria(Usuario.class)
+                .add(Restrictions.eq("id", datosEdicionPerfil.getId()))
+                .uniqueResult();
+
+        if (usuario != null) {
+            usuario.setNombre(datosEdicionPerfil.getNombre());
+            usuario.setApellido(datosEdicionPerfil.getApellido());
+            usuario.setNombreDeUsuario(datosEdicionPerfil.getNombreDeUsuario());
+            usuario.setEmail(datosEdicionPerfil.getEmail());
+            usuario.setTelefono(datosEdicionPerfil.getTelefono());
+
+            if (usuario.getDomicilio() == null) {
+                usuario.setDomicilio(new com.tallerwebi.dominio.Domicilio());
+            }
+
+            usuario.getDomicilio().setCalle(datosEdicionPerfil.getCalle());
+            usuario.getDomicilio().setNumero(datosEdicionPerfil.getNumero());
+            usuario.getDomicilio().setPiso(datosEdicionPerfil.getPiso());
+            usuario.getDomicilio().setDepartamento(datosEdicionPerfil.getDepartamento());
+            usuario.getDomicilio().setCiudad(datosEdicionPerfil.getCiudad());
+            usuario.getDomicilio().setProvincia(datosEdicionPerfil.getProvincia());
+            usuario.getDomicilio().setCodigoPostal(datosEdicionPerfil.getCodigoPostal());
+
+            sessionFactory.getCurrentSession().update(usuario);
+        }
     }
 
 }

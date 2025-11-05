@@ -19,7 +19,7 @@
                 <span class="logo-text fs-3 fw-bold">Rescate Amigos</span>
             </a>
 
-            <div class="ms-auto d-flex gap-3 navbar-buttons">
+            <div class="d-flex gap-3 navbar-buttons">
                 <a th:href="@{/feed}" class="btn btn-primary">
                     <i class="fa-solid fa-share-from-square"></i>
                     <span class="btn-text">Volver al Feed</span>
@@ -168,21 +168,21 @@
                         <div class="info-item">
                             <div class="info-label">
                                 <i class="fa-solid fa-city"></i>
-                                Ciudad
+                                Ciudad:
                             </div>
                             <div class="info-valor" th:text="${usuario.domicilio.ciudad}"></div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">
                                 <i class="fa-solid fa-map"></i>
-                                Provincia
+                                Provincia:
                             </div>
                             <div class="info-valor" th:text="${usuario.domicilio.provincia}"></div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">
                                 <i class="fa-solid fa-location-dot"></i>
-                                Código Postal
+                                Código Postal:
                             </div>
                             <div class="info-valor" th:text="${usuario.domicilio.codigoPostal}"></div>
                         </div>
@@ -190,10 +190,10 @@
                 </section>
 
                 <div class="d-flex justify-content-center mt-4 flex-wrap">
-                    <button class="btn btn-primary">
+                    <a th:href="@{'/perfil/editar'}" class="btn btn-primary">
                         <i class="fa-solid fa-pen-to-square"></i>
                         Editar Perfil
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

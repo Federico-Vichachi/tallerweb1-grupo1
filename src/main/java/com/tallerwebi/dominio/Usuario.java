@@ -40,7 +40,7 @@ public class Usuario {
     }
 
     public Usuario() {
-
+        this.urlFotoDePerfil = "/images/user.jpg";
     }
 
     public void sumarPuntos(int cantidad){

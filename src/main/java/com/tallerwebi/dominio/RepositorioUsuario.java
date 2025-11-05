@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.presentacion.DatosEdicionPerfil;
+
 public interface RepositorioUsuario {
 
     void guardar(Usuario usuario);
@@ -8,5 +10,7 @@ public interface RepositorioUsuario {
     Usuario buscarPorId(Long id);
     Usuario buscarPorTelefono(String telefono);
     void eliminar(Usuario usuario);
+    void guardarCambiosPerfil(DatosEdicionPerfil datosEdicionPerfil);
+
 }
 

@@ -24,7 +24,6 @@ public abstract class Publicacion {
     @Enumerated(EnumType.STRING)
     private Provincias provincia;
     private String localidad;
-
     private LocalDateTime fechaPublicacion;
     private String titulo;
     private String descripcionCorta;

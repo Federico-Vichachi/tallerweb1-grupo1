@@ -9,4 +9,6 @@ public class DatosInicioSesion {
     private String contrasenia;
 
     public DatosInicioSesion() {}
+
+    public DatosInicioSesion(String email, String contrasenia) {}
 }
