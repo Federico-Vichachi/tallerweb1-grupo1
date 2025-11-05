@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Domicilio;
 import com.tallerwebi.dominio.Provincias;
 import com.tallerwebi.dominio.ServicioPerfil;
 import com.tallerwebi.dominio.Usuario;
@@ -21,7 +22,7 @@ public class ControladorPerfilTest {
     private ControladorPerfil controladorPerfil;
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
-    private Usuario usuarioMock;
+    private Usuario usuario;
 
     @BeforeEach
     public void init() {
@@ -29,7 +30,7 @@ public class ControladorPerfilTest {
         controladorPerfil = new ControladorPerfil(servicioPerfilMock);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
-        usuarioMock = mock(Usuario.class);
+        usuario = new Usuario();
         when(requestMock.getSession()).thenReturn(sessionMock);
     }
     
@@ -65,21 +66,25 @@ public class ControladorPerfilTest {
         entoncesSeMuestraElInicioDeSesion(modelAndView);
     }
 
-//    @Test
-//    public void dadoQueHayUnaCuentaInciada_cuandoEditoUnDatoDelPerfil_entoncesSeActualizaElPerfil() {
-//        dadoQueHayUnaCuentaIniciada();
-//
-//        cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
-//                "1122334455", null, "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
-//    }
+    @Test
+    public void dadoQueHayUnaCuentaInciada_cuandoEditoUnDatoDelPerfil_entoncesSeActualizaElPerfil() {
+        dadoQueHayUnaCuentaIniciada();
+
+        ModelAndView modelAndView = cuandoEditoElPerfil("Juan", "Perez", "juanperezNevoNombre", "juan.perez@test.com",
+                "1122334455", "Av. de Mayo", "1234", "", "", "Ramos Mejia", Provincias.BUENOS_AIRES, "1704");
+
+        entoncesSeActualizaElPerfil(modelAndView);
+    }
 
     private void dadoQueHayUnaCuentaIniciada() {
-        usuarioMock.setEmail("juan.perez@test.com");
-        usuarioMock.setNombre("Juan");
-        usuarioMock.setApellido("Perez");
+        usuario.setEmail("juan.perez@test.com");
+        usuario.setNombre("Juan");
+        usuario.setApellido("Perez");
+        usuario.setDomicilio(new Domicilio());
 
-        when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuario);
     }
+
 
     private ModelAndView cuandoSeAccedeAlPerfil() {
         return controladorPerfil.irAlPerfil(requestMock);
@@ -101,19 +106,18 @@ public class ControladorPerfilTest {
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/inicio-de-sesion"));
     }
 
-//    private ModelAndView cuandoEditoElPerfil(String nombre, String apellido, String nombreDeUsuario, String email,
-//                                     String telefono, String urlFotoDePerfil, String calle, String numero, String piso,
-//                                     String departamento, String ciudad, Provincias provincia, String codigoPostal) {
-//        DatosEdicionPerfil datosEdicionPerfil = new DatosEdicionPerfil(
-//                nombre, apellido, nombreDeUsuario, email, telefono, urlFotoDePerfil,
-//                calle, numero, piso, departamento, ciudad, provincia, codigoPostal
-//        );
-//        return controladorPerfil.guardarPerfil(datosEdicionPerfil, requestMock);
-//    }
+    private ModelAndView cuandoEditoElPerfil(String nombre, String apellido, String nombreDeUsuario, String email,
+                                     String telefono, String calle, String numero, String piso,
+                                     String departamento, String ciudad, Provincias provincia, String codigoPostal) {
+        DatosEdicionPerfil datosEdicionPerfil = new DatosEdicionPerfil(
+                nombre, apellido, nombreDeUsuario, email, telefono,
+                calle, numero, piso, departamento, ciudad, provincia, codigoPostal
+        );
+        return controladorPerfil.guardarPerfil(datosEdicionPerfil, requestMock);
+    }
 
     private void entoncesSeActualizaElPerfil(ModelAndView modelAndView) {
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil"));
-
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil"));
     }
 
 }
