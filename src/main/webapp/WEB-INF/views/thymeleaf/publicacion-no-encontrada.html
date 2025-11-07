@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Publicacion no encontrada</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        body { background-color: #f8f9fa; }
+        .error-container {
+            text-align: center;
+            padding-top: 100px;
+        }
+        .error-icon {
+            font-size: 5rem;
+            color: #ffc107;
+        }
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .error-message {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="container error-container">
+    <div class="error-icon">
+        <i class="fas fa-search-minus"></i>
+    </div>
+    <h1 class="error-title">Publicacion no encontrada</h1>
+    <p class="error-message" th:text="${mensajeError}">La publicacion que estás buscando no existe o fue eliminada.</p>
+    <a th:href="@{/feed}" class="btn btn-primary mt-4">Volver al Feed</a>
+</div>
+</body>
+</html>

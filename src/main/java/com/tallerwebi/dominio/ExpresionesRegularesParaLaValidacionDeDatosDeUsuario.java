@@ -1,6 +1,6 @@
 package com.tallerwebi.dominio;
 
-public class ExpresionesRegularesParaLaValidacionDeDatosDeRegistro {
+public class ExpresionesRegularesParaLaValidacionDeDatosDeUsuario {
     public static final String FORMATO_EMAIL = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     public static final String FORMATO_CONTRASENIA = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
     public static final String FORMATO_NOMBRE_DE_USUARIO = "^[a-zA-Z0-9._]{3,30}$";

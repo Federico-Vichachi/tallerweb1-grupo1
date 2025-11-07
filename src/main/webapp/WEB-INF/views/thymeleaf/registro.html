@@ -95,30 +95,10 @@
                                 <div class="col-md-4 mb-2">
                                     <select class="form-select" name="provincia" th:field="*{provincia}" required>
                                         <option value="">Seleccione una provincia</option>
-                                        <option value="CAPITAL_FEDERAL">Capital Federal</option>
-                                        <option value="BUENOS_AIRES">Buenos Aires</option>
-                                        <option value="CATAMARCA">Catamarca</option>
-                                        <option value="CHACO">Chaco</option>
-                                        <option value="CHUBUT">Chubut</option>
-                                        <option value="CORDOBA">Córdoba</option>
-                                        <option value="CORRIENTES">Corrientes</option>
-                                        <option value="ENTRE_RIOS">Entre Ríos</option>
-                                        <option value="FORMOSA">Formosa</option>
-                                        <option value="JUJUY">Jujuy</option>
-                                        <option value="LA_PAMPA">La Pampa</option>
-                                        <option value="LA_RIOJA">La Rioja</option>
-                                        <option value="MENDOZA">Mendoza</option>
-                                        <option value="MISIONES">Misiones</option>
-                                        <option value="NEUQUEN">Neuquén</option>
-                                        <option value="RIO_NEGRO">Río Negro</option>
-                                        <option value="SALTA">Salta</option>
-                                        <option value="SAN_JUAN">San Juan</option>
-                                        <option value="SAN_LUIS">San Luis</option>
-                                        <option value="SANTA_CRUZ">Santa Cruz</option>
-                                        <option value="SANTA_FE">Santa Fe</option>
-                                        <option value="SANTIAGO_DEL_ESTERO">Santiago del Estero</option>
-                                        <option value="TIERRA_DEL_FUEGO">Tierra del Fuego</option>
-                                        <option value="TUCUMAN">Tucumán</option>
+                                        <option th:each="provincia : ${provincias}"
+                                                th:value="${provincia}"
+                                                th:text="${#strings.replace(#strings.replace(#strings.capitalize(#strings.toLowerCase(provincia)), '_', ' '), 'Del ', 'del ')}">
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-4 mb-2">
@@ -147,6 +127,5 @@
 </div>
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/validacionesRegistro.js}"></script>
-</body>
 </body>
 </html>

@@ -46,26 +46,21 @@ public class ControladorFeed {
         model.put("provinciaFiltro", provincia);
         model.put("localidadFiltro", localidad);
 
-        try {
-            DatosFiltro datosFiltro = new DatosFiltro();
-            datosFiltro.setCategoria(categoria);
-            datosFiltro.setNombre(nombre);
-            datosFiltro.setProvincia(provincia);
-            datosFiltro.setLocalidad(localidad);
-
-            List<Publicacion> publicacionesFinales = servicioPublicacion.buscarPublicacionesConFiltros(datosFiltro);
+        try{
+            List<Publicacion> publicacionesFinales = servicioPublicacion.buscarPublicacionesConFiltros(categoria, nombre, provincia, localidad);
             model.put("publicaciones", publicacionesFinales);
 
-        } catch (CategoriaInvalidaException e) {
+            return new ModelAndView("feed", model);
+        }catch (CategoriaInvalidaException e){
             return devolverFeedFallido(model, e.getMessage());
         }
-
-        return new ModelAndView("feed", model);
     }
 
-    private ModelAndView devolverFeedFallido(ModelMap model, String mensajeDeError) {
+    private ModelAndView devolverFeedFallido(ModelMap model, String mensajeDeError){
         model.put("error", mensajeDeError);
         model.put("publicaciones", Collections.emptyList());
         return new ModelAndView("feed", model);
+
     }
+
 }

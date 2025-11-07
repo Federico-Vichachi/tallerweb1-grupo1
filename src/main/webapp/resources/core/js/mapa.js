@@ -76,7 +76,7 @@ function cargarPublicacionesCercanas(map, lat, lon) {
                         <img src="${contextPath.slice(0, -1)}${pub.imagen}" alt="${pub.titulo}" width="120" style="border-radius: 5px; margin-bottom: 8px;"/>
                         <h6 style="margin: 0; font-size: 14px;">${pub.titulo}</h6>
                         <span class="badge bg-${pub.tipo === 'Perdido' ? 'danger' : 'primary'}" style="margin: 4px 0;">${pub.tipo}</span><br>
-                        <a href="${contextPath}post/${pub.id}" target="_blank" style="font-size: 12px;">Ver más detalles</a>
+                         <a href="${contextPath}publicacion/${pub.id}">Ver más detalles</a>
                     </div>
                 `;
 

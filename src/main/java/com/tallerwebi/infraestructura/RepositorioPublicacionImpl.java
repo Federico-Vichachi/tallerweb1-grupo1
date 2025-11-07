@@ -1,8 +1,7 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Provincias;
-import com.tallerwebi.dominio.Publicacion;
-import com.tallerwebi.dominio.RepositorioPublicacion;
+import com.tallerwebi.dominio.*;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -49,29 +48,17 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
 
     @Override
     public List<Publicacion> buscarPorNombre(String nombre) {
-        return (List<Publicacion>) sessionFactory.getCurrentSession()
-                .createCriteria(Publicacion.class)
-                .add(Restrictions.ilike("titulo", "%" + nombre + "%"))
-                .addOrder(Order.desc("id"))
-                .list();
+        return this.buscarPublicacionesPorFiltros(null, nombre, null, null);
     }
 
     @Override
     public List<Publicacion> buscarPorProvincia(Provincias provincia) {
-        return (List<Publicacion>) sessionFactory.getCurrentSession()
-                .createCriteria(Publicacion.class)
-                .add(Restrictions.eq("provincia", provincia))
-                .addOrder(Order.desc("id"))
-                .list();
+        return this.buscarPublicacionesPorFiltros(null, null, provincia, null);
     }
 
     @Override
     public List<Publicacion> buscarPorLocalidad(String localidad) {
-        return (List<Publicacion>) sessionFactory.getCurrentSession()
-                .createCriteria(Publicacion.class)
-                .add(Restrictions.ilike("localidad", "%" + localidad + "%"))
-                .addOrder(Order.desc("id"))
-                .list();
+        return this.buscarPublicacionesPorFiltros(null, null, null, localidad);
     }
 
     @Override
@@ -81,6 +68,33 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
                 .add(Restrictions.in("class", tipos))
                 .addOrder(Order.desc("id"))
                 .list();
+    }
+
+    @Override
+    public List<Publicacion> buscarPublicacionesPorFiltros(String categoria, String nombre, Provincias provincia, String localidad) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Publicacion.class);
+
+        if (categoria != null && !categoria.trim().isEmpty()) {
+            switch (categoria.toUpperCase()) {
+                case "ADOPCION": criteria.add(Restrictions.eq("class", PublicacionAdopcion.class)); break;
+                case "PERDIDO": criteria.add(Restrictions.eq("class", PublicacionPerdido.class)); break;
+                case "ENCONTRADO": criteria.add(Restrictions.eq("class", PublicacionEncontrado.class)); break;
+                case "RECAUDACION": criteria.add(Restrictions.eq("class", PublicacionRecaudacion.class)); break;
+                case "SALUD": criteria.add(Restrictions.eq("class", PublicacionSalud.class)); break;
+            }
+        }
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            criteria.add(Restrictions.ilike("titulo", "%" + nombre + "%"));
+        }
+        if (provincia != null) {
+            criteria.add(Restrictions.eq("provincia", provincia));
+        }
+        if (localidad != null && !localidad.trim().isEmpty()) {
+            criteria.add(Restrictions.ilike("localidad", "%" + localidad + "%"));
+        }
+
+        criteria.addOrder(Order.desc("id"));
+        return (List<Publicacion>) criteria.list();
     }
 
     @Override
