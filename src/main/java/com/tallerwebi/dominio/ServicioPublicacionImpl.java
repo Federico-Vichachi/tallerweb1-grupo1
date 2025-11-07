@@ -224,6 +224,11 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
     }
 
     @Override
+    public Publicacion obtenerPublicacionPorId(Long id) {
+        return repositorioPublicacion.buscarPorId(id);
+    }
+
+    @Override
     public void actualizar(Publicacion publicacion) {
         repositorioPublicacion.actualizar(publicacion);
     }

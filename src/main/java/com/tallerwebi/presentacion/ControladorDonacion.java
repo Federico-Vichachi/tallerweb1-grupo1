@@ -43,11 +43,7 @@ public class ControladorDonacion {
                 return new ModelAndView("redirect:/feed");
             }
 
-            Publicacion publicacion = servicioPublicacion.obtenerTodasLasPublicaciones()
-                    .stream()
-                    .filter(p -> p.getId().equals(id))
-                    .findFirst()
-                    .orElse(null);
+            Publicacion publicacion = servicioPublicacion.obtenerPublicacionPorId(id);
 
             if (publicacion == null) {
                 model.put("error", "No se encontró la publicación.");
@@ -78,15 +74,12 @@ public class ControladorDonacion {
 
         try {
             if ("approved".equalsIgnoreCase(status)) {
-                PublicacionRecaudacion publicacion = (PublicacionRecaudacion) servicioPublicacion.obtenerTodasLasPublicaciones()
-                        .stream()
-                        .filter(p -> p.getId().equals(idPublicacion))
-                        .findFirst()
-                        .orElse(null);
+                Publicacion publicacion =  servicioPublicacion.obtenerPublicacionPorId(idPublicacion);
 
-                if (publicacion != null) {
+                if (publicacion instanceof PublicacionRecaudacion) {
+                    PublicacionRecaudacion publicacionRecaudacion = (PublicacionRecaudacion) publicacion;
                     Double monto = servicioPago.obtenerMontoDePago(paymentId);
-                    publicacion.incrementarMontoRecaudado(monto);
+                    publicacionRecaudacion.incrementarMontoRecaudado(monto);
                     servicioPublicacion.actualizar(publicacion);
                 }
             }

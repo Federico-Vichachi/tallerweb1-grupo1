@@ -63,6 +63,10 @@ public class ControladorProducto {
 
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        if (usuario == null) {
+            model.put("error", "Tenés que iniciar sesión para donar.");
+            return new ModelAndView("redirect:/inicio-de-sesion");
+        }
 
         Producto producto = servicioProducto.buscarPorId(id);
 
@@ -89,6 +93,13 @@ public class ControladorProducto {
         ModelMap model = new ModelMap();
 
         try {
+
+            Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+            if (usuario == null) {
+                model.put("error", "Tenés que iniciar sesión para donar.");
+                return new ModelAndView("redirect:/inicio-de-sesion");
+            }
+
             Producto producto = servicioProducto.buscarPorId(id);
 
             if (producto == null) {
