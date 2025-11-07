@@ -48,7 +48,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         }
 
         if (publicacion.getImagen() != null && !publicacion.getImagen().matches(FORMATO_IMAGEN)) {
-            throw new ValidacionPublicacionException("La imagen es valida"); // No deberia ser invalida?
+            throw new ValidacionPublicacionException("La imagen no es valida");
         }
 
         if (publicacion.getLocalidad() == null || publicacion.getLocalidad().trim().isEmpty() || !publicacion.getLocalidad().matches(FORMATO_RAZA_UBICACION)) {

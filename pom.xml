@@ -215,7 +215,7 @@
                         <port>8080</port>
                     </httpConnector>
                     <webApp>
-                        <contextPath>/spring</contextPath>
+                        <contextPath>/rescateamigos</contextPath>
                     </webApp>
                 </configuration>
             </plugin>

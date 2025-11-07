@@ -8,7 +8,7 @@ VALUES(3, 'San Martin', '890', 'Rosario', 'SANTA_FE', '2000', null, null);
 
 -- Usuarios
 INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id, urlFotoDePerfil, puntos)
-VALUES(1, 'Juan', 'Perez', 'juan.perez@test.com', '1122334455', 'Contrasenia@2025', 'juanperez', 'USUARIO_COMUN', 1, '/images/user.jpg', 0);
+VALUES(1, 'Juan', 'Perez', 'juan.perez@test.com', '1122334455', 'Contrasenia@2025', 'juanperez', 'USUARIO_COMUN', 1, '/images/user.jpg', 10);
 INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id, urlFotoDePerfil, puntos)
 VALUES(2, 'Maria', 'Garcia', 'maria.garcia@test.com', '3511223344', 'Contrasenia@2025', 'mariagarcia', 'ORGANIZACION', 2, '/images/user.jpg', 0);
 INSERT INTO Usuario(id, nombre, apellido, email, telefono, contrasenia, nombreDeUsuario, rol, domicilio_id, urlFotoDePerfil, puntos)

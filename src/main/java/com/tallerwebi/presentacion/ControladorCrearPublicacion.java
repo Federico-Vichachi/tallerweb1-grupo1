@@ -33,6 +33,7 @@ public class ControladorCrearPublicacion {
         model.put("datosSalud", new DatosSalud());
         model.put("datosPerdido", new DatosPerdido());
         model.put("datosEncontrado", new DatosEncontrado());
+        model.put("provincias", Provincias.values());
         return new ModelAndView("crear-publicacion", model);
     }
 
