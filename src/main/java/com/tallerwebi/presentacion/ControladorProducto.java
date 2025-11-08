@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -58,7 +59,7 @@ public class ControladorProducto {
 
     //----- PUNTOS -----
     @RequestMapping(value = "/canjear-producto", method = RequestMethod.POST)
-    public ModelAndView canjearProducto(Long id, HttpSession session) {
+    public ModelAndView canjearProducto(@RequestParam("id") Long id, HttpSession session) {
         ModelMap model = new ModelMap();
 
 
@@ -76,6 +77,7 @@ public class ControladorProducto {
             boolean pudoCanjear = servicioPuntos.gastarPuntos(usuario, producto);
             if (pudoCanjear) {
                 model.put("mensaje", "¡Canje exitoso! Gastaste " + producto.getPrecioEnPuntos() + " puntos en " + producto.getNombre());
+                servicioProducto.descontarStock(producto, 1);
             } else {
                 model.put("error", "No tenés puntos suficientes para este producto");
             }
@@ -89,7 +91,7 @@ public class ControladorProducto {
     //----- MERCADO PAGO -----
 
     @RequestMapping(value = "/comprar-producto", method = RequestMethod.POST)
-    public ModelAndView comprarProducto(Long id, HttpSession session) {
+    public ModelAndView comprarProducto(@RequestParam("id") Long id,@RequestParam("cantidad") int cantidad ,HttpSession session) {
         ModelMap model = new ModelMap();
 
         try {
@@ -108,7 +110,13 @@ public class ControladorProducto {
                 return new ModelAndView("tienda", model);
             }
 
-            var  preference = servicioPago.generarLinkPago(producto);
+            if (producto.getStock() < cantidad) {
+                model.put("error", "No hay suficiente stock del producto");
+                model.put("productos", servicioProducto.listarProductos());
+                return new ModelAndView("tienda", model);
+            }
+
+            var  preference = servicioPago.generarLinkPago(producto,cantidad);
             if (preference == null){
                 model.put("error", "Error al generar el link de pago");
                 model.put("productos", servicioProducto.listarProductos());
@@ -126,24 +134,58 @@ public class ControladorProducto {
     }
 
     @RequestMapping("pago-exitoso")
-    public ModelAndView pagoExitoso() {
+    public ModelAndView pagoExitoso(@RequestParam("payment_id") String paymentId,
+                                    @RequestParam("external_reference") String externalReference,
+                                    @RequestParam(value = "status", required = false) String status,
+                                    HttpSession session) {
         ModelMap model = new ModelMap();
-        model.put("mensaje", "¡Pago realizado con éxito!");
-        return new ModelAndView("resultado-pago", model);
+
+        try {
+            String[] partes = externalReference.split("-");
+            Long idProducto = Long.parseLong(partes[0]);
+            int cantidad = partes.length > 1 ? Integer.parseInt(partes[1]) : 1;
+
+
+            Producto producto = servicioProducto.buscarPorId(idProducto);
+
+            if (producto == null) {
+                model.put("error", "El producto no existe.");
+                return new ModelAndView("redirect:/tienda", model);
+            }
+
+            // Consultamos el monto real pagado a Mercado Pago
+            Double montoPagado = servicioPago.obtenerMontoDePago(paymentId);
+
+            if ("approved".equalsIgnoreCase(status)) {
+                servicioProducto.descontarStock(producto, cantidad);
+                model.put("mensaje", "¡Pago realizado con éxito!");
+                model.put("montoPagado", montoPagado);
+                model.put("producto", producto);
+                model.put("cantidad", cantidad);
+            } else {
+                model.put("mensaje", "El pago no fue aprobado. Estado: " + status);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.put("error", "Error al procesar el pago: " + e.getMessage());
+        }
+
+        return new ModelAndView("redirect:/tienda", model);
     }
 
     @RequestMapping("pago-fallido")
     public ModelAndView pagoFallido() {
         ModelMap model = new ModelMap();
         model.put("mensaje", "El pago falló. Intentalo de nuevo.");
-        return new ModelAndView("resultado-pago", model);
+        return new ModelAndView("redirect:/tienda", model);
     }
 
     @RequestMapping("pago-pendiente")
     public ModelAndView pagoPendiente() {
         ModelMap model = new ModelMap();
         model.put("mensaje", "El pago está pendiente de confirmación.");
-        return new ModelAndView("resultado-pago", model);
+        return new ModelAndView("redirect:/tienda", model);
     }
 
 }

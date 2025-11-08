@@ -1,0 +1,99 @@
+body {
+    background-color: #fdf5e6;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/*Titulo*/
+h1{
+text-align:center;
+}
+
+/* Contenedor principal */
+.tienda-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+/* Card de producto */
+.producto-card {
+    background-color: #fef9e7;
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid #fbeec1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Imagen del producto */
+.producto-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+/* Titulo */
+.producto-card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+}
+
+/* Descripciones */
+.producto-card p {
+    font-size: 0.95rem;
+    margin: 0.25rem 0;
+}
+
+/* Formularios e inputs */
+.producto-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.producto-card input[type="number"] {
+   padding: 8px 12px;
+       border-radius: 8px;
+       border: 1px solid #ced4da;
+       width: 100%;
+       box-sizing: border-box;
+}
+
+/* Botones */
+.producto-card button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+    width: 100%;
+}
+
+/* Hover */
+.producto-card button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones de envio */
+.producto-card button[type="submit"] {
+    background-color: #f39c12;
+    color: white;
+}
+
+.producto-card button[type="submit"]:hover {
+    background-color: #d9780f;
+}

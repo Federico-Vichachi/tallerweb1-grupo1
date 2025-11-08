@@ -3,7 +3,7 @@ package com.tallerwebi.dominio;
 import com.mercadopago.resources.preference.Preference;
 
 public interface ServicioPago {
-    Preference generarLinkPago(Producto producto);
+    Preference generarLinkPago(Producto producto, int cantidad);
 
     Preference generarLinkPagoParaDonacion(String titulo, Double monto, Long idPublicacion);
 

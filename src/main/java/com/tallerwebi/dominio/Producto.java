@@ -34,4 +34,16 @@ public class Producto {
         this.stock = datosProducto.getStock();
         this.imagen = datosProducto.getImagen();
     }
+
+    public void descontarStock(int cantidad){
+        if(cantidad <= 0){
+            throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
+        }
+
+        if(this.stock == 0 || this.stock < cantidad){
+            throw new IllegalArgumentException("No hay suficiente stock");
+        }
+
+        this.stock -= cantidad;
+    }
 }

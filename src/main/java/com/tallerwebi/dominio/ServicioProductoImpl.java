@@ -30,4 +30,15 @@ public class ServicioProductoImpl implements ServicioProducto{
     public Producto buscarPorId(Long id) {
         return repositorioProducto.buscarPorId(id);
     }
+
+    @Override
+    public boolean hayStockDisponible(Producto producto, int cantidad) {
+        return producto.getStock() != 0 && producto.getStock() >= cantidad;
+    }
+
+    @Override
+    public void descontarStock(Producto producto, int cantidad) {
+        producto.descontarStock(cantidad);
+        repositorioProducto.guardar(producto);
+    }
 }

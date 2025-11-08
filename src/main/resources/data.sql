@@ -75,3 +75,13 @@ INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imag
 VALUES(10, 'Cachorro encontrado en Plaza Congreso', 'Cachorro tipo labrador, color negro, muy jugueton.', 'Lo encontramos corriendo solo por la plaza, sin collar. Debe tener unos 4 o 5 meses. Lo llevamos al veterinario y esta en buen estado. Buscamos a su familia o un hogar de transito.', '/images/perro.webp', 'Mestizo (tipo Labrador)', 12, 'CAPITAL_FEDERAL', 'Balvanera', '1122334455', 'test.congreso@example.com', 1, '2023-10-30 22:00:00', -34.6095, -58.3920);
 INSERT INTO PublicacionEncontrado(id)
 VALUES(10);
+
+--Productos
+INSERT INTO Producto (id, nombre, descripcion, precio, precioEnPuntos, stock, imagen)
+VALUES (1, 'Comida para perro Pedigree', 'Alimento balanceado para perros adultos, 21kg', 65800.00, 658, 10, '/images/pedigree.webp');
+INSERT INTO Producto (id, nombre, descripcion, precio, precioEnPuntos, stock, imagen)
+VALUES (2, 'Arena para gato Nelsoni Ranch', 'Arena aglomerante para gatos, 14kg', 21400.00, 214, 15, '/images/arenaparagatos.webp');
+INSERT INTO Producto (id, nombre, descripcion, precio, precioEnPuntos, stock, imagen)
+VALUES (3, 'Juguete para perro, Soga', 'Mordedor resistente para perros', 7800.00, 78, 20, '/images/sogaparamorder.webp');
+INSERT INTO Producto (id, nombre, descripcion, precio, precioEnPuntos, stock, imagen)
+VALUES (4, 'Collar antipulgas para perros', 'Collar efectivo por 8 meses', 11000.00, 110, 15, '/images/collarantipulgas.webp');

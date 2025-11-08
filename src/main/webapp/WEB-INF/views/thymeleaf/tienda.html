@@ -2,33 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Tienda de Productos</title>
+    <link rel="stylesheet" th:href="@{/css/tienda.css}"/>
 </head>
 <body>
-<h1>Tienda de Productos</h1>
+<h1>Rescate Amigos Tienda</h1>
+<div class="d-flex gap-2 flex-wrap"><a th:href="@{/home}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver al Home</a><a th:if="${usuarioLogueado != null}" th:href="@{/perfil}" class="btn btn-primary"><i class="fa-solid fa-user" style="color: #ffffff;"></i> Perfil</a></div>
 
 <p th:text="${mensaje}" th:if="${mensaje != null}"></p>
 
-<div>
-    <ul>
-        <li th:each="producto : ${productos}">
-            <h2 th:text="${producto.nombre}"></h2>
-            <p th:text="${producto.descripcion}"></p>
-            <p>Precio: $<span th:text="${producto.precio}"></span></p>
-            <p>Precio en puntos: <span th:text="${producto.precioEnPuntos}"></span> pts</p>
-            <p>Stock: <span th:text="${producto.stock}"></span></p>
-            <img th:src="@{${producto.imagen}}" alt="Imagen producto" width="150"/>
+<div class="tienda-container">
+    <div class="producto-card" th:each="producto : ${productos}">
+        <h2 th:text="${producto.nombre}"></h2>
+        <p th:text="${producto.descripcion}"></p>
+        <p>Precio: $<span th:text="${producto.precio}"></span></p>
+        <p>Precio en puntos: <span th:text="${producto.precioEnPuntos}"></span> pts</p>
+        <p>Stock: <span th:text="${producto.stock}"></span></p>
+        <img th:src="@{${producto.imagen}}" alt="Imagen producto"/>
 
-            <form th:action="@{/canjear-producto}" method="post">
-                <input type="hidden" th:name="id" th:value="${producto.id}"/>
-                <button type="submit">Canjear con puntos</button>
-            </form>
+        <form th:action="@{/canjear-producto}" method="post">
+            <input type="hidden" th:name="id" th:value="${producto.id}"/>
+            <button type="submit">Canjear con puntos</button>
+        </form>
 
-            <form th:action="@{/comprar-producto}" method="post">
-                <input type="hidden" th:name="id" th:value="${producto.id}"/>
-                <button type="submit">Comprar</button>
-            </form>
-        </li>
-    </ul>
+        <form th:action="@{/comprar-producto}" method="post">
+            <input type="hidden" th:name="id" th:value="${producto.id}"/>
+            <p>Cantidad:<input type="number" name="cantidad" min="1" max="${producto.stock}" required></p>
+            <button type="submit">Comprar</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

@@ -27,7 +27,7 @@ public class ServicioPagoImpl implements ServicioPago {
     }
 
     @Override
-    public Preference generarLinkPago(Producto producto) {
+    public Preference generarLinkPago(Producto producto, int cantidad) {
         try {
             if (producto.getPrecio() == null || producto.getPrecio().compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("El producto debe tener un precio mayor a 0");
@@ -39,7 +39,7 @@ public class ServicioPagoImpl implements ServicioPago {
             PreferenceItemRequest item = PreferenceItemRequest.builder()
                     .title(producto.getNombre())
                     .description(producto.getDescripcion())
-                    .quantity(1)
+                    .quantity(cantidad)
                     .currencyId("ARS")
                     .unitPrice(precioNormalizado)
                     .build();
@@ -54,6 +54,7 @@ public class ServicioPagoImpl implements ServicioPago {
             PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                     .items(Collections.singletonList(item))
                     .backUrls(backUrls)
+                    .externalReference(producto.getId() + "-" + cantidad)
                     //.autoReturn("approved")
                     .build();
 
