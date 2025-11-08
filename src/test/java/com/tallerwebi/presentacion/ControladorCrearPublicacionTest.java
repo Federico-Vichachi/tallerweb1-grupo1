@@ -66,9 +66,7 @@ public class ControladorCrearPublicacionTest {
 
     private void thenSeMuestraLaVistaDeAdopcion(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("feed"));
-        assertThat(mav.getModel().get("datosAdopcion"), is(notNullValue()));
-        assertThat(mav.getModel().get("datosAdopcion"), is(datosAdopcion));
+        assertThat(mav.getViewName(), is("redirect:/feed"));
     }
 
 
@@ -105,9 +103,7 @@ public class ControladorCrearPublicacionTest {
 
     private void thenSeMuestraLaVistaDeRecaudacion(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("feed"));
-        assertThat(mav.getModel().get("datosRecaudacion"), is(notNullValue()));
-        assertThat(mav.getModel().get("datosRecaudacion"), is(datosRecaudacion));
+        assertThat(mav.getViewName(), is("redirect:/feed"));
     }
 
 
@@ -143,9 +139,7 @@ public class ControladorCrearPublicacionTest {
 
     private void thenSeMuestraLaVistaDeSalud(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("feed"));
-        assertThat(mav.getModel().get("datosSalud"), is(notNullValue()));
-        assertThat(mav.getModel().get("datosSalud"), is(datosSalud));
+        assertThat(mav.getViewName(), is("redirect:/feed"));
     }
 
 
@@ -183,9 +177,7 @@ public class ControladorCrearPublicacionTest {
 
     private void thenSeMuestraLaVistaDePerdido(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("feed"));
-        assertThat(mav.getModel().get("datosPerdido"), is(notNullValue()));
-        assertThat(mav.getModel().get("datosPerdido"), is(datosPerdido));
+        assertThat(mav.getViewName(), is("redirect:/feed"));
     }
 
 
@@ -216,9 +208,7 @@ public class ControladorCrearPublicacionTest {
 
     private void thenSeMuestraLaVistaDeEncontrado(ModelAndView mav) {
         assertThat(mav, is(notNullValue()));
-        assertThat(mav.getViewName(), is("feed"));
-        assertThat(mav.getModel().get("datosEncontrado"), is(notNullValue()));
-        assertThat(mav.getModel().get("datosEncontrado"), is(datosEncontrado));
+        assertThat(mav.getViewName(), is("redirect:/feed"));
     }
 
 

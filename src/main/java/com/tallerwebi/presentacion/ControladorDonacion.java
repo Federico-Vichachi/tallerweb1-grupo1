@@ -43,7 +43,7 @@ public class ControladorDonacion {
                 return new ModelAndView("redirect:/feed");
             }
 
-            Publicacion publicacion = servicioPublicacion.obtenerPublicacionPorId(id);
+            Publicacion publicacion = servicioPublicacion.buscarPorId(id);
 
             if (publicacion == null) {
                 model.put("error", "No se encontró la publicación.");
@@ -74,7 +74,7 @@ public class ControladorDonacion {
 
         try {
             if ("approved".equalsIgnoreCase(status)) {
-                Publicacion publicacion =  servicioPublicacion.obtenerPublicacionPorId(idPublicacion);
+                Publicacion publicacion =  servicioPublicacion.buscarPorId(idPublicacion);
 
                 if (publicacion instanceof PublicacionRecaudacion) {
                     PublicacionRecaudacion publicacionRecaudacion = (PublicacionRecaudacion) publicacion;

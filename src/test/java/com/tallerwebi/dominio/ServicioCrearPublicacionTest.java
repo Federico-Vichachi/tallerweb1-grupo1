@@ -16,7 +16,7 @@ public class ServicioCrearPublicacionTest {
     @BeforeEach
     public void setUp() {
         repositorioMock = mock(RepositorioPublicacion.class);
-        servicioCrearPublicacion = new ServicioPublicacionImpl(repositorioMock, );
+        servicioCrearPublicacion = new ServicioPublicacionImpl(repositorioMock);
     }
 
 

@@ -37,6 +37,7 @@ public class ControladorCrearPublicacion {
         return new ModelAndView("crear-publicacion", model);
     }
 
+
     @RequestMapping(value = "/publicacion-adopcion", method = RequestMethod.POST)
     public ModelAndView crearPublicacionAdopcion(@ModelAttribute DatosAdopcion datosAdopcion, HttpSession session) {
             ModelMap model = new ModelMap();
@@ -51,10 +52,10 @@ public class ControladorCrearPublicacion {
 
             model.put("mensaje", "Publicacion adopcion guardada correctamente");
             model.put("datosAdopcion", datosAdopcion);
-            return new ModelAndView("feed", model);
+            return new ModelAndView("redirect:/feed");
         }catch(ValidacionPublicacionException e){
             model.put("error", e.getMessage());
-            return new ModelAndView("feed", model);
+            return new ModelAndView("crear-publicacion", model);
         }
     }
 
@@ -72,10 +73,10 @@ public class ControladorCrearPublicacion {
 
             model.put("mensaje", "Publicacion recaudacion creada correctamente");
             model.put("datosRecaudacion", datosRecaudacion);
-            return new ModelAndView("feed", model);
+            return new ModelAndView("redirect:/feed");
         }catch(ValidacionPublicacionException e){
             model.put("error", e.getMessage());
-            return new ModelAndView("feed", model);
+            return new ModelAndView("crear-publicacion", model);
         }
     }
 
@@ -89,10 +90,10 @@ public class ControladorCrearPublicacion {
         servicioPublicacion.guardar(publicacionDeSalud);
         model.put("mensaje", "Publicacion salud creada correctamente");
         model.put("datosSalud", datosSalud);
-        return new ModelAndView("feed", model);
+        return new ModelAndView("redirect:/feed");
     }catch (ValidacionPublicacionException e){
         model.put("error", e.getMessage());
-        return new ModelAndView("feed", model);
+        return new ModelAndView("crear-publicacion", model);
         }
     }
 
@@ -107,11 +108,11 @@ public class ControladorCrearPublicacion {
 
         model.put("mensaje", "Publicacion perdido creada correctamente");
         model.put("datosPerdido", datosPerdido);
-        return new ModelAndView("feed", model);
+        return new ModelAndView("redirect:/feed");
 
     }catch (ValidacionPublicacionException e){
         model.put("error", e.getMessage());
-        return new ModelAndView("feed", model);
+        return new ModelAndView("crear-publicacion", model);
         }
     }
 
@@ -125,10 +126,10 @@ public class ControladorCrearPublicacion {
         servicioPublicacion.guardar(publicacionDeEncontrado);
         model.put("mensaje", "Publicacion encontrado creada correctamente");
         model.put("datosEncontrado", datosEncontrado);
-        return new ModelAndView("feed", model);
+        return new ModelAndView("redirect:/feed");
     }catch (ValidacionPublicacionException e){
         model.put("error", e.getMessage());
-        return new ModelAndView("feed", model);
+        return new ModelAndView("crear-publicacion", model);
         }
     }
 }
