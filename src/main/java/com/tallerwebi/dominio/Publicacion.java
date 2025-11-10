@@ -48,8 +48,4 @@ public abstract class Publicacion {
         this.provincia=provincia;
         this.localidad=localidad;
     }
-
-
-    public abstract int puntosPorCreacion();
-
 }

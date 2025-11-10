@@ -17,10 +17,9 @@ public class ControladorCrearPublicacionTest {
 
     private ControladorCrearPublicacion controlador;
     private ServicioPublicacion servicioMock;
-    private ServicioPuntos servicioPuntosMock;
+
     private HttpSession sessionMock;
     private Usuario usuarioMock;
-
     private DatosAdopcion datosAdopcion;
     private DatosRecaudacion datosRecaudacion;
     private DatosSalud datosSalud;
@@ -30,8 +29,7 @@ public class ControladorCrearPublicacionTest {
     @BeforeEach
     public void setUp() {
         servicioMock = mock(ServicioPublicacion.class);
-        servicioPuntosMock = mock(ServicioPuntos.class);
-        controlador = new ControladorCrearPublicacion(servicioMock, servicioPuntosMock);
+        controlador = new ControladorCrearPublicacion(servicioMock);
         sessionMock = mock(HttpSession.class);
         usuarioMock = mock(Usuario.class);
         when(sessionMock.getAttribute("usuarioLogeado")).thenReturn(usuarioMock);

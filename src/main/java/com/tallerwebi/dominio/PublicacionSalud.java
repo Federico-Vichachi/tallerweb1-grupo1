@@ -25,8 +25,4 @@ public class PublicacionSalud extends Publicacion {
         this.nivelUrgencia = datosSalud.getNivelUrgencia();
     }
 
-    @Override
-    public int puntosPorCreacion() {
-        return 15;
-    }
 }

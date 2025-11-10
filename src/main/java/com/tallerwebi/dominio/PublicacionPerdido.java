@@ -26,9 +26,4 @@ public class PublicacionPerdido extends Publicacion {
         this.recompensa = datosPerdido.getRecompensa();
     }
 
-    @Override
-    public int puntosPorCreacion() {
-        return 10;
-    }
-
 }

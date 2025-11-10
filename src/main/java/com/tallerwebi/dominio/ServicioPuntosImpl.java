@@ -16,8 +16,8 @@ public class ServicioPuntosImpl implements ServicioPuntos {
     }
 
     @Override
-    public void sumarPuntos(Usuario usuario, Publicacion publicacion) {
-        int puntos = publicacion.puntosPorCreacion();
+    public void sumarPuntos(Usuario usuario, Double monto) {
+        int puntos = calcularPuntosPorDonacion(monto);
         usuario.sumarPuntos(puntos);
         repositorioUsuario.guardar(usuario);
     }
@@ -30,5 +30,19 @@ public class ServicioPuntosImpl implements ServicioPuntos {
             repositorioUsuario.guardar(usuario);
         }
         return pudoGastar;
+    }
+
+    @Override
+    public int calcularPuntosPorDonacion(Double monto) {
+        if (monto <= 1000) {
+            return 10;
+        }
+        if (monto > 1000 && monto <= 3000) {
+            return 25;
+        }
+        if (monto > 3000 && monto <= 6000) {
+            return 40;
+        }
+        return 50;
     }
 }

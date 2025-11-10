@@ -31,12 +31,6 @@ public class PublicacionRecaudacion extends Publicacion {
         this.activa = false;
     }
 
-    @Override
-    public int puntosPorCreacion() {
-        return 20;
-    }
-
-
     public void incrementarMontoRecaudado(Double montoDonado){
         if(this.activa == null){
             this.activa = true;

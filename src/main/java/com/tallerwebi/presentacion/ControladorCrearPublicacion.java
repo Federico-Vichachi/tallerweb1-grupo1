@@ -16,13 +16,10 @@ import javax.servlet.http.HttpSession;
 public class ControladorCrearPublicacion {
 
     private final ServicioPublicacion servicioPublicacion;
-    private final ServicioPuntos servicioPuntos;
 
     @Autowired
-    public ControladorCrearPublicacion(ServicioPublicacion servicioPublicacion, ServicioPuntos servicioPuntos) {
+    public ControladorCrearPublicacion(ServicioPublicacion servicioPublicacion) {
         this.servicioPublicacion = servicioPublicacion;
-
-        this.servicioPuntos = servicioPuntos;
     }
 
     @RequestMapping(value = "/crear-publicacion", method =  RequestMethod.GET)
@@ -47,9 +44,6 @@ public class ControladorCrearPublicacion {
             PublicacionAdopcion publicacionDeAdopcion = new PublicacionAdopcion(datosAdopcion);
             publicacionDeAdopcion.setUsuario(usuario);
             servicioPublicacion.guardar(publicacionDeAdopcion);
-
-            servicioPuntos.sumarPuntos(usuario, publicacionDeAdopcion);
-
             model.put("mensaje", "Publicacion adopcion guardada correctamente");
             model.put("datosAdopcion", datosAdopcion);
             return new ModelAndView("redirect:/feed");
@@ -68,8 +62,6 @@ public class ControladorCrearPublicacion {
             PublicacionRecaudacion publicacionDeRecaudacion = new PublicacionRecaudacion(datosRecaudacion);
             publicacionDeRecaudacion.setUsuario(usuario);
             servicioPublicacion.guardar(publicacionDeRecaudacion);
-
-
 
             model.put("mensaje", "Publicacion recaudacion creada correctamente");
             model.put("datosRecaudacion", datosRecaudacion);

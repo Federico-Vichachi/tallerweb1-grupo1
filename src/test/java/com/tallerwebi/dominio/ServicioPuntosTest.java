@@ -23,13 +23,13 @@ public class ServicioPuntosTest {
     }
 
     @Test
-    public void dadoQueExisteUnUsuarioYUnaPublicacionAdopcionQueSeSumenLosPuntosCorrectamente(){
+    public void dadoQueExisteUnUsuarioYUnaMontoQueSeSumenLosPuntosCorrectamente(){
         Usuario usuario = givenTengoUnUsuarioSinPuntos();
-        Publicacion publicacionAdopcion = givenTengoUnaPublicacionAdopcion();
+        Double monto = 100d;
 
-        whenSumoLosPuntos(usuario, publicacionAdopcion);
+        whenSumoLosPuntos(usuario, monto);
 
-        thenSeSumanLosPuntosCorrectamente(usuario, 15);
+        thenSeSumanLosPuntosCorrectamente(usuario, 10);
     }
 
     private Usuario givenTengoUnUsuarioSinPuntos() {
@@ -38,14 +38,8 @@ public class ServicioPuntosTest {
         return usuario;
     }
 
-    private Publicacion givenTengoUnaPublicacionAdopcion() {
-        Publicacion publicacionAdopcion = mock(PublicacionAdopcion.class);
-        when(publicacionAdopcion.puntosPorCreacion()).thenReturn(15);
-        return publicacionAdopcion;
-    }
-
-    private void whenSumoLosPuntos(Usuario usuario, Publicacion publicacionAdopcion) {
-        servicioPuntos.sumarPuntos(usuario, publicacionAdopcion);
+    private void whenSumoLosPuntos(Usuario usuario, Double monto) {
+        servicioPuntos.sumarPuntos(usuario, monto);
     }
 
     private void thenSeSumanLosPuntosCorrectamente(Usuario usuario, int puntosEsperados) {

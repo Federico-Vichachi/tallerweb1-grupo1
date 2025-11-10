@@ -17,11 +17,13 @@ public class ControladorDonacion {
 
     private final ServicioPublicacion servicioPublicacion;
     private final ServicioPago servicioPago;
+    private final ServicioPuntos servicioPuntos;
 
     @Autowired
-    public ControladorDonacion(ServicioPublicacion servicioPublicacion, ServicioPago servicioPago){
+    public ControladorDonacion(ServicioPublicacion servicioPublicacion, ServicioPago servicioPago, ServicioPuntos servicioPuntos) {
         this.servicioPublicacion = servicioPublicacion;
         this.servicioPago = servicioPago;
+        this.servicioPuntos = servicioPuntos;
     }
 
     @RequestMapping(value = "/donar", method = RequestMethod.POST)
@@ -69,7 +71,8 @@ public class ControladorDonacion {
     @RequestMapping(value = "/donacion-exitosa", method = RequestMethod.GET)
     public ModelAndView donacionExitosa(@RequestParam("payment_id") String paymentId,
                                         @RequestParam("external_reference") Long idPublicacion,
-                                        @RequestParam(value = "status", required = false) String status) {
+                                        @RequestParam(value = "status", required = false) String status,
+                                        HttpSession session) {
         ModelMap model = new ModelMap();
 
         try {
@@ -81,6 +84,11 @@ public class ControladorDonacion {
                     Double monto = servicioPago.obtenerMontoDePago(paymentId);
                     publicacionRecaudacion.incrementarMontoRecaudado(monto);
                     servicioPublicacion.actualizar(publicacion);
+
+                    Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+                    if (usuario != null) {
+                        servicioPuntos.sumarPuntos(usuario, monto);
+                    }
                 }
             }
             model.put("mensaje", "¡Gracias por tu donación!");

@@ -79,7 +79,7 @@ public class ControladorProducto {
                 model.put("mensaje", "¡Canje exitoso! Gastaste " + producto.getPrecioEnPuntos() + " puntos en " + producto.getNombre());
                 servicioProducto.descontarStock(producto, 1);
             } else {
-                model.put("error", "No tenés puntos suficientes para este producto");
+                model.put("error", "No tenés puntos suficientes ");
             }
         }
 
