@@ -230,4 +230,12 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         repositorioPublicacion.actualizar(publicacion);
     }
 
+    @Override
+    public List<Publicacion> obtenerPublicacionesDelUsuario(Usuario usuario) {
+        if (usuario == null) {
+            return new ArrayList<>();
+        }
+        return repositorioPublicacion.buscarPorUsuario(usuario);
+    }
+
 }

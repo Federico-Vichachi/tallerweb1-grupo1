@@ -13,4 +13,5 @@ public interface RepositorioPublicacion {
     List<Publicacion> buscarPorTipos(List<Class<? extends Publicacion>> tipos);
     List<Publicacion> buscarPublicacionesPorFiltros(String categoria, String nombre, Provincias provincia, String localidad);
     void actualizar(Publicacion publicacion);
+    List<Publicacion> buscarPorUsuario(Usuario usuario);
 }

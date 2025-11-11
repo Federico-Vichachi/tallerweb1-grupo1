@@ -101,4 +101,13 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
     public void actualizar(Publicacion publicacion) {
         sessionFactory.getCurrentSession().update(publicacion);
     }
+
+    @Override
+    public List<Publicacion> buscarPorUsuario(Usuario usuario) {
+        return (List<Publicacion>) sessionFactory.getCurrentSession()
+                .createCriteria(Publicacion.class)
+                .add(Restrictions.eq("usuario", usuario))
+                .addOrder(Order.desc("id"))
+                .list();
+    }
 }

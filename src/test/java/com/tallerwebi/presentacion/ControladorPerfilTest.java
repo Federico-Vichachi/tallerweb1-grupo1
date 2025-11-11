@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Domicilio;
-import com.tallerwebi.dominio.Provincias;
-import com.tallerwebi.dominio.ServicioPerfil;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +17,7 @@ import static org.mockito.Mockito.*;
 public class ControladorPerfilTest {
 
     private ServicioPerfil servicioPerfilMock;
+    private ServicioPublicacion servicioPublicacionMock;
     private ControladorPerfil controladorPerfil;
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
@@ -28,7 +26,8 @@ public class ControladorPerfilTest {
     @BeforeEach
     public void init() {
         servicioPerfilMock = mock(ServicioPerfil.class);
-        controladorPerfil = new ControladorPerfil(servicioPerfilMock);
+        servicioPublicacionMock = mock(ServicioPublicacion.class);
+        controladorPerfil = new ControladorPerfil(servicioPerfilMock, servicioPublicacionMock);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
         usuario = new Usuario();

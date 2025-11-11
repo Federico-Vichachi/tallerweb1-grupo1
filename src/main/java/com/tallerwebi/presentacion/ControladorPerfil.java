@@ -1,8 +1,10 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioPerfil;
+import com.tallerwebi.dominio.ServicioPublicacion;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Provincias;
+import com.tallerwebi.dominio.Publicacion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,19 +17,23 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
 public class ControladorPerfil {
 
     ServicioPerfil servicioPerfil;
+    ServicioPublicacion servicioPublicacion;
 
     @Autowired
     private ServletContext servletContext;
 
     @Autowired
-    public ControladorPerfil(ServicioPerfil servicioPerfil) {
+    public ControladorPerfil(ServicioPerfil servicioPerfil, ServicioPublicacion servicioPublicacion) {
         this.servicioPerfil = servicioPerfil;
+        this.servicioPublicacion = servicioPublicacion;
     }
 
     @RequestMapping(path = "/perfil", method = RequestMethod.GET)
@@ -40,7 +46,15 @@ public class ControladorPerfil {
             return new ModelAndView("redirect:/inicio-de-sesion");
         }
 
+        List<Publicacion> publicaciones = servicioPublicacion.obtenerPublicacionesDelUsuario(usuario);
+
+        // Asegurar que nunca sea null
+        if (publicaciones == null) {
+            publicaciones = new ArrayList<>();
+        }
+
         model.put("usuario", usuario);
+        model.put("publicaciones", publicaciones);
         return new ModelAndView("perfil", model);
     }
 
