@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.*;
 import static com.tallerwebi.dominio.ExpresionesRegularesParaLaValidacionDeDatosDePublicacion.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
