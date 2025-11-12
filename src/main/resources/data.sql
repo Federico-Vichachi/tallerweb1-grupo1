@@ -35,10 +35,10 @@ INSERT INTO PublicacionRecaudacion(id, edad, meta, montoActual, cbu, metodoPrefe
 VALUES(3, 4, 50000.00, 5000.00, 'AYUDA.LUNA.MP', 'Mercado Pago');
 
 -- Publicacion 4: Salud
---INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, provincia, localidad, telefono, email, usuario_id, fechaPublicacion)
---VALUES(4, 'Consulta sobre comportamiento canino', 'Mi perro ladra sin parar cuando me voy.', 'Es un caniche de 5 anios y sufre de ansiedad por separacion. ¿Algun consejo o recomendacion de un especialista en comportamiento en Rosario?', '/images/perro.webp', 'Caniche', 8, 'SANTA_FE','Santa Fe', 3415556677, 'carlos.lopez@test.com', 3, '2023-10-28 09:00:00');
---INSERT INTO PublicacionSalud(id, edad, sintomasPrincipales, diagnostico, nivelUrgencia)
---VALUES(4, 5, 'Ladridos excesivos, destructividad', 'Ansiedad por separacion', 'No urgente');
+INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, provincia, localidad, telefono, email, usuario_id, fechaPublicacion)
+VALUES(4, 'Consulta sobre comportamiento canino', 'Mi perro ladra sin parar cuando me voy.', 'Es un caniche de 5 anios y sufre de ansiedad por separacion. ¿Algun consejo o recomendacion de un especialista en comportamiento en Rosario?', '/images/perro.webp', 'Caniche', 8, 'SANTA_FE','Santa Fe', 3415556677, 'carlos.lopez@test.com', 3, '2023-10-28 09:00:00');
+INSERT INTO PublicacionSalud(id, edad, sintomasPrincipales, diagnostico, nivelUrgencia)
+VALUES(4, 5, 'Ladridos excesivos, destructividad', 'Ansiedad por separacion', 'No urgente');
 
 -- Publicacion 5: Encontrado
 INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imagen, raza, tamanio, provincia, localidad, telefono, email, usuario_id, fechaPublicacion, latitud, longitud)
@@ -75,6 +75,7 @@ INSERT INTO Publicacion(id, titulo, descripcionCorta, descripcionDetallada, imag
 VALUES(10, 'Cachorro encontrado en Plaza Congreso', 'Cachorro tipo labrador, color negro, muy jugueton.', 'Lo encontramos corriendo solo por la plaza, sin collar. Debe tener unos 4 o 5 meses. Lo llevamos al veterinario y esta en buen estado. Buscamos a su familia o un hogar de transito.', '/images/perro.webp', 'Mestizo (tipo Labrador)', 12, 'CAPITAL_FEDERAL', 'Balvanera', '1122334455', 'test.congreso@example.com', 1, '2023-10-30 22:00:00', -34.6095, -58.3920);
 INSERT INTO PublicacionEncontrado(id)
 VALUES(10);
+
 
 --Productos
 INSERT INTO Producto (id, nombre, descripcion, precio, precioEnPuntos, stock, imagen)

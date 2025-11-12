@@ -14,4 +14,7 @@ public interface ServicioPublicacion {
     List<Publicacion> buscarPublicacionesConFiltros(String categoria, String nombre, Provincias provincia, String localidad);
     Publicacion buscarPorId(Long id);
     void actualizar(Publicacion publicacion);
+    List<Publicacion> buscarPublicacionesParaMapa(Double latitud, Double longitud, Double radioKm, String categoria, String nombre);
+    List<Publicacion> obtenerPublicacionesDelUsuario(Usuario usuario);
+
 }

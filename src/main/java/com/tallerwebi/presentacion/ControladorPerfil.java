@@ -1,8 +1,10 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioPerfil;
+import com.tallerwebi.dominio.ServicioPublicacion;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Provincias;
+import com.tallerwebi.dominio.Publicacion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,49 +12,68 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class ControladorPerfil {
 
-    ServicioPerfil servicioPerfil;
+    private final ServicioPerfil servicioPerfil;
+    private final ServicioPublicacion servicioPublicacion;
+    private static final Path UPLOADS_IMAGES_DIR = Paths.get(System.getProperty("user.dir"), "uploads", "images");
 
     @Autowired
-    private ServletContext servletContext;
-
-    @Autowired
-    public ControladorPerfil(ServicioPerfil servicioPerfil) {
+    public ControladorPerfil(ServicioPerfil servicioPerfil, ServicioPublicacion servicioPublicacion) {
         this.servicioPerfil = servicioPerfil;
+        this.servicioPublicacion = servicioPublicacion;;
     }
 
     @RequestMapping(path = "/perfil", method = RequestMethod.GET)
     public ModelAndView irAlPerfil(HttpServletRequest request) {
         ModelMap model = new ModelMap();
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        VerificadorAutenticidadUsuario verificadorAutenticidadUsuario = new VerificadorAutenticidadUsuario(request);
 
-        if (usuario == null) {
-            return new ModelAndView("redirect:/inicio-de-sesion");
+        if (!verificadorAutenticidadUsuario.verificarUsuarioConSesionIniciada()) {
+            return redirectAlInicioDeSesion();
+        }
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
+
+        List<Publicacion> publicaciones = servicioPublicacion.obtenerPublicacionesDelUsuario(usuario);
+
+        if (publicaciones == null) {
+            publicaciones = new ArrayList<>();
         }
 
         model.put("usuario", usuario);
+        model.put("publicaciones", publicaciones);
         return new ModelAndView("perfil", model);
     }
 
     @RequestMapping(path = "/perfil/editar", method = RequestMethod.GET)
     public ModelAndView irAEditarPerfil(HttpServletRequest request) {
         ModelMap model = new ModelMap();
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        VerificadorAutenticidadUsuario verificadorAutenticidadUsuario = new VerificadorAutenticidadUsuario(request);
 
-        if (usuario == null) {
-            return new ModelAndView("redirect:/inicio-de-sesion");
+        if (!verificadorAutenticidadUsuario.verificarUsuarioConSesionIniciada()) {
+            return redirectAlInicioDeSesion();
         }
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
 
         DatosEdicionPerfil datosEdicionPerfil = new DatosEdicionPerfil(
                 usuario.getNombre(),
@@ -69,6 +90,8 @@ public class ControladorPerfil {
                 usuario.getDomicilio().getCodigoPostal()
         );
 
+        datosEdicionPerfil.setUrlFotoDePerfil(usuario.getUrlFotoDePerfil());
+
         model.put("usuario", usuario);
         model.put("datosEdicionPerfil", datosEdicionPerfil);
         model.put("provincias", Provincias.values());
@@ -79,18 +102,34 @@ public class ControladorPerfil {
 
     @RequestMapping(path = "/perfil/editar/guardar", method = RequestMethod.POST)
     public ModelAndView guardarPerfil(@ModelAttribute("datosEdicionPerfil") DatosEdicionPerfil datosEdicionPerfil,
+                                      @RequestParam(value = "fotoPerfil", required = false) MultipartFile archivo,
                                       HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        VerificadorAutenticidadUsuario verificadorAutenticidadUsuario = new VerificadorAutenticidadUsuario(request);
+        if (!verificadorAutenticidadUsuario.verificarUsuarioConSesionIniciada()) {
+            return redirectAlInicioDeSesion();
+        }
 
-        if (usuario == null) {
-            return new ModelAndView("redirect:/inicio-de-sesion");
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
+
+        if (datosEdicionPerfil.getUrlFotoDePerfil() == null || datosEdicionPerfil.getUrlFotoDePerfil().trim().isEmpty()) {
+            datosEdicionPerfil.setUrlFotoDePerfil(usuario.getUrlFotoDePerfil());
         }
 
         ModelMap model = new ModelMap();
         ModelAndView camposObligatoriosVacios = verficarCamposObligatoriosVacios(datosEdicionPerfil, model);
         if (camposObligatoriosVacios.getModelMap().containsKey("error")) {
-            return camposObligatoriosVacios;
+            String mensaje = (String) camposObligatoriosVacios.getModelMap().get("error");
+            return devolverEdicionFallidaConDTO(new ModelMap(), datosEdicionPerfil, usuario, mensaje);
+        }
+
+        if (archivo != null && !archivo.isEmpty()) {
+            try {
+                validarImagen(archivo);
+                String nombreArchivo = guardarImagenEnCarpeta(archivo);
+                datosEdicionPerfil.setUrlFotoDePerfil("/images/" + nombreArchivo);
+            } catch (Exception e) {
+                return devolverEdicionFallidaConDTO(model, datosEdicionPerfil, usuario, "Error al subir la imagen: " + e.getMessage());
+            }
         }
 
         datosEdicionPerfil.setId(usuario.getId());
@@ -98,11 +137,11 @@ public class ControladorPerfil {
         try {
             servicioPerfil.guardarCambiosPerfil(datosEdicionPerfil);
         } catch (Exception e) {
-            return devolverEdicionFallida(model, e.getMessage());
+            return devolverEdicionFallidaConDTO(model, datosEdicionPerfil, usuario, e.getMessage());
         }
 
         Usuario usuarioActualizado = servicioPerfil.buscarPorId(usuario.getId());
-        session.setAttribute("usuarioLogueado", usuarioActualizado);
+        request.getSession().setAttribute("usuarioLogueado", usuarioActualizado);
 
         return new ModelAndView("redirect:/perfil");
     }
@@ -153,4 +192,46 @@ public class ControladorPerfil {
         model.put("provincias", Provincias.values());
         return new ModelAndView("editar-perfil", model);
     }
+
+    private ModelAndView devolverEdicionFallidaConDTO(ModelMap model, DatosEdicionPerfil datos, Usuario usuario, String mensaje) {
+        model.put("error", mensaje);
+        model.put("provincias", Provincias.values());
+        model.put("datosEdicionPerfil", datos);
+        model.put("usuario", usuario);
+        return new ModelAndView("editar-perfil", model);
+    }
+
+    private void validarImagen(MultipartFile archivo) throws IOException {
+        if (archivo.getSize() > 5 * 1024 * 1024) {
+            throw new IOException("El archivo no debe superar los 5MB");
+        }
+        String contentType = archivo.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            throw new IOException("Solo se permiten archivos de imagen");
+        }
+    }
+
+    private String guardarImagenEnCarpeta(MultipartFile archivo) throws IOException {
+        String nombreOriginal = archivo.getOriginalFilename();
+        String extension = "";
+        if (nombreOriginal != null && nombreOriginal.contains(".")) {
+            extension = nombreOriginal.substring(nombreOriginal.lastIndexOf('.'));
+        }
+        String nombreUnico = UUID.randomUUID().toString() + extension;
+
+        if (!Files.exists(UPLOADS_IMAGES_DIR)) {
+            Files.createDirectories(UPLOADS_IMAGES_DIR);
+        }
+        Path rutaArchivo = UPLOADS_IMAGES_DIR.resolve(nombreUnico);
+        try (InputStream is = archivo.getInputStream()) {
+            Files.copy(is, rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        return nombreUnico;
+    }
+
+    private ModelAndView redirectAlInicioDeSesion() {
+        return new ModelAndView("redirect:/inicio-de-sesion");
+    }
+
 }

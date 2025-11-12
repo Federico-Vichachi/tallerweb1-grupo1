@@ -102,6 +102,10 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
             usuario.getDomicilio().setProvincia(datosEdicionPerfil.getProvincia());
             usuario.getDomicilio().setCodigoPostal(datosEdicionPerfil.getCodigoPostal());
 
+            if (datosEdicionPerfil.getUrlFotoDePerfil() != null && !datosEdicionPerfil.getUrlFotoDePerfil().trim().isEmpty()) {
+                usuario.setUrlFotoDePerfil(datosEdicionPerfil.getUrlFotoDePerfil());
+            }
+
             sessionFactory.getCurrentSession().update(usuario);
         }
     }

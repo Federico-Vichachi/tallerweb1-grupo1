@@ -20,15 +20,7 @@
         <!-- COLUMNA DE FILTROS Y MAPA -->
         <div class="col-lg-4 col-xl-3">
             <aside class="filtro-columna">
-                <!-- Botones para alternar vista -->
-                <div class="vista-toggle-container">
-                    <button id="btn-mostrar-filtros" class="vista-toggle-btn active">
-                        <i class="fa-solid fa-filter"></i> Filtros
-                    </button>
-                    <button id="btn-mostrar-mapa" class="vista-toggle-btn">
-                        <i class="fa-solid fa-map-location-dot"></i> Mapa
-                    </button>
-                </div>
+
 
                 <!-- Contenedor de Filtros -->
                 <div id="contenedor-filtros">
@@ -61,11 +53,7 @@
                         <a th:href="@{/feed}" class="limpiar-filtros-btn">Limpiar</a>
                     </form>
                 </div>
-                <!-- MAPA -->
-                <div id="contenedor-mapa" style="display: none;">
-                    <h4 class="subtitulo-filtros" style="margin-top: 15px;">Mascotas cerca de ti</h4>
-                    <div id="map"></div>
-                </div>
+
             </aside>
         </div>
 
@@ -75,6 +63,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap">
                     <div><h2 class="titulo-publicacion">Publicaciones</h2><p class="subtitulo-publicacion">Explora las ultimas publicaciones de la comunidad</p></div>
                     <div class="d-flex gap-2 flex-wrap"><a th:href="@{/home}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver al Home</a><a th:if="${usuarioLogueado != null}" th:href="@{/crear-publicacion}" class="btn btn-primary"><span class="fa-solid fa-plus"></span> Crear Publicacion</a><a th:if="${usuarioLogueado != null}" th:href="@{/perfil}" class="btn btn-primary"><i class="fa-solid fa-user" style="color: #ffffff;"></i> Perfil</a></div>
+                    <a th:href="@{/mapa}" class="btn btn-info"><i class="fa-solid fa-map-location-dot"></i> Ver en Mapa</a>
                 </div>
             </div>
             <!-- MENSAJES -->
@@ -129,6 +118,11 @@
                                                 <i class="fa-solid fa-dollar-sign"></i> Donar
                                             </button>
 
+                                            <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-secondary">
+                                                <i class="fa-solid fa-comments"></i>
+                                                <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
+                                            </a>
+
                                             <button type="button" class="btn btn-compartir">Compartir</button>
                                             <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-more-info">Mas info</a>
                                         </div>
@@ -139,7 +133,7 @@
                         </div>
                     </div>
 
-                    <!-- CASO POR DEFECTO PARA OTROS TIPOS DE PUBLICACIÓN -->
+                    <!-- CASO POR DEFECTO PARA OTROS TIPOS DE PUBLICACION -->
                     <div th:case="*">
                         <div class="card-header-custom d-flex justify-content-between align-items-center">
                             <div class="user-info d-flex align-items-center">
@@ -174,6 +168,10 @@
                                         <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
                                         <button class="btn btn-consult">Consultar</button>
                                         <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-more-info">Mas info</a>
+                                        <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-secondary">
+                                            <i class="fa-solid fa-comments"></i>
+                                            <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -191,8 +189,7 @@
 <script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/filtros.js}"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script th:src="@{/js/mapa.js}" charset="UTF-8"></script>
-<script th:src="@{/js/feed-toggle.js}" charset="UTF-8"></script>
+
 
 </body>
 </html>

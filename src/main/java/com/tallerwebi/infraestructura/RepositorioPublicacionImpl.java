@@ -7,6 +7,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Repository("repositorioPublicacion")
@@ -101,4 +103,35 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
     public void actualizar(Publicacion publicacion) {
         sessionFactory.getCurrentSession().update(publicacion);
     }
+
+    @Override
+    public List<Publicacion> buscarPorUsuario(Usuario usuario) {
+        return (List<Publicacion>) sessionFactory.getCurrentSession()
+                .createCriteria(Publicacion.class)
+                .add(Restrictions.eq("usuario", usuario))
+                .addOrder(Order.desc("id"))
+                .list();
+    }
+
+
+    public List<Publicacion> buscarMapeablesConFiltros(String categoria, String nombre) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Publicacion.class);
+
+        criteria.add(Restrictions.in("class", Arrays.asList(PublicacionPerdido.class, PublicacionEncontrado.class)));
+
+        if (categoria != null && !categoria.trim().isEmpty()) {
+            switch (categoria.toUpperCase()) {
+                case "PERDIDO": criteria.add(Restrictions.eq("class", PublicacionPerdido.class)); break;
+                case "ENCONTRADO": criteria.add(Restrictions.eq("class", PublicacionEncontrado.class)); break;
+            }
+        }
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            criteria.add(Restrictions.ilike("titulo", "%" + nombre + "%"));
+        }
+
+        criteria.addOrder(Order.desc("id"));
+        return (List<Publicacion>) criteria.list();
+    }
+
 }
+

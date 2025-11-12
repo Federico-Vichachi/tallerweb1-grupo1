@@ -24,6 +24,7 @@ public class DatosEdicionPerfil {
     private String ciudad;
     private Provincias provincia;
     private String codigoPostal;
+    private String urlFotoDePerfil;
 
     public DatosEdicionPerfil() {
     }

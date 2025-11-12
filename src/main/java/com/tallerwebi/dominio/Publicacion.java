@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -20,6 +21,9 @@ public abstract class Publicacion {
     private Double latitud;
     private Double longitud;
 
+    @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("fechaCreacion DESC")
+    private List<Comentario> comentarios;
 
     @Enumerated(EnumType.STRING)
     private Provincias provincia;

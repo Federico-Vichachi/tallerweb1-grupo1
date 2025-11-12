@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" th:href="@{/css/variables.css}"/>
     <link rel="stylesheet" th:href="@{/css/editar-perfil.css}"/>
-
 </head>
 <body>
 
@@ -54,14 +53,15 @@
             <span th:text="${mensaje}"></span>
         </div>
 
-        <form th:action="@{/perfil/editar/guardar}" method="POST" th:object="${datosEdicionPerfil}">
-<!--            <div class="text-center mb-4">-->
-<!--                <div class="avatar-preview">-->
-<!--                    <img th:src="@{${usuario.urlFotoDePerfil}}"-->
-<!--                         alt="Foto de perfil"-->
-<!--                         id="avatarPreview">-->
-<!--                </div>-->
-<!--            </div>-->
+        <form th:action="@{/perfil/editar/guardar}" method="POST" th:object="${datosEdicionPerfil}" enctype="multipart/form-data">
+
+            <div class="text-center mb-4">
+                <div class="avatar-preview">
+                    <img th:src="@{${datosEdicionPerfil.urlFotoDePerfil}}"
+                         alt="Foto de perfil"
+                         id="avatarPreview">
+                </div>
+            </div>
 
             <div class="form-section">
                 <h2 class="section-title">
@@ -134,17 +134,18 @@
                                required>
                     </div>
 
-<!--                    <div class="col-md-6 mb-3">-->
-<!--                        <label for="urlFotoDePerfil" class="form-label">-->
-<!--                            <i class="fa-solid fa-image"></i>-->
-<!--                            Foto de Perfil-->
-<!--                        </label>-->
-<!--                        <input type="file"-->
-<!--                               class="form-control"-->
-<!--                               id="urlFotoDePerfil"-->
-<!--                               name="urlFotoDePerfil"-->
-<!--                               accept="image/*">-->
-<!--                    </div>-->
+                    <div class="col-md-6 mb-3">
+                        <label for="fotoPerfil" class="form-label">
+                            <i class="fa-solid fa-image"></i>
+                            Foto de Perfil
+                        </label>
+                        <input type="file"
+                               class="form-control"
+                               id="fotoPerfil"
+                               name="fotoPerfil"
+                               accept="image/*">
+                    </div>
+
                 </div>
             </div>
 
@@ -230,7 +231,7 @@
                             <option value="">Seleccione una provincia</option>
                             <option th:each="provincia : ${provincias}"
                                     th:value="${provincia}"
-                                    th:text="${#strings.replace(#strings.replace(#strings.capitalize(#strings.toLowerCase(provincia)), '_', ' '), 'Del ', 'del ')}">
+                                    th:text="${provincia.getNombreFormateado()}">
                             </option>
                         </select>
                     </div>
@@ -264,5 +265,6 @@
 </main>
 
 <script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/editar-perfil.js}"></script>
 </body>
 </html>

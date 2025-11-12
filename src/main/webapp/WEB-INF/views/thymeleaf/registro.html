@@ -66,9 +66,10 @@
                         <div class="mb-3">
                             <label for="rol" class="form-label">Rol</label>
                             <select class="form-select" id="rol" name="rol" th:field="*{rol}">
-                                <option value="USUARIO_COMUN">Usuario Común</option>
-                                <option value="ORGANIZACION">Organización</option>
-                                <option value="VETERINARIO">Veterinario</option>
+                                <option th:each="rol : ${roles}"
+                                        th:value="${rol}"
+                                        th:text="${rol.getNombreFormateado()}">
+                                </option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -97,7 +98,7 @@
                                         <option value="">Seleccione una provincia</option>
                                         <option th:each="provincia : ${provincias}"
                                                 th:value="${provincia}"
-                                                th:text="${#strings.replace(#strings.replace(#strings.capitalize(#strings.toLowerCase(provincia)), '_', ' '), 'Del ', 'del ')}">
+                                                th:text="${provincia.getNombreFormateado()}">
                                         </option>
                                     </select>
                                 </div>
