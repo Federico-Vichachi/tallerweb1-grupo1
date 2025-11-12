@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${publicacion.titulo}">Detalle de Publicacion</title>
+    <title th:text="${publicacion != null ? publicacion.titulo : 'Publicación no encontrada'}">Detalle</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" th:href="@{/css/feed.css}"/>
@@ -10,53 +10,120 @@
         body { background-color: #fdf5e6; }
         .detalle-container { max-width: 900px; margin: 40px auto; }
         .imagen-detalle { width: 100%; height: 500px; object-fit: cover; border-radius: 15px; }
-        .descripcion-detallada { font-size: 1.1rem; line-height: 1.7; }
+        .descripcion-detallada { font-size: 1.1rem; line-height: 1.7; white-space: pre-wrap; }
     </style>
 </head>
 <body>
 
+<div class="container detalle-container" th:with="usuarioLogueado=${session.usuarioLogueado}">
+
+    <div th:if="${publicacion != null}">
+        <div class="carta-adopcion">
+            <a th:href="@{/feed}" class="btn btn-secondary mb-4"><i class="fa-solid fa-arrow-left"></i> Volver al Feed</a>
 
 
-<div class="container detalle-container">
-    <div class="carta-adopcion" th:if="${publicacion != null}">
 
-        <a th:href="@{/feed}" class="btn btn-secondary mb-4"><i class="fa-solid fa-arrow-left"></i> Volver al Feed</a>
+            <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="imagen-detalle mb-4">
 
-        <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="imagen-detalle mb-4">
+            <!-- Título y Tag -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="nombre-animal" th:text="${publicacion.titulo}"></h1>
+                <div class="tag-adopcion"
+                     th:classappend="${publicacion.class.simpleName == 'PublicacionAdopcion' ? 'tag-adopcion' :
+                                     (publicacion.class.simpleName == 'PublicacionRecaudacion' ? 'tag-recaudacion' :
+                                     (publicacion.class.simpleName == 'PublicacionPerdido' ? 'tag-perdido' :
+                                     (publicacion.class.simpleName == 'PublicacionEncontrado' ? 'tag-encontrado' :
+                                     (publicacion.class.simpleName == 'PublicacionSalud' ? 'tag-salud' : ''))))}"
+                     th:text="${#strings.capitalize(publicacion.class.simpleName.replace('Publicacion',''))}">
+                </div>
+            </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="nombre-animal" th:text="${publicacion.titulo}"></h1>
-            <div class="tag-adopcion"
-                 th:classappend="${publicacion.class.simpleName == 'PublicacionAdopcion' ? 'tag-adopcion' :
-                                 (publicacion.class.simpleName == 'PublicacionRecaudacion' ? 'tag-recaudacion' : 'tag-default')}"
-                 th:text="${#strings.capitalize(publicacion.class.simpleName.replace('Publicacion',''))}">
+            <!-- Info Basica -->
+            <div class="contenedor-info d-flex flex-wrap align-items-center mb-4">
+                <span th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion) or publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud) or publicacion instanceof T(com.tallerwebi.dominio.PublicacionRecaudacion)}">
+                    <i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span> anios
+                </span>
+                <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${#strings.capitalizeWords(publicacion.localidad.toLowerCase()) + ', ' + #strings.capitalizeWords(publicacion.provincia.toString().replace('_', ' ').toLowerCase())}"></span></span>
+                <span><i class="fa-solid fa-paw"></i> <span th:text="${publicacion.raza}"></span></span>
+            </div>
+
+            <!-- RECAUDACION -->
+            <div th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionRecaudacion)}" class="recaudacion-progreso mb-4">
+                <div class="d-flex justify-content-between">
+                    <span>Meta: <span class="fw-bold" th:text="${publicacion.meta}"></span></span>
+                    <span class="recaudado">Recaudado: <span class="fw-bold" th:text="${publicacion.montoActual}"></span></span>
+                </div>
+                <div class="progress mt-1" style="height: 10px;"><div class="progress-bar" role="progressbar" th:style="'width: ' + (${publicacion.meta > 0 ? (publicacion.montoActual / publicacion.meta * 100) : 0}) + '%;'"></div></div>
+            </div>
+
+            <!-- DESCRIPCION DETALLADA -->
+            <h4 class="mb-2">Sobre este caso</h4>
+            <p class="descripcion-detallada" th:text="${publicacion.descripcionDetallada}"></p>
+
+
+            <!-- COMENTARIOS  -->
+
+            <hr class="my-4">
+            <h4>Comentarios (<span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}">0</span>)</h4>
+
+            <div th:if="${param.errorComentario}" class="alert alert-danger" th:text="${param.errorComentario[0]}"></div>
+
+            <div th:if="${usuarioLogueado != null}">
+                <form th:if="${not (publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud))}"
+                      th:action="@{/comentario/guardar}" method="POST" class="mt-4">
+                    <div class="mb-3">
+                        <textarea name="texto" class="form-control" rows="3" placeholder="Escribe un comentario..." required></textarea>
+                        <input type="hidden" name="publicacionId" th:value="${publicacion.id}" />
+                    </div>
+                    <button type="submit" class="btn success">Comentar</button>
+                </form>
+
+                <!-- Si la publicación si es de salud, solo los veterinarios pueden comentar -->
+                <form th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud) and usuarioLogueado.rol.name() == 'VETERINARIO'}"
+                      th:action="@{/comentario/guardar}" method="POST" class="mt-4">
+                    <div class="mb-3">
+                        <textarea name="texto" class="form-control" rows="3" placeholder="Escribe un comentario..." required></textarea>
+                        <input type="hidden" name="publicacionId" th:value="${publicacion.id}" />
+                    </div>
+                    <button type="submit" class="btn btn success">Comentar</button>
+                </form>
+
+                <!-- Mensaje para no-veterinarios en publicaciones de salud -->
+                <div th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud) and usuarioLogueado.rol.name() != 'VETERINARIO'}" class="alert alert-info mt-4">
+                    Solo los usuarios con rol de veterinario pueden comentar en esta publicación.
+                </div>
+            </div>
+
+            <!-- Mensaje para usuarios no logueados -->
+            <div th:if="${usuarioLogueado == null}" class="alert alert-secondary mt-4">
+                <a th:href="@{/inicio-de-sesion}">Inicia sesion</a> para poder comentar.
+            </div>
+
+            <!-- Lista de comentarios existentes -->
+            <div id="lista-comentarios" class="mt-5">
+                <div th:if="${publicacion.comentarios == null or publicacion.comentarios.isEmpty()}">
+                    <p>Todavia no hay comentarios</p>
+                </div>
+                <div th:each="comentario : ${publicacion.comentarios}" class="mb-3 border p-3 rounded bg-light">
+                    <strong>
+                        <i class="fa fa-user"></i> <span th:text="${comentario.autor.nombreDeUsuario}"></span>
+                        <span th:if="${comentario.autor.rol.name() == 'VETERINARIO'}" class="badge bg-success ms-2">Veterinario</span>
+                    </strong>
+                    <small class="text-muted float-end" th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(comentario.fechaCreacion)}"></small>
+                    <p th:text="${comentario.texto}" class="mt-2 mb-0"></p>
+                </div>
             </div>
         </div>
-
-        <div class="contenedor-info d-flex flex-wrap align-items-center mb-4">
-            <span th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion) or publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud)}"><i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span> años</span>
-            <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${publicacion.localidad + ', ' + publicacion.provincia}"></span></span>
-            <span><i class="fa-solid fa-paw"></i> <span th:text="${publicacion.raza}"></span></span>
-        </div>
-
-        <div th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionRecaudacion)}" class="recaudacion-progreso mb-4">
-            <div class="d-flex justify-content-between">
-                <span>Meta: <span class="fw-bold" th:text="${publicacion.meta}"></span></span>
-                <span class="recaudado">Recaudado: <span class="fw-bold" th:text="${publicacion.montoActual}"></span></span>
-            </div>
-            <div class="progress mt-1" style="height: 10px;"><div class="progress-bar" role="progressbar" th:style="'width: ' + (${publicacion.montoActual / publicacion.meta * 100}) + '%;'"></div></div>
-        </div>
-
-        <h4 class="mb-2">Sobre <span th:text="${publicacion.titulo}"></span></h4>
-        <p class="descripcion-detallada" th:text="${publicacion.descripcionDetallada}"></p>
-
-        <hr class="my-4">
-        <div class="boton-pta d-flex flex-wrap gap-2">
-            <button class="btn btn-consult">Contactar</button>
-        </div>
-
     </div>
-    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <!-- Bloque para cuando la publicación no existe -->
+    <div th:unless="${publicacion != null}" class="text-center">
+        <div class="alert alert-warning">
+            <h2>Publicacion no encontrada</h2>
+            <p>La publicacion que buscas no existe o ha sido eliminada.</p>
+            <a th:href="@{/feed}" class="btn btn-primary mt-3">Volver al Feed</a>
+        </div>
+    </div>
 </div>
 
 </body>

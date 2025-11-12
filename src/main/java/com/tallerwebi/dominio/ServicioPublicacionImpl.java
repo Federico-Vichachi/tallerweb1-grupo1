@@ -48,7 +48,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         }
 
         if (publicacion.getImagen() != null && !publicacion.getImagen().matches(FORMATO_IMAGEN)) {
-            throw new ValidacionPublicacionException("La imagen no es valida");
+            throw new ValidacionPublicacionException("La imagen es valida"); // No deberia ser invalida?
         }
 
         if (publicacion.getLocalidad() == null || publicacion.getLocalidad().trim().isEmpty() || !publicacion.getLocalidad().matches(FORMATO_RAZA_UBICACION)) {
@@ -224,11 +224,29 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         return publicacion;
     }
 
-
     @Override
     public void actualizar(Publicacion publicacion) {
         repositorioPublicacion.actualizar(publicacion);
     }
+
+
+
+    @Override
+    public List<Publicacion> buscarPublicacionesParaMapa(Double latitud, Double longitud, Double radioKm, String categoria, String nombre) {
+        List<Publicacion> candidatas = repositorioPublicacion.buscarMapeablesConFiltros(categoria, nombre);
+
+        return candidatas.stream()
+                .filter(publicacion -> {
+                    if (publicacion.getLatitud() != null && publicacion.getLongitud() != null) {
+                        double distancia = calcularDistancia(latitud, longitud, publicacion.getLatitud(), publicacion.getLongitud());
+                        return distancia <= radioKm;
+                    }
+                    return false;
+                })
+                .collect(Collectors.toList());
+    }
+
+
 
     @Override
     public List<Publicacion> obtenerPublicacionesDelUsuario(Usuario usuario) {

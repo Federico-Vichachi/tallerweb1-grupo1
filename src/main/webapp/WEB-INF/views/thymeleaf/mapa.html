@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa Interactivo de Mascotas</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" th:href="@{/css/feed.css}"/>
+
+    <script th:inline="javascript">
+        const contextPath = /*[[@{/}]]*/ '';
+    </script>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .map-page-container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar-filters {
+            width: 320px;
+            flex-shrink: 0;
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+        }
+        .filters-content {
+            padding: 20px;
+            overflow-y: auto;
+        }
+        #map-container {
+            flex-grow: 1;
+        }
+        .footer-buttons {
+            margin-top: auto;
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        .range-slider-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="map-page-container">
+
+    <aside class="sidebar-filters">
+        <div class="filters-content">
+            <h3 class="titulo-filtros"><i class="fa-solid fa-filter"></i> Filtros del Mapa</h3>
+
+            <!-- Seccion Buscar -->
+            <div class="filtro-seccion">
+                <h4 class="subtitulo-filtros">Buscar</h4>
+                <div class="busqueda">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="filtro-nombre" name="nombre" class="busqueda-cuadro" placeholder="Buscar por titulo...">
+                </div>
+            </div>
+
+            <!-- Seccion Categorias -->
+            <div class="filtro-seccion">
+                <h4 class="subtitulo-filtros">Categorias</h4>
+                <div class="item-categoria"><input type="radio" id="categoria-todos" name="categoria" value="" checked><label for="categoria-todos">Todas </label></div>
+                <div class="item-categoria"><input type="radio" id="animal-perdido" name="categoria" value="PERDIDO"><label for="animal-perdido">Perdido</label></div>
+                <div class="item-categoria"><input type="radio" id="animal-encontrado" name="categoria" value="ENCONTRADO"><label for="animal-encontrado">Encontrado</label></div>
+            </div>
+
+            <!-- Seccion Rango de Busqueda -->
+            <div class="filtro-seccion">
+                <h4 class="subtitulo-filtros">
+                    Rango de Busqueda: <span id="rango-valor" class="fw-bold">10</span> km
+                </h4>
+                <div class="range-slider-group">
+                    <span>1</span>
+                    <input type="range" class="form-range" id="filtro-rango" min="1" max="50" step="1" value="10">
+                    <span>50</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-buttons">
+            <a th:href="@{/feed}" class="btn btn-secondary w-100"><i class="fa-solid fa-arrow-left me-2"></i>Volver al Feed</a>
+        </div>
+    </aside>
+
+    <main id="map-container"></main>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script th:src="@{/js/mapa-interactivo.js}"></script>
+
+</body>
+</html>
