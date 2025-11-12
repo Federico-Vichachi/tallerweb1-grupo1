@@ -32,34 +32,29 @@ import java.util.UUID;
 @Controller
 public class ControladorPerfil {
 
-    ServicioPerfil servicioPerfil;
-    ServicioPublicacion servicioPublicacion;
-
-    @Autowired
-    private ServletContext servletContext;
-
-    // Directorio externo de uploads definido también en SpringWebConfig
+    private final ServicioPerfil servicioPerfil;
+    private final ServicioPublicacion servicioPublicacion;
     private static final Path UPLOADS_IMAGES_DIR = Paths.get(System.getProperty("user.dir"), "uploads", "images");
 
     @Autowired
     public ControladorPerfil(ServicioPerfil servicioPerfil, ServicioPublicacion servicioPublicacion) {
         this.servicioPerfil = servicioPerfil;
-        this.servicioPublicacion = servicioPublicacion;
+        this.servicioPublicacion = servicioPublicacion;;
     }
 
     @RequestMapping(path = "/perfil", method = RequestMethod.GET)
     public ModelAndView irAlPerfil(HttpServletRequest request) {
         ModelMap model = new ModelMap();
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        VerificadorAutenticidadUsuario verificadorAutenticidadUsuario = new VerificadorAutenticidadUsuario(request);
 
-        if (usuario == null) {
-            return new ModelAndView("redirect:/inicio-de-sesion");
+        if (!verificadorAutenticidadUsuario.verificarUsuarioConSesionIniciada()) {
+            return redirectAlInicioDeSesion();
         }
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
 
         List<Publicacion> publicaciones = servicioPublicacion.obtenerPublicacionesDelUsuario(usuario);
 
-        // Asegurar que nunca sea null
         if (publicaciones == null) {
             publicaciones = new ArrayList<>();
         }
@@ -72,12 +67,13 @@ public class ControladorPerfil {
     @RequestMapping(path = "/perfil/editar", method = RequestMethod.GET)
     public ModelAndView irAEditarPerfil(HttpServletRequest request) {
         ModelMap model = new ModelMap();
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        VerificadorAutenticidadUsuario verificadorAutenticidadUsuario = new VerificadorAutenticidadUsuario(request);
 
-        if (usuario == null) {
-            return new ModelAndView("redirect:/inicio-de-sesion");
+        if (!verificadorAutenticidadUsuario.verificarUsuarioConSesionIniciada()) {
+            return redirectAlInicioDeSesion();
         }
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
 
         DatosEdicionPerfil datosEdicionPerfil = new DatosEdicionPerfil(
                 usuario.getNombre(),
@@ -94,7 +90,6 @@ public class ControladorPerfil {
                 usuario.getDomicilio().getCodigoPostal()
         );
 
-        // Mantener la ruta actual de la foto en el DTO para poder mostrarla en el formulario
         datosEdicionPerfil.setUrlFotoDePerfil(usuario.getUrlFotoDePerfil());
 
         model.put("usuario", usuario);
@@ -109,14 +104,13 @@ public class ControladorPerfil {
     public ModelAndView guardarPerfil(@ModelAttribute("datosEdicionPerfil") DatosEdicionPerfil datosEdicionPerfil,
                                       @RequestParam(value = "fotoPerfil", required = false) MultipartFile archivo,
                                       HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
-
-        if (usuario == null) {
-            return new ModelAndView("redirect:/inicio-de-sesion");
+        VerificadorAutenticidadUsuario verificadorAutenticidadUsuario = new VerificadorAutenticidadUsuario(request);
+        if (!verificadorAutenticidadUsuario.verificarUsuarioConSesionIniciada()) {
+            return redirectAlInicioDeSesion();
         }
 
-        // Si el formulario no envió urlFotoDePerfil (no hay input para ese campo), preservar la actual
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
+
         if (datosEdicionPerfil.getUrlFotoDePerfil() == null || datosEdicionPerfil.getUrlFotoDePerfil().trim().isEmpty()) {
             datosEdicionPerfil.setUrlFotoDePerfil(usuario.getUrlFotoDePerfil());
         }
@@ -147,7 +141,7 @@ public class ControladorPerfil {
         }
 
         Usuario usuarioActualizado = servicioPerfil.buscarPorId(usuario.getId());
-        session.setAttribute("usuarioLogueado", usuarioActualizado);
+        request.getSession().setAttribute("usuarioLogueado", usuarioActualizado);
 
         return new ModelAndView("redirect:/perfil");
     }
@@ -199,18 +193,15 @@ public class ControladorPerfil {
         return new ModelAndView("editar-perfil", model);
     }
 
-    // Nuevo helper para errores preservando el DTO y usuario
     private ModelAndView devolverEdicionFallidaConDTO(ModelMap model, DatosEdicionPerfil datos, Usuario usuario, String mensaje) {
         model.put("error", mensaje);
         model.put("provincias", Provincias.values());
-        model.put("datosEdicionPerfil", datos); // Mantener datos ingresados y urlFoto
+        model.put("datosEdicionPerfil", datos);
         model.put("usuario", usuario);
         return new ModelAndView("editar-perfil", model);
     }
 
-    // --- Helpers para manejo de imágenes ---
     private void validarImagen(MultipartFile archivo) throws IOException {
-        // Tamaño máximo 5MB
         if (archivo.getSize() > 5 * 1024 * 1024) {
             throw new IOException("El archivo no debe superar los 5MB");
         }
@@ -228,7 +219,6 @@ public class ControladorPerfil {
         }
         String nombreUnico = UUID.randomUUID().toString() + extension;
 
-        // Usar siempre el directorio externo de uploads
         if (!Files.exists(UPLOADS_IMAGES_DIR)) {
             Files.createDirectories(UPLOADS_IMAGES_DIR);
         }
@@ -239,4 +229,9 @@ public class ControladorPerfil {
 
         return nombreUnico;
     }
+
+    private ModelAndView redirectAlInicioDeSesion() {
+        return new ModelAndView("redirect:/inicio-de-sesion");
+    }
+
 }

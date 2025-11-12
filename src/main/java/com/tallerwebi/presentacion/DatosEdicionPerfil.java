@@ -24,7 +24,7 @@ public class DatosEdicionPerfil {
     private String ciudad;
     private Provincias provincia;
     private String codigoPostal;
-    private String urlFotoDePerfil; // nuevo campo para guardar la ruta en la BD
+    private String urlFotoDePerfil;
 
     public DatosEdicionPerfil() {
     }
