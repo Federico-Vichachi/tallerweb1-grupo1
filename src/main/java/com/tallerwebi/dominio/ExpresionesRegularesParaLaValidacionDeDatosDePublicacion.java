@@ -10,7 +10,7 @@ public class ExpresionesRegularesParaLaValidacionDeDatosDePublicacion {
     public static final String FORMATO_CBU = "^[0-9]{22}$";
     public static final String FORMATO_FECHA = "^\\d{4}-\\d{2}-\\d{2}$";
     public static final String FORMATO_HORA = "^\\d{2}:\\d{2}$";
-    public static final String FORMATO_IMAGEN = ".*\\.(jpg|jpeg|png)$";
+    public static final String FORMATO_IMAGEN = "(?i)^.+\\.(jpg|jpeg|png|webp)$";
 
 
 }
