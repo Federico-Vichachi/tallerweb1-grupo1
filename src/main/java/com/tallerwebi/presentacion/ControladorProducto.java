@@ -153,7 +153,7 @@ public class ControladorProducto {
                 return new ModelAndView("redirect:/tienda", model);
             }
 
-            // Consultamos el monto real pagado a Mercado Pago
+            // Consulto el monto real pagado a Mercado Pago
             Double montoPagado = servicioPago.obtenerMontoDePago(paymentId);
 
             if ("approved".equalsIgnoreCase(status)) {

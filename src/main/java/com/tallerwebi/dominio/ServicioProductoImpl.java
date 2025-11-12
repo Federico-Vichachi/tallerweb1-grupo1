@@ -1,7 +1,6 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.ValidacionProductoException;
-import com.tallerwebi.dominio.excepcion.ValidacionPublicacionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -62,11 +61,6 @@ public class ServicioProductoImpl implements ServicioProducto{
     @Override
     public Producto buscarPorId(Long id) {
         return repositorioProducto.buscarPorId(id);
-    }
-
-    @Override
-    public boolean hayStockDisponible(Producto producto, int cantidad) {
-        return producto.getStock() != 0 && producto.getStock() >= cantidad;
     }
 
     @Override
