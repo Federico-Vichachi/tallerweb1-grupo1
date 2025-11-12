@@ -102,6 +102,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
             usuario.getDomicilio().setProvincia(datosEdicionPerfil.getProvincia());
             usuario.getDomicilio().setCodigoPostal(datosEdicionPerfil.getCodigoPostal());
 
+            // Si el DTO trae una ruta de foto, actualizarla en la entidad
+            if (datosEdicionPerfil.getUrlFotoDePerfil() != null && !datosEdicionPerfil.getUrlFotoDePerfil().trim().isEmpty()) {
+                usuario.setUrlFotoDePerfil(datosEdicionPerfil.getUrlFotoDePerfil());
+            }
+
             sessionFactory.getCurrentSession().update(usuario);
         }
     }

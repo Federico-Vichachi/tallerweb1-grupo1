@@ -59,7 +59,7 @@
                 <div class="perfil-center">
                     <span class="perfil-rol">
                         <i class="fa-solid fa-shield-halved"></i>
-                        <span th:text="${usuario.rol}"></span>
+                        <span th:text="${usuario.rol.getNombreFormateado()}"></span>
                     </span>
                 </div>
 
@@ -127,7 +127,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia}"></span>
+                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
@@ -206,7 +206,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia}"></span>
+                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
@@ -271,7 +271,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia}"></span>
+                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
@@ -319,7 +319,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia}"></span>
+                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
@@ -384,7 +384,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia}"></span>
+                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
@@ -495,7 +495,7 @@
                                 <i class="fa-solid fa-map"></i>
                                 Provincia:
                             </div>
-                            <div class="info-valor" th:text="${usuario.domicilio.provincia}"></div>
+                            <div class="info-valor" th:text="${usuario.domicilio.provincia.getNombreFormateado()}"></div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">

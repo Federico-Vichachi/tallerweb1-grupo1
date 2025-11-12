@@ -377,7 +377,7 @@ public class ControladorPerfilTest {
                 nombre, apellido, nombreDeUsuario, email, telefono,
                 calle, numero, piso, departamento, ciudad, provincia, codigoPostal
         );
-        return controladorPerfil.guardarPerfil(datosEdicionPerfil, requestMock);
+        return controladorPerfil.guardarPerfil(datosEdicionPerfil, null, requestMock);
     }
 
     private void entoncesSeActualizaElPerfil(ModelAndView modelAndView) {

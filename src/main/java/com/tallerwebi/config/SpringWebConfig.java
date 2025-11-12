@@ -14,10 +14,17 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @EnableWebMvc
 @Configuration
 @ComponentScan({"com.tallerwebi.presentacion", "com.tallerwebi.dominio", "com.tallerwebi.infraestructura"})
 public class SpringWebConfig implements WebMvcConfigurer {
+
+    // Directorio externo para imágenes subidas por usuarios
+    private static final Path UPLOADS_IMAGES_DIR = Paths.get(System.getProperty("user.dir"), "uploads", "images");
 
     // Spring + Thymeleaf need this
     @Autowired
@@ -25,9 +32,21 @@ public class SpringWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        try {
+            if (!Files.exists(UPLOADS_IMAGES_DIR)) {
+                Files.createDirectories(UPLOADS_IMAGES_DIR);
+            }
+        } catch (Exception ignored) {
+        }
+
         registry.addResourceHandler("/css/**").addResourceLocations("/resources/core/css/");
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/core/js/");
-        registry.addResourceHandler("/images/**").addResourceLocations("/resources/core/images/");
+        String uploadsLocation = UPLOADS_IMAGES_DIR.toUri().toString();
+        if (!uploadsLocation.endsWith("/")) {
+            uploadsLocation = uploadsLocation + "/";
+        }
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations(uploadsLocation, "/resources/core/images/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
 
@@ -71,5 +90,13 @@ public class SpringWebConfig implements WebMvcConfigurer {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
+    }
+
+    // Configuración para manejo de archivos multipart (carga de imágenes)
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(5242880); // 5MB en bytes
+        return multipartResolver;
     }
 }

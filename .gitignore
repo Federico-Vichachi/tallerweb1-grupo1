@@ -38,3 +38,4 @@ src/main/webapp/resources/core/js/package-lock.json
 *.swp
 *.swo
 
+/uploads/
