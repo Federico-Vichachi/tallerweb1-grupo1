@@ -2,34 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Tienda de Productos</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" th:href="@{/css/tienda.css}"/>
+    <link rel="stylesheet" th:href="@{/css/variables.css}"/>
 </head>
 <body>
-<h1>Rescate Amigos Tienda</h1>
-<div class="d-flex gap-2 flex-wrap"><a th:href="@{/home}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver al Home</a><a th:if="${usuarioLogueado != null}" th:href="@{/perfil}" class="btn btn-primary"><i class="fa-solid fa-user" style="color: #ffffff;"></i> Perfil</a></div>
+<div class="tienda-header">
+    <div class="tienda-titulo-container">
+        <i class="fa-solid fa-store icono-tienda"></i>
+        <h1 class="titulo-tienda">Tienda de Rescate Amigos</h1>
+        <i class="fa-solid fa-cart-shopping icono-carrito"></i>
+    </div>
+</div>
+
+<div class="d-flex justify-content-around">
+    <a th:href="@{/home}" class="btn btn-primary">
+        <i class="fa-solid fa-share-from-square"></i>
+        <span class="btn-text">Volver al home</span>
+    </a>
+
+    <div class="puntos" th:if="${usuario != null}">
+        <span class="puntos-label">Tus puntos</span>
+        <i class="fa-solid fa-star"></i>
+        <div class="puntos-info">
+            <span class="puntos-valor" th:text="${usuario.puntos != null ? usuario.puntos : 0}"></span>
+        </div>
+    </div>
+
+</div>
 
 <p th:text="${mensaje}" th:if="${mensaje != null}"></p>
 
 <div class="tienda-container">
     <div class="producto-card" th:each="producto : ${productos}">
-        <h2 th:text="${producto.nombre}"></h2>
-        <p th:text="${producto.descripcion}"></p>
-        <p>Precio: $<span th:text="${producto.precio}"></span></p>
-        <p>Precio en puntos: <span th:text="${producto.precioEnPuntos}"></span> pts</p>
-        <p>Stock: <span th:text="${producto.stock}"></span></p>
-        <img th:src="@{${producto.imagen}}" alt="Imagen producto"/>
+        <div class="producto-imagen-container">
+            <img th:src="@{${producto.imagen}}" alt="Imagen producto"/>
+        </div>
 
-        <form th:action="@{/canjear-producto}" method="post">
-            <input type="hidden" th:name="id" th:value="${producto.id}"/>
-            <button type="submit">Canjear con puntos</button>
-        </form>
+        <div class="producto-info">
+            <h2 th:text="${producto.nombre}"></h2>
+            <p class="descripcion" th:text="${producto.descripcion}"></p>
 
-        <form th:action="@{/comprar-producto}" method="post">
-            <input type="hidden" th:name="id" th:value="${producto.id}"/>
-            <p>Cantidad:<input type="number" name="cantidad" min="1" max="${producto.stock}" required></p>
-            <button type="submit">Comprar</button>
-        </form>
+            <div class="producto-precios">
+                <div class="precio-badge precio-dinero">
+                    <span><i class="fa-solid fa-dollar-sign"></i>Precio</span>
+                    <span th:text="${producto.precio}"></span>
+                </div>
+                <div class="precio-badge precio-puntos">
+                    <span><i class="fa-solid fa-star"></i>Puntos</span>
+                    <span th:text="${producto.precioEnPuntos}"></span>
+                </div>
+            </div>
+
+            <div class="stock-info" th:classappend="${producto.stock}">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>Stock: </span>
+                <span th:text="${producto.stock}"></span>
+            </div>
+        </div>
+
+
+        <div class="producto-acciones">
+            <form th:action="@{/canjear-producto}" method="post">
+                <input type="hidden" th:name="id" th:value="${producto.id}"/>
+                <button class="btn btn-secondary" type="submit">
+                    <i class="fa-solid fa-gift"></i>Canjear con puntos
+                </button>
+            </form>
+
+            <form th:action="@{/comprar-producto}" method="post">
+                <input type="hidden" th:name="id" th:value="${producto.id}"/>
+                <label class="cantidad-label">
+                    <i class="fa-solid fa-calculator"></i>Cantidad:
+                </label>
+                <input type="number" name="cantidad" min="1" th:max="${producto.stock}" value="1" required>
+                <button class="btn btn-primary" type="submit">
+                    <i class="fa-solid fa-shopping-cart"></i>Comprar ahora
+                </button>
+            </form>
+        </div>
     </div>
 </div>
+
+<script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+
 </body>
 </html>

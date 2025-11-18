@@ -51,8 +51,9 @@ public class ControladorProducto {
     @RequestMapping(value = "/tienda")
     public ModelAndView verTienda(HttpSession session) {
         ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         model.put("productos", servicioProducto.listarProductos());
-        model.put("usuario", session.getAttribute("usuarioLogueado"));
+        model.put("usuario", usuario);
         return new ModelAndView("tienda", model);
     }
 

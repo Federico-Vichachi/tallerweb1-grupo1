@@ -18,7 +18,7 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container-fluid">
             <div class="w-100 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
-                <a class="navbar-brand d-flex align-items-center" href="#">
+                <a class="navbar-brand d-flex align-items-center" th:href="@{/home}">
                     <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
                     <span class="logo-text fs-3 fw-bold">Rescate Amigos</span>
                 </a>
@@ -58,7 +58,7 @@
                         </p>
                         <div class="d-flex hero-buttons justify-content-center flex-wrapc">
                             <a th:href="@{/feed}" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
-                            <a href="#" class="btn btn-light btn-lg px-4 py-2">Ir a la tienda</a>
+                            <a th:href="@{/tienda}" class="btn btn-light btn-lg px-4 py-2">Ir a la tienda</a>
                         </div>
                     </div>
                 </div>
