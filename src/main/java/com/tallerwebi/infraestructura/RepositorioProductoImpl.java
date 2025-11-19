@@ -35,4 +35,9 @@ public class RepositorioProductoImpl implements RepositorioProducto {
     public Producto buscarPorId(Long id) {
         return sessionFactory.getCurrentSession().get(Producto.class, id);
     }
+
+    @Override
+    public void actualizar(Producto producto) {
+        sessionFactory.getCurrentSession().update(producto);
+    }
 }

@@ -66,6 +66,11 @@ public class ServicioProductoImpl implements ServicioProducto{
     @Override
     public void descontarStock(Producto producto, int cantidad) {
         producto.descontarStock(cantidad);
-        repositorioProducto.guardar(producto);
+        repositorioProducto.actualizar(producto);
+    }
+
+    @Override
+    public void actualizar(Producto producto) {
+        repositorioProducto.actualizar(producto);
     }
 }

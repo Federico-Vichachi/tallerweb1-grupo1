@@ -67,19 +67,19 @@
             <label class="cantidad-label">
                 <i class="fa-solid fa-calculator"></i>Cantidad:
             </label>
-            <input id="cant-${producto.id}" type="number" min="1" th:max="${producto.stock}" value="1" required>
+            <input  id="cantidad-card-[[${producto.id}]]" type="number" min="1" th:max="${producto.stock}" value="1" required>
 
-            <form th:action="@{/canjear-producto}" method="post" onsubmit="copiarCantidad('${producto.id}', 'canjear')">
+            <form th:action="@{/canjear-producto}" method="post" onsubmit="this.querySelector('input[name=cantidad]').value = document.getElementById('cantidad-card-[[${producto.id}]]').value;">
                 <input type="hidden" th:name="id" th:value="${producto.id}"/>
-                <input type="hidden" id="cant-canjear-${producto.id}" name="cantidad">
+                <input type="hidden" name="cantidad">
                 <button class="btn btn-secondary" type="submit">
                     <i class="fa-solid fa-gift"></i>Canjear con puntos
                 </button>
             </form>
 
-            <form th:action="@{/comprar-producto}" method="post" onsubmit="copiarCantidad('${producto.id}', 'comprar')">
+            <form th:action="@{/comprar-producto}" method="post" onsubmit="this.querySelector('input[name=cantidad]').value = document.getElementById('cantidad-card-[[${producto.id}]]').value;">
                 <input type="hidden" th:name="id" th:value="${producto.id}"/>
-                <input type="hidden" id="cant-comprar-${producto.id}" name="cantidad">
+                <input type="hidden" name="cantidad">
                 <button class="btn btn-primary" type="submit">
                     <i class="fa-solid fa-shopping-cart"></i>Comprar ahora
                 </button>
@@ -88,7 +88,6 @@
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/tienda.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
