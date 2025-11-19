@@ -3,20 +3,35 @@ package com.tallerwebi.dominio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ServicioCrearPublicacionTest {
 
     private RepositorioPublicacion repositorioMock;
     private ServicioPublicacion servicioCrearPublicacion;
+    private HttpServletRequest requestMock;
+    private HttpSession sessionMock;
+    private Usuario usuarioMock;
+
+
 
 
     @BeforeEach
     public void setUp() {
         repositorioMock = mock(RepositorioPublicacion.class);
         servicioCrearPublicacion = new ServicioPublicacionImpl(repositorioMock);
+        usuarioMock = mock(Usuario.class);
+        when(usuarioMock.getRol()).thenReturn(Roles.ORGANIZACION);
+        requestMock = mock(HttpServletRequest.class);
+        sessionMock = mock(HttpSession.class);
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuarioMock);
     }
 
 
@@ -45,7 +60,7 @@ public class ServicioCrearPublicacionTest {
         publicacion.setTelefono(telefono);
         publicacion.setEmail(email);
         publicacion.setEdad(edad);
-          servicioCrearPublicacion.guardar(publicacion);
+          servicioCrearPublicacion.guardar(publicacion, requestMock);
         return publicacion;
     }
 
@@ -56,7 +71,7 @@ public class ServicioCrearPublicacionTest {
     @Test
     public void siLosDatosDeLaPublicacionRecaudacionSonCorrectosLaCreacionEsExitosa(){
         givenNoExistePublicacionRecaudacion();
-        Publicacion publicacionRecaudacion = whenCreoUnaPublicacionRecaudacionCon("Campaña para operar a Pelusa", "Ayudanos a que Pelusa vuelva a correr.", "Pelusa es un perrito mestizo de 5 años que fue atropellado y necesita una cirugía urgente en su patita trasera.", "Pelusa.jpg", "Mestizo",50 , Provincias.BUENOS_AIRES, "Moron","1145332211", "ayuda.rocky@gmail.com", 5, 150000.0, "0000003100035478292345", "Transferencia bancaria");
+        Publicacion publicacionRecaudacion = whenCreoUnaPublicacionRecaudacionCon("Campana para operar a Pelusa", "Ayudanos a que Pelusa vuelva a correr.", "Pelusa es un perrito mestizo de 5 anos que fue atropellado y necesita una cirugia urgente en su patita trasera.", "Pelusa.jpg", "Mestizo",50 , Provincias.BUENOS_AIRES, "Moron","1145332211", "ayuda.rocky@gmail.com", 5, 150000.0, "0000003100035478292345", "Transferencia bancaria");
         thenLaCreacionDePublicacionRecaudacionEsExitosa(publicacionRecaudacion);
     }
 
@@ -80,7 +95,7 @@ public class ServicioCrearPublicacionTest {
         publicacion.setMeta(meta);
         publicacion.setCbu(cbu);
         publicacion.setMetodoPreferido(metodoPreferido);
-        servicioCrearPublicacion.guardar(publicacion);
+        servicioCrearPublicacion.guardar(publicacion, requestMock);
         return publicacion;
     }
 
@@ -115,7 +130,7 @@ public class ServicioCrearPublicacionTest {
         publicacion.setSintomasPrincipales(sintomasPrincipales);
         publicacion.setDiagnostico(diagnostico);
         publicacion.setNivelUrgencia(nivelUrgencia);
-        servicioCrearPublicacion.guardar(publicacion);
+        servicioCrearPublicacion.guardar(publicacion, requestMock);
         return publicacion;
     }
 
@@ -151,7 +166,7 @@ public class ServicioCrearPublicacionTest {
         publicacion.setHoraDesaparicion(horaDesaparicion);
         publicacion.setLlevaCollar(llevaCollar);
         publicacion.setRecompensa(recompensa);
-        servicioCrearPublicacion.guardar(publicacion);
+        servicioCrearPublicacion.guardar(publicacion, requestMock);
         return publicacion;
     }
 
@@ -183,7 +198,7 @@ public class ServicioCrearPublicacionTest {
         publicacion.setLocalidad(localidad);
         publicacion.setTelefono(telefono);
         publicacion.setEmail(email);
-        servicioCrearPublicacion.guardar(publicacion);
+        servicioCrearPublicacion.guardar(publicacion, requestMock);
         return publicacion;
     }
 

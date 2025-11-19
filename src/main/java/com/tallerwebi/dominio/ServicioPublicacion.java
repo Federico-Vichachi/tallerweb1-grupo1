@@ -1,10 +1,11 @@
 package com.tallerwebi.dominio;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ServicioPublicacion {
 
-    Publicacion guardar(Publicacion publicacion);
+    Publicacion guardar(Publicacion publicacion, HttpServletRequest request);
     List<Publicacion> obtenerTodasLasPublicaciones();
     List<Publicacion> buscarPublicacionesPorCategoria(String categoria);
     List<Publicacion> buscarPorNombre(String nombre);
