@@ -50,17 +50,17 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
 
     @Override
     public List<Publicacion> buscarPorNombre(String nombre) {
-        return this.buscarPublicacionesPorFiltros(null, nombre, null, null);
+        return this.buscarPublicacionesPorFiltros(null, nombre, null, null, false);
     }
 
     @Override
     public List<Publicacion> buscarPorProvincia(Provincias provincia) {
-        return this.buscarPublicacionesPorFiltros(null, null, provincia, null);
+        return this.buscarPublicacionesPorFiltros(null, null, provincia, null, false);
     }
 
     @Override
     public List<Publicacion> buscarPorLocalidad(String localidad) {
-        return this.buscarPublicacionesPorFiltros(null, null, null, localidad);
+        return this.buscarPublicacionesPorFiltros(null, null, null, localidad, false);
     }
 
     @Override
@@ -72,9 +72,14 @@ public class RepositorioPublicacionImpl implements RepositorioPublicacion {
                 .list();
     }
 
+
     @Override
-    public List<Publicacion> buscarPublicacionesPorFiltros(String categoria, String nombre, Provincias provincia, String localidad) {
+    public List<Publicacion> buscarPublicacionesPorFiltros(String categoria, String nombre, Provincias provincia, String localidad, boolean soloMapeables) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Publicacion.class);
+
+        if (soloMapeables) {
+            criteria.add(Restrictions.in("class", Arrays.asList(PublicacionPerdido.class, PublicacionEncontrado.class)));
+        }
 
         if (categoria != null && !categoria.trim().isEmpty()) {
             switch (categoria.toUpperCase()) {

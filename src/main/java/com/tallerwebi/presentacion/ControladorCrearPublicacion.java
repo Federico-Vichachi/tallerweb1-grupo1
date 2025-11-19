@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -36,67 +37,85 @@ public class ControladorCrearPublicacion {
 
 
     @RequestMapping(value = "/publicacion-adopcion", method = RequestMethod.POST)
-    public ModelAndView crearPublicacionAdopcion(@ModelAttribute DatosAdopcion datosAdopcion, HttpSession session) {
+    public ModelAndView crearPublicacionAdopcion(@ModelAttribute DatosAdopcion datosAdopcion, HttpServletRequest request) {
             ModelMap model = new ModelMap();
 
         try {
-            Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
             PublicacionAdopcion publicacionDeAdopcion = new PublicacionAdopcion(datosAdopcion);
             publicacionDeAdopcion.setUsuario(usuario);
-            servicioPublicacion.guardar(publicacionDeAdopcion);
+            servicioPublicacion.guardar(publicacionDeAdopcion, request);
             model.put("mensaje", "Publicacion adopcion guardada correctamente");
             model.put("datosAdopcion", datosAdopcion);
             return new ModelAndView("redirect:/feed");
         }catch(ValidacionPublicacionException e){
             model.put("error", e.getMessage());
+            model.put("datosAdopcion", datosAdopcion);
+            model.put("datosRecaudacion", new DatosRecaudacion());
+            model.put("datosSalud", new DatosSalud());
+            model.put("datosPerdido", new DatosPerdido());
+            model.put("datosEncontrado", new DatosEncontrado());
+            model.put("provincias", Provincias.values());
             return new ModelAndView("crear-publicacion", model);
         }
     }
 
 
     @RequestMapping(value = "/publicacion-recaudacion", method = RequestMethod.POST)
-    public ModelAndView crearPublicacionRecaudacion(@ModelAttribute DatosRecaudacion datosRecaudacion, HttpSession session) {
+    public ModelAndView crearPublicacionRecaudacion(@ModelAttribute DatosRecaudacion datosRecaudacion, HttpServletRequest request) {
             ModelMap model = new ModelMap();
         try {
-            Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
             PublicacionRecaudacion publicacionDeRecaudacion = new PublicacionRecaudacion(datosRecaudacion);
             publicacionDeRecaudacion.setUsuario(usuario);
-            servicioPublicacion.guardar(publicacionDeRecaudacion);
+            servicioPublicacion.guardar(publicacionDeRecaudacion, request);
 
             model.put("mensaje", "Publicacion recaudacion creada correctamente");
             model.put("datosRecaudacion", datosRecaudacion);
             return new ModelAndView("redirect:/feed");
         }catch(ValidacionPublicacionException e){
             model.put("error", e.getMessage());
+            model.put("datosAdopcion", new DatosAdopcion());
+            model.put("datosRecaudacion", datosRecaudacion);
+            model.put("datosSalud", new DatosSalud());
+            model.put("datosPerdido", new DatosPerdido());
+            model.put("datosEncontrado", new DatosEncontrado());
+            model.put("provincias", Provincias.values());
             return new ModelAndView("crear-publicacion", model);
         }
     }
 
     @RequestMapping(value = "/publicacion-salud", method = RequestMethod.POST)
-    public ModelAndView crearPublicacionSalud(@ModelAttribute DatosSalud datosSalud, HttpSession session) {
+    public ModelAndView crearPublicacionSalud(@ModelAttribute DatosSalud datosSalud, HttpServletRequest request) {
         ModelMap model = new ModelMap();
     try {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
         PublicacionSalud publicacionDeSalud = new PublicacionSalud(datosSalud);
         publicacionDeSalud.setUsuario(usuario);
-        servicioPublicacion.guardar(publicacionDeSalud);
+        servicioPublicacion.guardar(publicacionDeSalud, request);
         model.put("mensaje", "Publicacion salud creada correctamente");
         model.put("datosSalud", datosSalud);
         return new ModelAndView("redirect:/feed");
     }catch (ValidacionPublicacionException e){
         model.put("error", e.getMessage());
+        model.put("datosAdopcion", new DatosAdopcion());
+        model.put("datosRecaudacion", new DatosRecaudacion());
+        model.put("datosSalud", datosSalud);
+        model.put("datosPerdido", new DatosPerdido());
+        model.put("datosEncontrado", new DatosEncontrado());
+        model.put("provincias", Provincias.values());
         return new ModelAndView("crear-publicacion", model);
         }
     }
 
     @RequestMapping(value = "/publicacion-perdido", method = RequestMethod.POST)
-    public ModelAndView crearPublicacionPerdido(@ModelAttribute DatosPerdido datosPerdido, HttpSession session) {
+    public ModelAndView crearPublicacionPerdido(@ModelAttribute DatosPerdido datosPerdido, HttpServletRequest request) {
         ModelMap model = new ModelMap();
     try {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
         PublicacionPerdido publicacionDePerdido = new PublicacionPerdido(datosPerdido);
         publicacionDePerdido.setUsuario(usuario);
-        servicioPublicacion.guardar(publicacionDePerdido);
+        servicioPublicacion.guardar(publicacionDePerdido, request);
 
         model.put("mensaje", "Publicacion perdido creada correctamente");
         model.put("datosPerdido", datosPerdido);
@@ -104,23 +123,35 @@ public class ControladorCrearPublicacion {
 
     }catch (ValidacionPublicacionException e){
         model.put("error", e.getMessage());
+        model.put("datosAdopcion", new DatosAdopcion());
+        model.put("datosRecaudacion", new DatosRecaudacion());
+        model.put("datosSalud", new DatosSalud());
+        model.put("datosPerdido", datosPerdido);
+        model.put("datosEncontrado", new DatosEncontrado());
+        model.put("provincias", Provincias.values());
         return new ModelAndView("crear-publicacion", model);
         }
     }
 
     @RequestMapping(value = "/publicacion-encontrado", method = RequestMethod.POST)
-    public ModelAndView crearPublicacionEncontrado(@ModelAttribute DatosEncontrado datosEncontrado, HttpSession session) {
+    public ModelAndView crearPublicacionEncontrado(@ModelAttribute DatosEncontrado datosEncontrado, HttpServletRequest request) {
         ModelMap model = new ModelMap();
     try {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
         PublicacionEncontrado publicacionDeEncontrado = new PublicacionEncontrado(datosEncontrado);
         publicacionDeEncontrado.setUsuario(usuario);
-        servicioPublicacion.guardar(publicacionDeEncontrado);
+        servicioPublicacion.guardar(publicacionDeEncontrado, request);
         model.put("mensaje", "Publicacion encontrado creada correctamente");
         model.put("datosEncontrado", datosEncontrado);
         return new ModelAndView("redirect:/feed");
     }catch (ValidacionPublicacionException e){
         model.put("error", e.getMessage());
+        model.put("datosAdopcion", new DatosAdopcion());
+        model.put("datosRecaudacion", new DatosRecaudacion());
+        model.put("datosSalud", new DatosSalud());
+        model.put("datosPerdido", new DatosPerdido());
+        model.put("datosEncontrado", datosEncontrado);
+        model.put("provincias", Provincias.values());
         return new ModelAndView("crear-publicacion", model);
         }
     }

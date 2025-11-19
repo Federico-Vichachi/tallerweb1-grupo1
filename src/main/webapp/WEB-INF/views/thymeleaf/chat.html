@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Chats</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/chat.css}"/>
+</head>
+<body>
+
+<div class="chat-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h4>Mis Chats</h4>
+            <a th:href="@{/feed}">Volver al Feed</a>
+        </div>
+        <ul id="conversation-list" class="conversation-list">
+            <li th:each="conv : ${conversaciones}">
+                <a th:href="@{/chat(iniciarCon=${conv.nombreDeUsuario})}"
+                   th:classappend="${destinatarioActivo == conv.nombreDeUsuario ? 'active' : ''}">
+                    <i class="fa-solid fa-user"></i>
+                    <span th:text="${conv.nombreDeUsuario}"></span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="chat-window">
+        <div id="chat-placeholder" th:if="${destinatarioActivo == null}" class="d-flex h-100 justify-content-center align-items-center" style="background-color: #e9ecef;">
+
+            <div th:if="${not #lists.isEmpty(conversaciones)}" class="text-center text-muted placeholder-content">
+                <i class="fa-solid fa-arrow-left fa-3x mb-3"></i>
+                <h4>Selecciona un chat</h4>
+                <p>Elegi una conversacion para ver tus mensajes</p>
+            </div>
+
+            <div th:if="${#lists.isEmpty(conversaciones)}" class="text-center text-muted placeholder-content">
+                <i class="fa-solid fa-comments fa-3x mb-3"></i>
+                <h4>¡Bienvenido a tus chats!</h4>
+                <p>Aun no tenes ninguna conversacion. Para empezar una, busca una publicacion y hace clic en "Consultar".</p>
+                <a th:href="@{/feed}" class="btn btn-primary mt-3">
+                    <i class="fa-solid fa-arrow-right"></i> Ir al Feed
+                </a>
+            </div>
+
+        </div>
+
+        <div id="active-chat" th:if="${destinatarioActivo != null}" class="h-100 d-flex flex-column">
+            <div class="chat-header">
+                <h5 id="chat-with-user" th:text="'Chat con ' + ${destinatarioActivo}"></h5>
+            </div>
+
+            <ul id="messages" class="messages-area">
+                <li th:each="mensaje : ${historialMensajes}"
+                    th:classappend="${mensaje.remitente.nombreDeUsuario == usuarioLogueado.nombreDeUsuario ? 'sent' : 'received'}">
+                    <div class="message-bubble">
+                        <p class="mb-0" th:text="${mensaje.contenido}"></p>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="message-input-area">
+                <form id="messageForm">
+                    <div class="input-group">
+                        <input type="text" id="message" class="form-control" placeholder="Escribe un mensaje..." autocomplete="off" autofocus/>
+                        <button class="btn btn-primary" type="submit">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript">
+    const contextPath = /*[[@{/}]]*/ '';
+    const remitenteUsername = /*[[${usuarioLogueado.nombreDeUsuario}]]*/ null;
+    const destinatarioUsername = /*[[${destinatarioActivo}]]*/ null;
+</script>
+<script th:src="@{/js/chat.js}"></script>
+
+</body>
+</html>

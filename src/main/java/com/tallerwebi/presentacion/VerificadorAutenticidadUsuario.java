@@ -19,14 +19,20 @@ public class VerificadorAutenticidadUsuario {
 
     public boolean verificarUsuarioConRolOrganizacion() {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
+        if (usuario == null) {
+            return false;
+        }
         Roles rol = usuario.getRol();
-        return rol != null && rol.equals("ORGANIZACION");
+        return rol == Roles.ORGANIZACION;
     }
 
     public boolean verificarUsuarioConRolVeterinario() {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
+        if (usuario == null) {
+            return false;
+        }
         Roles rol = usuario.getRol();
-        return rol != null && rol.equals("VETERINARIO");
+        return rol == Roles.VETERINARIO;
     }
 
 }

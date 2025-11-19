@@ -3,8 +3,11 @@ package com.tallerwebi.dominio;
 import com.tallerwebi.dominio.excepcion.CategoriaInvalidaException;
 import com.tallerwebi.dominio.excepcion.PublicacionNoEncontradaException;
 import com.tallerwebi.dominio.excepcion.ValidacionPublicacionException;
+import com.tallerwebi.presentacion.VerificadorAutenticidadUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.*;
 import static com.tallerwebi.dominio.ExpresionesRegularesParaLaValidacionDeDatosDePublicacion.*;
@@ -22,14 +25,13 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
     }
 
     @Override
-    public Publicacion guardar(Publicacion publicacion) {
-        verificarFormatoDeLosDatosDePublicacion(publicacion);
+    public Publicacion guardar(Publicacion publicacion, HttpServletRequest request) {
+        verificarFormatoDeLosDatosDePublicacion(publicacion, request);
 
         return repositorioPublicacion.guardar(publicacion);
     }
 
-
-    private void verificarFormatoDeLosDatosDePublicacion(Publicacion publicacion) {
+    private void verificarFormatoDeLosDatosDePublicacion(Publicacion publicacion, HttpServletRequest request) {
         if (publicacion.getTitulo() == null || !publicacion.getTitulo().matches(FORMATO_TITULO)) {
             throw new ValidacionPublicacionException("El título no cumple con el formato requerido (3-255 caracteres).");
         }
@@ -47,7 +49,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         }
 
         if (publicacion.getImagen() != null && !publicacion.getImagen().matches(FORMATO_IMAGEN)) {
-            throw new ValidacionPublicacionException("La imagen es valida"); // No deberia ser invalida?
+            throw new ValidacionPublicacionException("La imagen no es valida");
         }
 
         if (publicacion.getLocalidad() == null || publicacion.getLocalidad().trim().isEmpty() || !publicacion.getLocalidad().matches(FORMATO_RAZA_UBICACION)) {
@@ -75,7 +77,11 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
         if (publicacion instanceof PublicacionRecaudacion) {
             PublicacionRecaudacion recaudacion = (PublicacionRecaudacion) publicacion;
 
-            //METODO PREFERIDO.
+            VerificadorAutenticidadUsuario verificador = new VerificadorAutenticidadUsuario(request);
+
+            if (!verificador.verificarUsuarioConRolOrganizacion()) {
+                throw new ValidacionPublicacionException("Solo los usuarios con rol 'ORGANIZACION' pueden crear publicaciones de recaudación, pónganse en contacto con una organización.");
+            }
 
             if (recaudacion.getEdad() == null || recaudacion.getEdad() < 0) {
                 throw new ValidacionPublicacionException("La edad del animal es obligatoria y no puede ser negativa.");
@@ -84,6 +90,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
             if (recaudacion.getCbu() == null || !recaudacion.getCbu().matches(FORMATO_CBU)) {
                 throw new ValidacionPublicacionException("El CBU debe tener 22 dígitos numéricos.");
             }
+
         }
 
         //PERDIDO.
@@ -209,7 +216,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
             return this.obtenerTodasLasPublicaciones();
         }
 
-        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, nombre, provincia, localidad);
+        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, nombre, provincia, localidad, false);
     }
 
 
@@ -232,7 +239,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
 
     @Override
     public List<Publicacion> buscarPublicacionesParaMapa(Double latitud, Double longitud, Double radioKm, String categoria, String nombre) {
-        List<Publicacion> candidatas = repositorioPublicacion.buscarMapeablesConFiltros(categoria, nombre);
+        List<Publicacion> candidatas = repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, nombre, null, null, true);
 
         return candidatas.stream()
                 .filter(publicacion -> {

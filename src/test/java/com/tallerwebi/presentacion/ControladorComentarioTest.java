@@ -52,11 +52,17 @@ public class ControladorComentarioTest {
         elComentarioSeGuardaYSeRedirige(mav);
     }
 
+
     @Test
-    public void queUnUsuarioNoLogueadoSeaRedirigidoAlLogin() {
+    public void queSiUsuarioNoLogueadoComentaSeMuestreErrorEnLaMismaPagina() {
         tengoUnUsuarioNoLogueado();
+        when(servicioPublicacionMock.buscarPorId(ID_PUBLICACION)).thenReturn(publicacionExistente);
+        doThrow(new ComentarioException("Debe iniciar sesion para comentar."))
+                .when(servicioComentarioMock)
+                .guardarComentario(anyString(), eq(null), org.mockito.ArgumentMatchers.any(Publicacion.class));
         ModelAndView mav = guardoElComentario(TEXTO_COMENTARIO, ID_PUBLICACION);
-        entoncesSeRedirigeAlLogin(mav);
+
+        seMuestraLaVistaDeDetalleConMensajeDeError(mav, "Debe iniciar sesion para comentar.");
     }
 
     @Test
@@ -100,14 +106,7 @@ public class ControladorComentarioTest {
         assertThat(mav.getViewName(), equalToIgnoringCase("redirect:/publicacion/" + ID_PUBLICACION));
     }
 
-    private void entoncesSeRedirigeAlLogin(ModelAndView mav) {
-        verify(servicioComentarioMock, never()).guardarComentario(
-                org.mockito.ArgumentMatchers.anyString(),
-                org.mockito.ArgumentMatchers.any(Usuario.class),
-                org.mockito.ArgumentMatchers.any(Publicacion.class)
-        );
-        assertThat(mav.getViewName(), equalToIgnoringCase("redirect:/inicio-de-sesion"));
-    }
+
 
     private void seMuestraLaVistaDeDetalleConMensajeDeError(ModelAndView mav, String mensajeError) {
         assertThat(mav.getViewName(), equalToIgnoringCase("publicacion-detalle"));

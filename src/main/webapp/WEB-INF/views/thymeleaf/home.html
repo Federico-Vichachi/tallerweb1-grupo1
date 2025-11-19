@@ -18,12 +18,12 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container-fluid">
             <div class="w-100 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
-                <a class="navbar-brand d-flex align-items-center" href="#">
+                <a class="navbar-brand d-flex align-items-center" th:href="@{/home}">
                     <img th:src="@{/images/isotipo.svg}" alt="Isotipo" height="60" class="me-2">
                     <span class="logo-text fs-3 fw-bold">Rescate Amigos</span>
                 </a>
 
-                <div class="d-flex gap-2 gap-sm-4">
+                <div class="d-flex gap-2 gap-sm-4" th:if="${usuario == null}">
                     <a th:href="@{/inicio-de-sesion}" class="btn btn-primary">Iniciar Sesión</a>
                     <a th:href="@{/registro}" class="btn btn-secondary">Registrarse</a>
                 </div>
@@ -58,7 +58,7 @@
                         </p>
                         <div class="d-flex hero-buttons justify-content-center flex-wrapc">
                             <a th:href="@{/feed}" class="btn btn-primary btn-lg px-4 py-2">Explorar Feed</a>
-                            <a href="#" class="btn btn-light btn-lg px-4 py-2">Ir a la tienda</a>
+                            <a th:href="@{/tienda}" class="btn btn-light btn-lg px-4 py-2">Ir a la tienda</a>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                             </div>
                             <h4 class="card-title fw-bold mb-3">Tienda Solidaria</h4>
                             <p class="card-text text-muted">
-                                Ganá puntos usando Rescate Amigos y utilizalos comprando los mejores productos para tu mascota en nuestra tienda.
+                                Ganá puntos participando en campañas de recaudación y utilizalos comprando los mejores productos para tu mascota en nuestra tienda.
                             </p>
                         </div>
                     </div>

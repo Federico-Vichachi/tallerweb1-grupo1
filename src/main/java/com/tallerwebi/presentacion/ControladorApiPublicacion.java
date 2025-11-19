@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Archivo: src/main/java/com/tallerwebi/presentacion/ControladorApiPublicacion.java
 @Controller
 public class ControladorApiPublicacion {
 

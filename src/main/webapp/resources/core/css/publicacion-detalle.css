@@ -1,0 +1,76 @@
+body {
+    background-color: #fdf5e6;
+    font-family: 'Poppins', sans-serif;
+}
+
+.detalle-container {
+    max-width: 950px;
+    margin: 2rem auto;
+}
+
+.publicacion-card {
+    background-color: #fef9e7;
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1px solid #fbeec1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.publicacion-imagen {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.info-sidebar .card {
+    border-radius: 15px;
+    border: 1px solid #fbeec1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.titulo-seccion {
+    font-weight: 600;
+    border-bottom: 2px solid #fbeec1;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
+}
+
+#map {
+    height: 250px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.tag-detalle {
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.tag-adopcion { background-color: #d7bde2; color: #8e44ad; }
+.tag-recaudacion { background-color: #aed6f1; color: #2e86c1; }
+.tag-perdido { background-color: #f5b7b1; color: #c0392b; }
+.tag-encontrado { background-color: #a3e4d7; color: #16a085; }
+.tag-salud { background-color: #f9e79f; color: #f1c40f; }
+
+.recaudacion-progreso {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+.recaudacion-progreso .recaudado {
+    color: #28a745;
+    font-weight: 600;
+}
+.recaudacion-progreso .progress {
+    background-color: #e9ecef;
+    border-radius: 20px;
+    height: 12px;
+}
+.recaudacion-progreso .progress-bar {
+    background-color: #f39c12;
+    border-radius: 20px;
+}
