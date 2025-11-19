@@ -23,26 +23,30 @@ public class ServicioPuntosImpl implements ServicioPuntos {
     }
 
     @Override
-    public boolean gastarPuntos(Usuario usuario, Producto producto) {
-        int puntos = producto.getPrecioEnPuntos();
-        boolean pudoGastar = usuario.gastarPuntos(puntos);
-        if (pudoGastar) {
+    public boolean gastarPuntos(Usuario usuario, Producto producto, int cantidad) {
+        int puntos = producto.getPrecioEnPuntos() * cantidad;
+
+        if (usuario.getPuntos() >= puntos) {
+            usuario.setPuntos(usuario.getPuntos() - puntos);
             repositorioUsuario.guardar(usuario);
+            return true;
         }
-        return pudoGastar;
+        return false;
     }
 
     @Override
     public int calcularPuntosPorDonacion(Double monto) {
+        double porcentaje;
+
         if (monto <= 1000) {
-            return 10;
+            porcentaje = 0.01;
+        }else if (monto <= 3000) {
+            porcentaje = 0.015;
+        }else if (monto <= 6000) {
+            porcentaje = 0.02;
+        }else{
+            porcentaje = 0.025;
         }
-        if (monto > 1000 && monto <= 3000) {
-            return 25;
-        }
-        if (monto > 3000 && monto <= 6000) {
-            return 40;
-        }
-        return 50;
+        return (int) Math.round(monto * porcentaje);
     }
 }

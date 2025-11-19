@@ -4,7 +4,7 @@ public interface ServicioPuntos {
 
     void sumarPuntos(Usuario usuario, Double monto);
 
-    boolean gastarPuntos(Usuario usuario, Producto producto);
+    boolean gastarPuntos(Usuario usuario, Producto producto, int cantidad);
 
     int calcularPuntosPorDonacion(Double monto);
 }

@@ -5,6 +5,8 @@ import com.tallerwebi.dominio.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.Collections;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
@@ -20,6 +22,7 @@ public class ControladorProductoTest {
     private ServicioPuntos servicioPuntosMock;
     private ServicioPago servicioPagoMock;
     private HttpSession sessionMock;
+    private RedirectAttributes redirectAttributesMock;
     private DatosProducto datosProducto;
 
     private Usuario usuario;
@@ -32,11 +35,9 @@ public class ControladorProductoTest {
         servicioPuntosMock = mock(ServicioPuntos.class);
         servicioPagoMock = mock(ServicioPago.class);
         sessionMock = mock(HttpSession.class);
+        redirectAttributesMock = mock(RedirectAttributes.class);
 
-        controladorProducto = new ControladorProducto(
-                servicioProductoMock, servicioPuntosMock, servicioPagoMock
-        );
-    }
+        controladorProducto = new ControladorProducto(servicioProductoMock, servicioPuntosMock, servicioPagoMock);}
 
     // --- TEST CREAR PRODUCTO ---
     @Test
@@ -118,17 +119,17 @@ public class ControladorProductoTest {
 
         when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuario);
         when(servicioProductoMock.buscarPorId(1L)).thenReturn(producto);
-        when(servicioPuntosMock.gastarPuntos(usuario, producto)).thenReturn(true);
+        when(servicioPuntosMock.gastarPuntos(usuario, producto,1)).thenReturn(true);
         when(servicioProductoMock.listarProductos()).thenReturn(Collections.singletonList(producto));
     }
 
     private void whenCanjeaProducto() {
-        mav = controladorProducto.canjearProducto(1L, sessionMock);
+        mav = controladorProducto.canjearProducto(1L, 1, sessionMock, redirectAttributesMock);
     }
 
     private void thenCanjeExitoso() {
         verify(servicioProductoMock).descontarStock(producto, 1);
-        assertThat(mav.getViewName(), is("tienda"));
+        assertThat(mav.getViewName(), is("redirect:/tienda"));
     }
 
     // --- CANJE SIN PUNTOS ---
@@ -141,22 +142,23 @@ public class ControladorProductoTest {
 
     private void givenUsuarioSinPuntos() {
         usuario = new Usuario();
-        usuario.setPuntos(50);
+        usuario.setPuntos(0);
         producto = new Producto();
         producto.setId(1L);
         producto.setNombre("Cucha");
         producto.setPrecioEnPuntos(100);
+        producto.setStock(10);
 
         when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuario);
         when(servicioProductoMock.buscarPorId(1L)).thenReturn(producto);
-        when(servicioPuntosMock.gastarPuntos(usuario, producto)).thenReturn(false);
+        when(servicioPuntosMock.gastarPuntos(usuario, producto,1)).thenReturn(false);
         when(servicioProductoMock.listarProductos()).thenReturn(Collections.singletonList(producto));
     }
 
     private void thenErrorPorFaltaDePuntos() {
         verify(servicioProductoMock, never()).descontarStock(any(), anyInt());
-        assertThat(mav.getViewName(), is("tienda"));
-        assertThat(mav.getModel().get("error").toString(), containsString("No tenés puntos suficientes"));
+        assertThat(mav.getViewName(), is("redirect:/tienda"));
+        verify(redirectAttributesMock).addFlashAttribute(eq("error"), contains("No tenes puntos suficientes"));
     }
 
     // --- CANJE SIN LOGIN ---

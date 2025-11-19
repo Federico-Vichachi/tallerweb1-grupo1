@@ -45,9 +45,9 @@ public class ServicioPagoImpl implements ServicioPago {
                     .build();
 
             PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                    .success("http://localhost:8080/spring/pago-exitoso")
-                    .failure("http://localhost:8080/spring/pago-fallido")
-                    .pending("http://localhost:8080/spring/pago-pendiente")
+                    .success("https://haunched-unbraceleted-shaunta.ngrok-free.dev/spring/pago-exitoso")
+                    .failure("https://haunched-unbraceleted-shaunta.ngrok-free.dev/spring/pago-fallido")
+                    .pending("https://haunched-unbraceleted-shaunta.ngrok-free.dev/spring/pago-pendiente")
                     .build();
 
 
@@ -55,7 +55,7 @@ public class ServicioPagoImpl implements ServicioPago {
                     .items(Collections.singletonList(item))
                     .backUrls(backUrls)
                     .externalReference(producto.getId() + "-" + cantidad)
-                    //.autoReturn("approved")
+                    .autoReturn("approved")
                     .build();
 
             PreferenceClient client = new PreferenceClient();
@@ -97,9 +97,9 @@ public class ServicioPagoImpl implements ServicioPago {
                     .build();
 
             PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                    .success("http://localhost:8080/spring/donacion-exitosa")
-                    .failure("http://localhost:8080/spring/donacion-fallida")
-                    .pending("http://localhost:8080/spring/donacion-pendiente")
+                    .success("https://haunched-unbraceleted-shaunta.ngrok-free.dev/spring/donacion-exitosa")
+                    .failure("https://haunched-unbraceleted-shaunta.ngrok-free.dev/spring/donacion-fallida")
+                    .pending("https://haunched-unbraceleted-shaunta.ngrok-free.dev/spring/donacion-pendiente")
                     .build();
 
             PreferenceRequest preferenceRequest = PreferenceRequest.builder()
@@ -139,6 +139,4 @@ public class ServicioPagoImpl implements ServicioPago {
             return 0.0;
         }
     }
-
-
 }

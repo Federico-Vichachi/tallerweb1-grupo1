@@ -8,4 +8,5 @@ public interface ServicioPago {
     Preference generarLinkPagoParaDonacion(String titulo, Double monto, Long idPublicacion);
 
     Double obtenerMontoDePago(String idPago);
+
 }

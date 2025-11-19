@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
@@ -59,33 +60,34 @@ public class ControladorProducto {
 
     //----- PUNTOS -----
     @RequestMapping(value = "/canjear-producto", method = RequestMethod.POST)
-    public ModelAndView canjearProducto(@RequestParam("id") Long id, HttpSession session) {
+    public ModelAndView canjearProducto(@RequestParam("id") Long id,@RequestParam("cantidad") int cantidad, HttpSession session, RedirectAttributes redirectAttributes) {
         ModelMap model = new ModelMap();
+
 
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) {
-            model.put("error", "Tenés que iniciar sesión para donar.");
+            redirectAttributes.addFlashAttribute("error", "Tenés que iniciar sesión para donar.");
             return new ModelAndView("redirect:/inicio-de-sesion");
         }
 
         Producto producto = servicioProducto.buscarPorId(id);
 
         if (producto == null) {
-            model.put("error", "Producto no encontrado");
-        } else {
-            boolean pudoCanjear = servicioPuntos.gastarPuntos(usuario, producto);
+            redirectAttributes.addFlashAttribute("error", "Producto no encontrado");
+        } else if(producto.getStock() < cantidad) {
+            redirectAttributes.addFlashAttribute("error", "No hay suficiente stock");
+        }else {
+            boolean pudoCanjear = servicioPuntos.gastarPuntos(usuario, producto, cantidad);
             if (pudoCanjear) {
-                model.put("mensaje", "¡Canje exitoso! Gastaste " + producto.getPrecioEnPuntos() + " puntos en " + producto.getNombre());
-                servicioProducto.descontarStock(producto, 1);
+                servicioProducto.descontarStock(producto, cantidad);
+                redirectAttributes.addFlashAttribute("mensaje", "¡Canje exitoso! Gastaste " + producto.getPrecioEnPuntos() * cantidad + " puntos en " + producto.getNombre());
             } else {
-                model.put("error", "No tenés puntos suficientes ");
+                redirectAttributes.addFlashAttribute("error", "No tenes puntos suficientes ");
             }
         }
 
-        model.put("productos", servicioProducto.listarProductos());
-        model.put("usuario", usuario);
-        return new ModelAndView("tienda", model);
+        return new ModelAndView("redirect:/tienda");
     }
 
     //----- MERCADO PAGO -----
@@ -137,7 +139,7 @@ public class ControladorProducto {
     public ModelAndView pagoExitoso(@RequestParam("payment_id") String paymentId,
                                     @RequestParam("external_reference") String externalReference,
                                     @RequestParam(value = "status", required = false) String status,
-                                    HttpSession session) {
+                                    RedirectAttributes redirectAttributes) {
         ModelMap model = new ModelMap();
 
         try {
@@ -149,8 +151,8 @@ public class ControladorProducto {
             Producto producto = servicioProducto.buscarPorId(idProducto);
 
             if (producto == null) {
-                model.put("error", "El producto no existe.");
-                return new ModelAndView("redirect:/tienda", model);
+                redirectAttributes.addFlashAttribute("error", "El producto no existe.");
+                return new ModelAndView("redirect:/tienda");
             }
 
             // Consulto el monto real pagado a Mercado Pago
@@ -158,34 +160,32 @@ public class ControladorProducto {
 
             if ("approved".equalsIgnoreCase(status)) {
                 servicioProducto.descontarStock(producto, cantidad);
-                model.put("mensaje", "¡Pago realizado con éxito!");
-                model.put("montoPagado", montoPagado);
-                model.put("producto", producto);
-                model.put("cantidad", cantidad);
+                redirectAttributes.addFlashAttribute("mensaje", "¡Pago realizado con éxito!");
+                redirectAttributes.addFlashAttribute("montoPagado", montoPagado);
+                redirectAttributes.addFlashAttribute("producto", producto);
+                redirectAttributes.addFlashAttribute("cantidad", cantidad);
             } else {
-                model.put("mensaje", "El pago no fue aprobado. Estado: " + status);
+                redirectAttributes.addFlashAttribute("mensaje", "El pago no fue aprobado. Estado: " + status);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            model.put("error", "Error al procesar el pago: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error al procesar el pago: " + e.getMessage());
         }
 
-        return new ModelAndView("redirect:/tienda", model);
+        return new ModelAndView("redirect:/tienda");
     }
 
     @RequestMapping("pago-fallido")
-    public ModelAndView pagoFallido() {
-        ModelMap model = new ModelMap();
-        model.put("mensaje", "El pago falló. Intentalo de nuevo.");
-        return new ModelAndView("redirect:/tienda", model);
+    public ModelAndView pagoFallido(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", "El pago falló. Intentalo de nuevo.");
+        return new ModelAndView("redirect:/tienda");
     }
 
     @RequestMapping("pago-pendiente")
-    public ModelAndView pagoPendiente() {
-        ModelMap model = new ModelMap();
-        model.put("mensaje", "El pago está pendiente de confirmación.");
-        return new ModelAndView("redirect:/tienda", model);
+    public ModelAndView pagoPendiente(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("mensaje", "El pago está pendiente de confirmación.");
+        return new ModelAndView("redirect:/tienda");
     }
 
 }

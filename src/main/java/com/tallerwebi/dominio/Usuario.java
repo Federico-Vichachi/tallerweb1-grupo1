@@ -48,12 +48,5 @@ public class Usuario {
     }
 
 
-    public boolean gastarPuntos(int cantidad){
-        if(this.puntos >= cantidad){
-            this.puntos -= cantidad;
-            return true;
-        }
-        return false;
-    }
 
 }
