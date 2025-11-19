@@ -55,6 +55,7 @@ public class ServicioPagoImpl implements ServicioPago {
                     .items(Collections.singletonList(item))
                     .backUrls(backUrls)
                     .externalReference(producto.getId() + "-" + cantidad)
+                    .notificationUrl("https://haunched-unbraceleted-shaunta.ngrok-free.dev/spring/webhook")
                     .autoReturn("approved")
                     .build();
 
