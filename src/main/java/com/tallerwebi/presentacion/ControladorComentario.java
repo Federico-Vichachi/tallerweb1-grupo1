@@ -33,9 +33,6 @@ public class ControladorComentario {
             HttpServletRequest request) {
 
         Usuario autor = (Usuario) request.getSession().getAttribute("usuarioLogueado");
-        if (autor == null) {
-            return new ModelAndView("redirect:/inicio-de-sesion");
-        }
 
         Publicacion publicacion = servicioPublicacion.buscarPorId(publicacionId);
 

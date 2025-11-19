@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.config.WebSocketConfig;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
@@ -20,7 +21,7 @@ import static org.hamcrest.Matchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {SpringWebTestConfig.class, HibernateTestConfig.class})
+@ContextConfiguration(classes = {SpringWebTestConfig.class, HibernateTestConfig.class, WebSocketConfig.class})
 public class RepositorioPublicacionTest {
 
     @Autowired
@@ -60,7 +61,7 @@ public class RepositorioPublicacionTest {
     }
 
     private List<Publicacion> cuandoBuscoPorFiltroDeProvincia(Provincias provincia) {
-        return repositorioPublicacion.buscarPublicacionesPorFiltros(null, null, provincia, null);
+        return repositorioPublicacion.buscarPublicacionesPorFiltros(null, null, provincia, null, false);
     }
 
     private void entoncesLaListaContieneSoloPublicacionesDeCordoba(List<Publicacion> resultado) {
@@ -107,7 +108,7 @@ public class RepositorioPublicacionTest {
     }
 
     private List<Publicacion> cuandoBuscoPorCategoriaYProvincia(String categoria, Provincias provincia) {
-        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, null, provincia, null);
+        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, null, provincia, null, false);
     }
 
     private void entoncesLaListaContieneUnaSolaPublicacionQueCumpleAmbosCriterios(List<Publicacion> resultado) {
@@ -153,7 +154,7 @@ public class RepositorioPublicacionTest {
     }
 
     private List<Publicacion> cuandoBuscoPorFiltroDeNombre(String nombre) {
-        return repositorioPublicacion.buscarPublicacionesPorFiltros(null, nombre, null, null);
+        return repositorioPublicacion.buscarPublicacionesPorFiltros(null, nombre, null, null, false);
     }
 
     private void entoncesEncuentroLasPublicacionesQueContienenEsaPalabraEnElTitulo(List<Publicacion> resultado) {
@@ -192,7 +193,7 @@ public class RepositorioPublicacionTest {
     }
 
     private List<Publicacion> cuandoBuscoPorFiltroDeLocalidad(String localidad) {
-        return repositorioPublicacion.buscarPublicacionesPorFiltros(null, null, null, localidad);
+        return repositorioPublicacion.buscarPublicacionesPorFiltros(null, null, null, localidad, false);
     }
 
     private void entoncesEncuentroLasPublicacionesDeEsaLocalidad(List<Publicacion> resultado) {
@@ -211,7 +212,7 @@ public class RepositorioPublicacionTest {
     }
 
     private List<Publicacion> cuandoBuscoConFiltrosSinResultados(String categoria, Provincias provincia) {
-        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, null, provincia, null);
+        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, null, provincia, null, false);
     }
 
     private void entoncesLaListaDeResultadosEstaVacia(List<Publicacion> resultado) {

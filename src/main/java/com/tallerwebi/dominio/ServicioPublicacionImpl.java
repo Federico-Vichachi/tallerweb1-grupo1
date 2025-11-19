@@ -216,7 +216,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
             return this.obtenerTodasLasPublicaciones();
         }
 
-        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, nombre, provincia, localidad);
+        return repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, nombre, provincia, localidad, false);
     }
 
 
@@ -239,7 +239,7 @@ public class ServicioPublicacionImpl implements ServicioPublicacion {
 
     @Override
     public List<Publicacion> buscarPublicacionesParaMapa(Double latitud, Double longitud, Double radioKm, String categoria, String nombre) {
-        List<Publicacion> candidatas = repositorioPublicacion.buscarMapeablesConFiltros(categoria, nombre);
+        List<Publicacion> candidatas = repositorioPublicacion.buscarPublicacionesPorFiltros(categoria, nombre, null, null, true);
 
         return candidatas.stream()
                 .filter(publicacion -> {

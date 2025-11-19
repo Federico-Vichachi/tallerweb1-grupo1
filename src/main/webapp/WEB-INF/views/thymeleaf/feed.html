@@ -125,6 +125,9 @@
 
                                             <button type="button" class="btn btn-compartir">Compartir</button>
                                             <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-more-info">Mas info</a>
+                                            <a th:href="@{/chat(iniciarCon=${publicacion.usuario.nombreDeUsuario})}"
+                                               class="btn btn-consult">Consultar</a>
+
                                         </div>
                                     </form>
 
@@ -166,7 +169,9 @@
                                     <p class="descripcion-animal" th:text="${publicacion.descripcionCorta}"></p>
                                     <div class="boton-pta d-flex flex-wrap gap-2 mt-auto">
                                         <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
-                                        <button class="btn btn-consult">Consultar</button>
+<!--                                        <button class="btn btn-consult">Consultar</button>-->
+                                        <a th:href="@{/chat(iniciarCon=${publicacion.usuario.nombreDeUsuario})}"
+                                           class="btn btn-consult">Consultar</a>
                                         <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-more-info">Mas info</a>
                                         <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-secondary">
                                             <i class="fa-solid fa-comments"></i>
