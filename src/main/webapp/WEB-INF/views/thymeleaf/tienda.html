@@ -64,19 +64,22 @@
 
 
         <div class="producto-acciones">
-            <form th:action="@{/canjear-producto}" method="post">
+            <label class="cantidad-label">
+                <i class="fa-solid fa-calculator"></i>Cantidad:
+            </label>
+            <input id="cant-${producto.id}" type="number" min="1" th:max="${producto.stock}" value="1" required>
+
+            <form th:action="@{/canjear-producto}" method="post" onsubmit="copiarCantidad('${producto.id}', 'canjear')">
                 <input type="hidden" th:name="id" th:value="${producto.id}"/>
+                <input type="hidden" id="cant-canjear-${producto.id}" name="cantidad">
                 <button class="btn btn-secondary" type="submit">
                     <i class="fa-solid fa-gift"></i>Canjear con puntos
                 </button>
             </form>
 
-            <form th:action="@{/comprar-producto}" method="post">
+            <form th:action="@{/comprar-producto}" method="post" onsubmit="copiarCantidad('${producto.id}', 'comprar')">
                 <input type="hidden" th:name="id" th:value="${producto.id}"/>
-                <label class="cantidad-label">
-                    <i class="fa-solid fa-calculator"></i>Cantidad:
-                </label>
-                <input type="number" name="cantidad" min="1" th:max="${producto.stock}" value="1" required>
+                <input type="hidden" id="cant-comprar-${producto.id}" name="cantidad">
                 <button class="btn btn-primary" type="submit">
                     <i class="fa-solid fa-shopping-cart"></i>Comprar ahora
                 </button>
@@ -86,6 +89,6 @@
 </div>
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
-
+<script th:src="@{/js/tienda.js}"></script>
 </body>
 </html>
