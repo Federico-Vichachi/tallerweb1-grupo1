@@ -88,18 +88,8 @@
             </div>
 
             <div>
-                <h6>Datos para recibir donaciones</h6>
-
-                <label>CBU / Alias</label>
+                <label>CBU</label>
                 <input th:field="*{cbu}" id="cbu-recaudacion" type="text" placeholder="Ej: mi.alias.mp" class="form-control" required />
-
-                <label>Método preferido</label>
-                <select th:field="*{metodoPreferido}" class="form-control" required>
-                    <option value="">Selecciona uno</option>
-                    <option value="mercadopago">Mercado Pago</option>
-                    <option value="transferencia">Transferencia bancaria</option>
-                    <option value="paypal">PayPal</option>
-                </select>
             </div>
 
             <div>

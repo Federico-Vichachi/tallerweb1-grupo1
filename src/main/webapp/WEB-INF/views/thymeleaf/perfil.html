@@ -94,81 +94,62 @@
                     <!-- MOSTRAR PUBLICACIONES SI EXISTEN -->
                     <div th:if="${publicaciones != null && !#lists.isEmpty(publicaciones)}">
                         <div th:each="publicacion : ${publicaciones}" class="mb-4">
-                            <div th:switch="${publicacion.class.simpleName}" class="card shadow-sm">
+                            <div th:switch="${publicacion.class.simpleName}">
 
                                 <!-- PUBLICACIÓN DE RECAUDACIÓN -->
-                                <div th:case="'PublicacionRecaudacion'">
-                                    <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0"><i class="fa-solid fa-hand-holding-dollar"></i> Recaudación</h5>
-                                        <span class="badge bg-dark" th:if="${publicacion.fechaPublicacion != null}"
-                                              th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
+                                <div th:case="'PublicacionRecaudacion'" class="card shadow-sm border-0 overflow-hidden">
+                                    <!-- Header -->
+                                    <div class="card-header bg-white border-0 p-3 p-md-4">
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                                            <span class="badge bg-info bg-gradient px-3 py-2">
+                                                <i class="fa-solid fa-hand-holding-dollar me-1"></i> Recaudación
+                                            </span>
+                                            <span class="text-muted small"
+                                                  th:if="${publicacion.fechaPublicacion != null}"
+                                                  th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}">
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row g-3">
-                                            <div class="col-md-4">
-                                                <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="img-fluid rounded">
+
+                                    <!-- Body -->
+                                    <div class="card-body p-3 p-md-4">
+                                        <div class="row g-3 g-md-4">
+                                            <div class="col-12 col-md-4">
+                                                <img th:src="@{${publicacion.imagen}}"
+                                                     alt="Imagen de la mascota"
+                                                     class="img-fluid rounded w-100"
+                                                     style="height: 250px; object-fit: cover;">
                                             </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title" th:text="${publicacion.titulo}"></h4>
-                                                <p class="text-muted mb-2" th:text="${publicacion.descripcionCorta}"></p>
+                                            <div class="col-12 col-md-8">
+                                                <h3 class="h5 fw-bold mb-3" th:text="${publicacion.titulo}"></h3>
 
-                                                <div class="row g-2 mb-3">
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-calendar-days"></i> Edad:</strong>
-                                                        <span th:text="${publicacion.edad} + ' años'"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-paw"></i> Raza:</strong>
-                                                        <span th:text="${publicacion.raza}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-ruler"></i> Tamaño:</strong>
-                                                        <span th:text="${publicacion.tamanio} + ' cm'"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
-                                                        <span th:text="${publicacion.telefono}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-envelope"></i> Email:</strong>
-                                                        <span th:text="${publicacion.email}"></span>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <strong><i class="fa-solid fa-university"></i> CBU:</strong>
-                                                        <span th:text="${publicacion.cbu}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-credit-card"></i> Método Preferido:</strong>
-                                                        <span th:text="${publicacion.metodoPreferido}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-circle"></i> Estado:</strong>
-                                                        <span class="badge"
-                                                              th:classappend="${publicacion.activa != null && publicacion.activa ? 'bg-success' : 'bg-secondary'}"
-                                                              th:text="${publicacion.activa != null && publicacion.activa ? 'Activa' : 'Finalizada'}"></span>
-                                                    </div>
-
-                                                </div>
-
+                                                <!-- Progress de recaudación -->
                                                 <div class="mb-3">
-                                                    <div class="d-flex justify-content-between mb-1">
-                                                        <span><strong>Meta:</strong> $<span th:text="${publicacion.meta}"></span></span>
-                                                        <span><strong>Recaudado:</strong> $<span th:text="${publicacion.montoActual != null ? publicacion.montoActual : 0}"></span></span>
+                                                    <div class="d-flex justify-content-between mb-2 small">
+                                                        <span>Meta: <strong>$<span th:text="${publicacion.meta}"></span></strong></span>
+                                                        <span class="text-success">Recaudado: <strong>$<span th:text="${publicacion.montoActual != null ? publicacion.montoActual : 0}"></span></strong></span>
                                                     </div>
-                                                    <div class="progress" style="height: 20px;">
-                                                        <div class="progress-bar bg-success" role="progressbar"
+                                                    <div class="progress" style="height: 10px;">
+                                                        <div class="progress-bar bg-warning"
+                                                             role="progressbar"
                                                              th:style="'width: ' + (${publicacion.montoActual != null and publicacion.meta > 0 ? (publicacion.montoActual / publicacion.meta * 100) : 0}) + '%;'"
-                                                             th:text="(${publicacion.montoActual != null and publicacion.meta > 0 ? (publicacion.montoActual / publicacion.meta * 100) : 0}) + '%'"></div>
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="100">
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="alert alert-light">
-                                                    <strong><i class="fa-solid fa-align-left"></i> Descripción Detallada:</strong>
-                                                    <p class="mb-0 mt-2" th:text="${publicacion.descripcionDetallada}"></p>
+                                                <p class="text-muted mb-4" th:text="${publicacion.descripcionCorta}"></p>
+
+                                                <!-- Botones de acción -->
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-secondary btn-sm">
+                                                        <i class="fa-solid fa-info-circle"></i> Más info
+                                                    </a>
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-secondary btn-sm">
+                                                        <i class="fa-solid fa-comments"></i>
+                                                        <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,51 +157,59 @@
                                 </div>
 
                                 <!-- PUBLICACIÓN DE ADOPCIÓN -->
-                                <div th:case="'PublicacionAdopcion'">
-                                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0"><i class="fa-solid fa-heart"></i> Adopción</h5>
-                                        <span class="badge bg-dark" th:if="${publicacion.fechaPublicacion != null}"
-                                              th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
+                                <div th:case="'PublicacionAdopcion'" class="card shadow-sm border-0 overflow-hidden">
+                                    <!-- Header -->
+                                    <div class="card-header bg-white border-0 p-3 p-md-4">
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                                            <span class="badge bg-purple bg-gradient px-3 py-2">
+                                                <i class="fa-solid fa-heart me-1"></i> Adopción
+                                            </span>
+                                            <span class="text-muted small"
+                                                  th:if="${publicacion.fechaPublicacion != null}"
+                                                  th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}">
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row g-3">
-                                            <div class="col-md-4">
-                                                <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="img-fluid rounded">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title" th:text="${publicacion.titulo}"></h4>
-                                                <p class="text-muted mb-2" th:text="${publicacion.descripcionCorta}"></p>
 
-                                                <div class="row g-2 mb-3">
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-calendar-days"></i> Edad:</strong>
-                                                        <span th:text="${publicacion.edad} + ' años'"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-paw"></i> Raza:</strong>
+                                    <!-- Body -->
+                                    <div class="card-body p-3 p-md-4">
+                                        <div class="row g-3 g-md-4">
+                                            <div class="col-12 col-md-4">
+                                                <img th:src="@{${publicacion.imagen}}"
+                                                     alt="Imagen de la mascota"
+                                                     class="img-fluid rounded w-100"
+                                                     style="height: 250px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-12 col-md-8">
+                                                <h3 class="h5 fw-bold mb-3" th:text="${publicacion.titulo}"></h3>
+
+                                                <div class="d-flex flex-wrap gap-3 mb-3 small text-muted">
+                                                    <span>
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                        <span th:text="${publicacion.edad}"></span> años
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span th:text="${publicacion.localidad}"></span>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa-solid fa-paw"></i>
                                                         <span th:text="${publicacion.raza}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-ruler"></i> Tamaño:</strong>
-                                                        <span th:text="${publicacion.tamanio} + ' cm'"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
-                                                        <span th:text="${publicacion.telefono}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-envelope"></i> Email:</strong>
-                                                        <span th:text="${publicacion.email}"></span>
-                                                    </div>
+                                                    </span>
                                                 </div>
 
-                                                <div class="alert alert-light">
-                                                    <strong><i class="fa-solid fa-align-left"></i> Descripción Detallada:</strong>
-                                                    <p class="mb-0 mt-2" th:text="${publicacion.descripcionDetallada}"></p>
+                                                <p class="text-muted mb-4" th:text="${publicacion.descripcionCorta}"></p>
+
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                                       class="btn btn-secondary btn-sm">
+                                                        <i class="fa-solid fa-info-circle"></i> Más info
+                                                    </a>
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="fa-solid fa-comments"></i>
+                                                        <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -228,64 +217,59 @@
                                 </div>
 
                                 <!-- PUBLICACIÓN DE PERDIDO -->
-                                <div th:case="'PublicacionPerdido'">
-                                    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0"><i class="fa-solid fa-magnifying-glass"></i> Perdido</h5>
-                                        <span class="badge bg-dark" th:if="${publicacion.fechaPublicacion != null}"
-                                              th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
+                                <div th:case="'PublicacionPerdido'" class="card shadow-sm border-0 overflow-hidden">
+                                    <!-- Header -->
+                                    <div class="card-header bg-white border-0 p-3 p-md-4">
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                                            <span class="badge bg-danger bg-gradient px-3 py-2">
+                                                <i class="fa-solid fa-magnifying-glass me-1"></i> Perdido
+                                            </span>
+                                            <span class="text-muted small"
+                                                  th:if="${publicacion.fechaPublicacion != null}"
+                                                  th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}">
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row g-3">
-                                            <div class="col-md-4">
-                                                <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="img-fluid rounded">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title" th:text="${publicacion.titulo}"></h4>
-                                                <p class="text-muted mb-2" th:text="${publicacion.descripcionCorta}"></p>
 
-                                                <div class="row g-2 mb-3">
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-calendar-xmark"></i> Fecha Desaparición:</strong>
-                                                        <span th:text="${publicacion.fechaDesaparicion}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-clock"></i> Hora Desaparición:</strong>
-                                                        <span th:text="${publicacion.horaDesaparicion}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-paw"></i> Raza:</strong>
+                                    <!-- Body -->
+                                    <div class="card-body p-3 p-md-4">
+                                        <div class="row g-3 g-md-4">
+                                            <div class="col-12 col-md-4">
+                                                <img th:src="@{${publicacion.imagen}}"
+                                                     alt="Imagen de la mascota"
+                                                     class="img-fluid rounded w-100"
+                                                     style="height: 250px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-12 col-md-8">
+                                                <h3 class="h5 fw-bold mb-3" th:text="${publicacion.titulo}"></h3>
+
+                                                <div class="d-flex flex-wrap gap-3 mb-3 small text-muted">
+                                                    <span>
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span th:text="${publicacion.localidad}"></span>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa-solid fa-paw"></i>
                                                         <span th:text="${publicacion.raza}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-ruler"></i> Tamaño:</strong>
-                                                        <span th:text="${publicacion.tamanio} + ' cm'"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-tag"></i> Lleva Collar:</strong>
-                                                        <span class="badge" th:classappend="${publicacion.llevaCollar ? 'bg-success' : 'bg-secondary'}"
-                                                              th:text="${publicacion.llevaCollar ? 'Sí' : 'No'}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-gift"></i> Recompensa:</strong>
+                                                    </span>
+                                                    <span th:if="${publicacion.recompensa != null}">
+                                                        <i class="fa-solid fa-gift"></i>
                                                         <span th:text="${publicacion.recompensa}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
-                                                        <span th:text="${publicacion.telefono}"></span>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <strong><i class="fa-solid fa-envelope"></i> Email:</strong>
-                                                        <span th:text="${publicacion.email}"></span>
-                                                    </div>
+                                                    </span>
                                                 </div>
 
-                                                <div class="alert alert-light">
-                                                    <strong><i class="fa-solid fa-align-left"></i> Descripción Detallada:</strong>
-                                                    <p class="mb-0 mt-2" th:text="${publicacion.descripcionDetallada}"></p>
+                                                <p class="text-muted mb-4" th:text="${publicacion.descripcionCorta}"></p>
+
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                                       class="btn btn-secondary btn-sm">
+                                                        <i class="fa-solid fa-info-circle"></i> Más info
+                                                    </a>
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="fa-solid fa-comments"></i>
+                                                        <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -293,47 +277,55 @@
                                 </div>
 
                                 <!-- PUBLICACIÓN DE ENCONTRADO -->
-                                <div th:case="'PublicacionEncontrado'">
-                                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0"><i class="fa-solid fa-paw"></i> Encontrado</h5>
-                                        <span class="badge bg-dark" th:if="${publicacion.fechaPublicacion != null}"
-                                              th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
+                                <div th:case="'PublicacionEncontrado'" class="card shadow-sm border-0 overflow-hidden">
+                                    <!-- Header -->
+                                    <div class="card-header bg-white border-0 p-3 p-md-4">
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                                            <span class="badge bg-success bg-gradient px-3 py-2">
+                                                <i class="fa-solid fa-check-circle me-1"></i> Encontrado
+                                            </span>
+                                            <span class="text-muted small"
+                                                  th:if="${publicacion.fechaPublicacion != null}"
+                                                  th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}">
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row g-3">
-                                            <div class="col-md-4">
-                                                <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="img-fluid rounded">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title" th:text="${publicacion.titulo}"></h4>
-                                                <p class="text-muted mb-2" th:text="${publicacion.descripcionCorta}"></p>
 
-                                                <div class="row g-2 mb-3">
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-paw"></i> Raza:</strong>
+                                    <!-- Body -->
+                                    <div class="card-body p-3 p-md-4">
+                                        <div class="row g-3 g-md-4">
+                                            <div class="col-12 col-md-4">
+                                                <img th:src="@{${publicacion.imagen}}"
+                                                     alt="Imagen de la mascota"
+                                                     class="img-fluid rounded w-100"
+                                                     style="height: 250px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-12 col-md-8">
+                                                <h3 class="h5 fw-bold mb-3" th:text="${publicacion.titulo}"></h3>
+
+                                                <div class="d-flex flex-wrap gap-3 mb-3 small text-muted">
+                                                    <span>
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span th:text="${publicacion.localidad}"></span>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa-solid fa-paw"></i>
                                                         <span th:text="${publicacion.raza}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-ruler"></i> Tamaño:</strong>
-                                                        <span th:text="${publicacion.tamanio} + ' cm'"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
-                                                        <span th:text="${publicacion.telefono}"></span>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <strong><i class="fa-solid fa-envelope"></i> Email:</strong>
-                                                        <span th:text="${publicacion.email}"></span>
-                                                    </div>
+                                                    </span>
                                                 </div>
 
-                                                <div class="alert alert-light">
-                                                    <strong><i class="fa-solid fa-align-left"></i> Descripción Detallada:</strong>
-                                                    <p class="mb-0 mt-2" th:text="${publicacion.descripcionDetallada}"></p>
+                                                <p class="text-muted mb-4" th:text="${publicacion.descripcionCorta}"></p>
+
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                                       class="btn btn-secondary btn-sm">
+                                                        <i class="fa-solid fa-info-circle"></i> Más info
+                                                    </a>
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="fa-solid fa-comments"></i>
+                                                        <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -341,64 +333,59 @@
                                 </div>
 
                                 <!-- PUBLICACIÓN DE SALUD -->
-                                <div th:case="'PublicacionSalud'">
-                                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0"><i class="fa-solid fa-heart-pulse"></i> Salud</h5>
-                                        <span class="badge bg-dark" th:if="${publicacion.fechaPublicacion != null}"
-                                              th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
+                                <div th:case="'PublicacionSalud'" class="card shadow-sm border-0 overflow-hidden">
+                                    <!-- Header -->
+                                    <div class="card-header bg-white border-0 p-3 p-md-4">
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                                            <span class="badge bg-warning bg-gradient px-3 py-2">
+                                                <i class="fa-solid fa-heart-pulse me-1"></i> Salud
+                                            </span>
+                                            <span class="text-muted small"
+                                                  th:if="${publicacion.fechaPublicacion != null}"
+                                                  th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}">
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row g-3">
-                                            <div class="col-md-4">
-                                                <img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="img-fluid rounded">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title" th:text="${publicacion.titulo}"></h4>
-                                                <p class="text-muted mb-2" th:text="${publicacion.descripcionCorta}"></p>
 
-                                                <div class="row g-2 mb-3">
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-calendar-days"></i> Edad:</strong>
-                                                        <span th:text="${publicacion.edad} + ' años'"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-paw"></i> Raza:</strong>
+                                    <!-- Body -->
+                                    <div class="card-body p-3 p-md-4">
+                                        <div class="row g-3 g-md-4">
+                                            <div class="col-12 col-md-4">
+                                                <img th:src="@{${publicacion.imagen}}"
+                                                     alt="Imagen de la mascota"
+                                                     class="img-fluid rounded w-100"
+                                                     style="height: 250px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-12 col-md-8">
+                                                <h3 class="h5 fw-bold mb-3" th:text="${publicacion.titulo}"></h3>
+
+                                                <div class="d-flex flex-wrap gap-3 mb-3 small text-muted">
+                                                    <span>
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                        <span th:text="${publicacion.edad}"></span> años
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span th:text="${publicacion.localidad}"></span>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa-solid fa-paw"></i>
                                                         <span th:text="${publicacion.raza}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-ruler"></i> Tamaño:</strong>
-                                                        <span th:text="${publicacion.tamanio} + ' cm'"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-exclamation-triangle"></i> Nivel Urgencia:</strong>
-                                                        <span class="badge" th:classappend="${publicacion.nivelUrgencia == 'ALTA' ? 'bg-danger' : (publicacion.nivelUrgencia == 'MEDIA' ? 'bg-warning' : 'bg-success')}"
-                                                              th:text="${publicacion.nivelUrgencia}"></span>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <strong><i class="fa-solid fa-notes-medical"></i> Síntomas Principales:</strong>
-                                                        <span th:text="${publicacion.sintomasPrincipales}"></span>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <strong><i class="fa-solid fa-stethoscope"></i> Diagnóstico:</strong>
-                                                        <span th:text="${publicacion.diagnostico}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-location-dot"></i> Ubicación:</strong>
-                                                        <span th:text="${publicacion.localidad + ', ' + publicacion.provincia.getNombreFormateado()}"></span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong><i class="fa-solid fa-phone"></i> Teléfono:</strong>
-                                                        <span th:text="${publicacion.telefono}"></span>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <strong><i class="fa-solid fa-envelope"></i> Email:</strong>
-                                                        <span th:text="${publicacion.email}"></span>
-                                                    </div>
+                                                    </span>
                                                 </div>
 
-                                                <div class="alert alert-light">
-                                                    <strong><i class="fa-solid fa-align-left"></i> Descripción Detallada:</strong>
-                                                    <p class="mb-0 mt-2" th:text="${publicacion.descripcionDetallada}"></p>
+                                                <p class="text-muted mb-4" th:text="${publicacion.descripcionCorta}"></p>
+
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                                       class="btn btn-secondary btn-sm">
+                                                        <i class="fa-solid fa-info-circle"></i> Más info
+                                                    </a>
+                                                    <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="fa-solid fa-comments"></i>
+                                                        <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

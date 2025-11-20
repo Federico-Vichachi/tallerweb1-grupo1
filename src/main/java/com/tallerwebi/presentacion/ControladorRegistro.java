@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Roles;
 import com.tallerwebi.dominio.ServicioRegistro;
 import com.tallerwebi.dominio.Provincias;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class ControladorRegistro {
         ModelMap model = new ModelMap();
         model.put("datosRegistro", new DatosRegistro());
         model.put("provincias", Provincias.values());
+        model.put("roles", Roles.values());
         return new ModelAndView("registro", model);
     }
 
