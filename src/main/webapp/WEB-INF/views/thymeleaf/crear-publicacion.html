@@ -10,6 +10,8 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/variables.css}"/>
     <link rel="stylesheet" th:href="@{/css/crear-publicacion.css}" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
 
 
 </head>
@@ -207,6 +209,16 @@
                 <label>Fecha de desaparición<input th:field="*{fechaDesaparicion}" id="fecha-desaparicion" type="date" class="form-control" required/></label>
                 <label>Hora de desaparición<input th:field="*{horaDesaparicion}" id="hora-desaparicion" type="time" class="form-control" required/></label>
             </div>
+
+            <div class="mt-4">
+                <label>Ubicación en el mapa</label>
+                <p class="text-muted small">Haz clic en el mapa para marcar la última ubicación conocida.</p>
+                <div id="mapa-perdido" style="height: 300px; width: 100%; border-radius: 8px;"></div>
+
+                <input type="hidden" th:field="*{latitud}" id="latitud-perdido" />
+                <input type="hidden" th:field="*{longitud}" id="longitud-perdido" />
+            </div>
+
             <div>
                 <label>¿Lleva collar?</label>
                 <input th:field="*{llevaCollar}" type="checkbox"/>
@@ -258,6 +270,15 @@
                 </select>
             </div>
 
+            <div class="mt-4">
+                <label>Ubicación en el mapa</label>
+                <p class="text-muted small">Haz clic en el mapa para marcar dónde fue encontrado.</p>
+                <div id="mapa-encontrado" style="height: 300px; width: 100%; border-radius: 8px;"></div>
+
+                <input type="hidden" th:field="*{latitud}" id="latitud-encontrado" />
+                <input type="hidden" th:field="*{longitud}" id="longitud-encontrado" />
+            </div>
+
             <h5>Información de contacto</h5>
             <div>
                 <label>Telefono<input th:field="*{telefono}" id="telefono-encontrado" type="tel" placeholder="+54 9 11 5124-3215" class="form-control" required/></label>
@@ -272,5 +293,7 @@
 </div>
 
 <script th:src="@{/js/crear-publicacion.js}"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 </body>
 </html>

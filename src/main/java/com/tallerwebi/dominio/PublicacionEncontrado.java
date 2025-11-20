@@ -15,6 +15,10 @@ public class PublicacionEncontrado extends Publicacion {
 
     public PublicacionEncontrado(DatosEncontrado datosEncontrado) {
         super(datosEncontrado.getTitulo(), datosEncontrado.getDescripcionCorta(), datosEncontrado.getDescripcionDetallada(), datosEncontrado.getImagen(), datosEncontrado.getRaza(), datosEncontrado.getTamanio(), datosEncontrado.getTelefono(),datosEncontrado.getEmail(), datosEncontrado.getProvincia(), datosEncontrado.getLocalidad());
+
+        this.setLatitud(datosEncontrado.getLatitud());
+        this.setLongitud(datosEncontrado.getLongitud());
+
     }
 
 }

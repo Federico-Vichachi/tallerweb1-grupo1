@@ -18,6 +18,9 @@ public abstract class DatosPublicacion {
     private String telefono;
     private String email;
 
+    private Double latitud;
+    private Double longitud;
+
     public DatosPublicacion() {
     }
 

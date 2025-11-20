@@ -24,6 +24,10 @@ public class PublicacionPerdido extends Publicacion {
         this.horaDesaparicion = datosPerdido.getHoraDesaparicion();
         this.llevaCollar = datosPerdido.getLlevaCollar();
         this.recompensa = datosPerdido.getRecompensa();
+
+        this.setLatitud(datosPerdido.getLatitud());
+        this.setLongitud(datosPerdido.getLongitud());
+
     }
 
 }
