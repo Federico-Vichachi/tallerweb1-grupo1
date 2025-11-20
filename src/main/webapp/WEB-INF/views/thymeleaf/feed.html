@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feed de Publicaciones</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -15,181 +16,364 @@
 </head>
 <body>
 
-<div class="container my-5">
-    <div class="row g-4">
-        <!-- COLUMNA DE FILTROS Y MAPA -->
-        <div class="col-lg-4 col-xl-3">
-            <aside class="filtro-columna">
-
-
-                <!-- Contenedor de Filtros -->
-                <div id="contenedor-filtros">
+<div class="container-fluid px-3 px-md-4 py-4">
+    <div class="row g-3 g-lg-4">
+        <!-- COLUMNA DE FILTROS -->
+        <div class="col-12 col-lg-4 col-xl-3">
+            <aside class="card shadow-sm border-0 sticky-top" style="top: 20px;">
+                <div class="card-body p-3 p-md-4">
                     <form th:action="@{/feed}" method="GET" id="form-filtros">
-                        <h3 class="titulo-filtros"><i class="fa-solid fa-filter"></i> Filtros</h3>
-                        <!-- Seccion Buscar -->
-                        <div class="filtro-seccion">
-                            <h4 class="subtitulo-filtros">Buscar</h4>
-                            <div class="busqueda">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" name="nombre" class="busqueda-cuadro" placeholder="Buscar por titulo..." th:value="${nombreFiltro}">
+                        <!-- Título Filtros -->
+                        <h3 class="h5 fw-bold mb-4 d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-filter text-dark"></i> Filtros
+                        </h3>
+
+                        <!-- Búsqueda -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold small">Buscar</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                                </span>
+                                <input type="text"
+                                       name="nombre"
+                                       class="form-control border-start-0 ps-0"
+                                       placeholder="Buscar por título..."
+                                       th:value="${nombreFiltro}">
                             </div>
                         </div>
-                        <!-- Seccion Categorias -->
-                        <div class="filtro-seccion">
-                            <h4 class="subtitulo-filtros">Categorias</h4>
-                            <div class="item-categoria"><input type="radio" id="animal-adopcion" name="categoria" value="ADOPCION" th:checked="${categoriaFiltro=='ADOPCION'}"><label for="animal-adopcion">Adopcion</label></div>
-                            <div class="item-categoria"><input type="radio" id="animal-perdido" name="categoria" value="PERDIDO" th:checked="${categoriaFiltro=='PERDIDO'}"><label for="animal-perdido">Perdido</label></div>
-                            <div class="item-categoria"><input type="radio" id="animal-encontrado" name="categoria" value="ENCONTRADO" th:checked="${categoriaFiltro=='ENCONTRADO'}"><label for="animal-encontrado">Encontrado</label></div>
-                            <div class="item-categoria"><input type="radio" id="animal-salud" name="categoria" value="SALUD" th:checked="${categoriaFiltro=='SALUD'}"><label for="animal-salud">Salud</label></div>
-                            <div class="item-categoria"><input type="radio" id="animal-recaudacion" name="categoria" value="RECAUDACION" th:checked="${categoriaFiltro=='RECAUDACION'}"><label for="animal-recaudacion">Recaudacion</label></div>
+
+                        <!-- Categorías -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold small">Categorías</label>
+                            <div class="d-flex flex-column gap-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="categoria" value="ADOPCION"
+                                           id="cat-adopcion" th:checked="${categoriaFiltro=='ADOPCION'}">
+                                    <label class="form-check-label" for="cat-adopcion">Adopción</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="categoria" value="PERDIDO"
+                                           id="cat-perdido" th:checked="${categoriaFiltro=='PERDIDO'}">
+                                    <label class="form-check-label" for="cat-perdido">Perdido</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="categoria" value="ENCONTRADO"
+                                           id="cat-encontrado" th:checked="${categoriaFiltro=='ENCONTRADO'}">
+                                    <label class="form-check-label" for="cat-encontrado">Encontrado</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="categoria" value="SALUD"
+                                           id="cat-salud" th:checked="${categoriaFiltro=='SALUD'}">
+                                    <label class="form-check-label" for="cat-salud">Salud</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="categoria" value="RECAUDACION"
+                                           id="cat-recaudacion" th:checked="${categoriaFiltro=='RECAUDACION'}">
+                                    <label class="form-check-label" for="cat-recaudacion">Recaudación</label>
+                                </div>
+                            </div>
                         </div>
-                        <!-- Seccion Provincia y Localidad -->
-                        <div class="filtro-seccion mb-4">
-                            <h4 class="subtitulo-filtros">Ubicacion</h4>
-                            <div class="mb-2"><label for="provincia" class="form-label" style="font-weight: 500;">Provincia</label><select id="provincia" name="provincia" class="form-select"><option value="">Todas</option><option th:each="p : ${provincias}" th:value="${p}" th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}" th:selected="${p == provinciaFiltro}"></option></select></div>
-                            <div><label for="localidad" class="form-label" style="font-weight: 500;">Ciudad / Localidad</label><input type="text" id="localidad" name="localidad" class="form-control" placeholder="Ej: La Plata" th:value="${localidadFiltro}"></div>
+
+                        <!-- Ubicación -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold small">Ubicación</label>
+                            <div class="mb-3">
+                                <label for="provincia" class="form-label small">Provincia</label>
+                                <select id="provincia" name="provincia" class="form-select">
+                                    <option value="">Todas</option>
+                                    <option th:each="p : ${provincias}"
+                                            th:value="${p}"
+                                            th:text="${#strings.capitalizeWords(p.toString().replace('_', ' ').toLowerCase())}"
+                                            th:selected="${p == provinciaFiltro}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="localidad" class="form-label small">Ciudad / Localidad</label>
+                                <input type="text"
+                                       id="localidad"
+                                       name="localidad"
+                                       class="form-control"
+                                       placeholder="Ej: La Plata"
+                                       th:value="${localidadFiltro}">
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-4">Aplicar Filtros</button>
-                        <a th:href="@{/feed}" class="limpiar-filtros-btn">Limpiar</a>
+
+                        <!-- Botones -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-check me-1"></i> Aplicar Filtros
+                            </button>
+                            <a th:href="@{/feed}" class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-rotate-right me-1"></i> Limpiar
+                            </a>
+                        </div>
                     </form>
                 </div>
-
             </aside>
         </div>
 
         <!-- COLUMNA DE PUBLICACIONES -->
-        <div class="col-lg-8 col-xl-9">
-            <div class="publicaciones-container">
-                <div class="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap">
-                    <div><h2 class="titulo-publicacion">Publicaciones</h2><p class="subtitulo-publicacion">Explora las ultimas publicaciones de la comunidad</p></div>
-                    <div class="d-flex gap-2 flex-wrap"><a th:href="@{/home}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver al Home</a><a th:if="${usuarioLogueado != null}" th:href="@{/crear-publicacion}" class="btn btn-primary"><span class="fa-solid fa-plus"></span> Crear Publicacion</a><a th:if="${usuarioLogueado != null}" th:href="@{/perfil}" class="btn btn-primary"><i class="fa-solid fa-user" style="color: #ffffff;"></i> Perfil</a></div>
-                    <a th:href="@{/mapa}" class="btn btn-info"><i class="fa-solid fa-map-location-dot"></i> Ver en Mapa</a>
+        <div class="col-12 col-lg-8 col-xl-9">
+            <!-- Header con botones -->
+            <div class="mb-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+                    <div>
+                        <h2 class="h3 fw-bold mb-1">Publicaciones</h2>
+                        <p class="text-muted mb-0 small">Explora las últimas publicaciones de la comunidad</p>
+                    </div>
+
+                    <!-- Botones de navegación -->
+                    <div class="d-flex flex-wrap gap-2">
+                        <a th:href="@{/home}" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span class="d-none d-sm-inline ms-1">Volver al home</span>
+                        </a>
+                        <a th:if="${usuarioLogueado != null}"
+                           th:href="@{/crear-publicacion}"
+                           class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-plus"></i>
+                            <span class="d-none d-sm-inline ms-1">Crear</span>
+                        </a>
+                        <a th:if="${usuarioLogueado != null}"
+                           th:href="@{/perfil}"
+                           class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-user"></i>
+                            <span class="d-none d-sm-inline ms-1">Perfil</span>
+                        </a>
+                        <a th:href="@{/mapa}" class="btn btn-primary btn-sm text-white">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span class="d-none d-sm-inline ms-1">Ver Mapa</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <!-- MENSAJES -->
-            <div th:if="${error}" class="alert alert-warning mt-3" role="alert"><i class="fa-solid fa-triangle-exclamation me-2"></i><span th:text="${error}"></span></div>
-            <div th:if="${error == null and publicaciones.isEmpty()}" class="alert alert-info mt-3" role="alert"><i class="fa-solid fa-circle-info me-2"></i><span th:if="${not #strings.isEmpty(nombreFiltro) or not #strings.isEmpty(categoriaFiltro) or provinciaFiltro != null or not #strings.isEmpty(localidadFiltro)}">No se encontraron publicaciones que coincidan con tu busqueda.</span><span th:if="${#strings.isEmpty(nombreFiltro) and #strings.isEmpty(categoriaFiltro) and provinciaFiltro == null and #strings.isEmpty(localidadFiltro)}">Aun no hay publicaciones.</span></div>
-            <div th:if="${mensaje}" class="alert alert-info mt-3" role="alert"><i class="fa-solid fa-circle-info me-2"></i><span th:text="${mensaje}"></span></div>
 
-            <!-- BUCLE DE PUBLICACIONES CON SWITCH -->
-            <div th:each="publicacion : ${publicaciones}">
-                <div th:switch="${publicacion.class.simpleName}" class="carta-adopcion">
+            <!-- Mensajes -->
+            <div th:if="${error}" class="alert alert-warning d-flex align-items-center" role="alert">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <span th:text="${error}"></span>
+            </div>
 
+            <div th:if="${error == null and publicaciones.isEmpty()}" class="alert alert-info d-flex align-items-center" role="alert">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                <span th:if="${not #strings.isEmpty(nombreFiltro) or not #strings.isEmpty(categoriaFiltro) or provinciaFiltro != null or not #strings.isEmpty(localidadFiltro)}">
+                    No se encontraron publicaciones que coincidan con tu búsqueda.
+                </span>
+                <span th:if="${#strings.isEmpty(nombreFiltro) and #strings.isEmpty(categoriaFiltro) and provinciaFiltro == null and #strings.isEmpty(localidadFiltro)}">
+                    Aún no hay publicaciones.
+                </span>
+            </div>
 
-                    <div th:case="'PublicacionRecaudacion'">
-                        <div class="card-header-custom d-flex justify-content-between align-items-center">
-                            <div class="user-info d-flex align-items-center">
-                                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
-                                <div class="user-details ms-3">
-                                    <span class="nombre-usuario" th:text="${publicacion.usuario.nombre + ' ' + publicacion.usuario.apellido}"></span>
-                                    <div>
-                                        <span class="usuario" th:text="${#strings.capitalizeWords(publicacion.usuario.rol.toString().replace('_', ' ').toLowerCase())}"></span>
-                                        <span class="fecha" th:if="${publicacion.fechaPublicacion != null}" th:text="'  ' + ${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
+            <div th:if="${mensaje}" class="alert alert-info d-flex align-items-center" role="alert">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                <span th:text="${mensaje}"></span>
+            </div>
+
+            <!-- Lista de Publicaciones -->
+            <div class="publicaciones-list">
+                <div th:each="publicacion : ${publicaciones}" class="mb-4">
+                    <div th:switch="${publicacion.class.simpleName}">
+
+                        <!-- PUBLICACIÓN DE RECAUDACIÓN -->
+                        <div th:case="'PublicacionRecaudacion'" class="card shadow-sm border-0 overflow-hidden">
+                            <!-- Header -->
+                            <div class="card-header bg-white border-0 p-3 p-md-4">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-avatar rounded-circle overflow-hidden d-flex align-items-center justify-content-center"
+                                             style="width: 50px; height: 50px; min-width: 50px; background-color: #f0f0f0;">
+                                            <img th:src="@{${publicacion.usuario.urlFotoDePerfil}}"
+                                                 th:alt="${publicacion.usuario.nombre}"
+                                                 class="w-100 h-100"
+                                                 style="object-fit: cover;">
+                                        </div>
+                                        <div class="ms-3">
+                                            <div class="fw-semibold" th:text="${publicacion.usuario.nombre + ' ' + publicacion.usuario.apellido}"></div>
+                                            <div class="small">
+                                                <span class="badge bg-light text-secondary me-2"
+                                                      th:text="${#strings.capitalizeWords(publicacion.usuario.rol.toString().replace('_', ' ').toLowerCase())}">
+                                                </span>
+                                                <span class="text-muted"
+                                                      th:if="${publicacion.fechaPublicacion != null}"
+                                                      th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-info bg-gradient px-3 py-2">
+                                        <i class="fa-solid fa-hand-holding-dollar me-1"></i> Recaudación
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="card-body p-3 p-md-4">
+                                <div class="row g-3 g-md-4">
+                                    <div class="col-12 col-md-4">
+                                        <img th:src="@{${publicacion.imagen}}"
+                                             alt="Imagen de la mascota"
+                                             class="img-fluid rounded w-100"
+                                             style="height: 250px; object-fit: cover;">
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <h3 class="h5 fw-bold mb-3" th:text="${publicacion.titulo}"></h3>
+
+                                        <!-- Progress de recaudación -->
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between mb-2 small">
+                                                <span>Meta: <strong th:text="${publicacion.meta}"></strong></span>
+                                                <span class="text-success">Recaudado: <strong th:text="${publicacion.montoActual}"></strong></span>
+                                            </div>
+                                            <div class="progress" style="height: 10px;">
+                                                <div class="progress-bar bg-warning"
+                                                     role="progressbar"
+                                                     th:style="'width: ' + (${publicacion.montoActual != null and publicacion.meta > 0 ? (publicacion.montoActual / publicacion.meta * 100) : 0}) + '%;'"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p class="text-muted mb-4" th:text="${publicacion.descripcionCorta}"></p>
+
+                                        <!-- Form de donación -->
+                                        <form th:action="@{/donar}" method="POST">
+                                            <input type="hidden" name="id" th:value="${publicacion.id}" />
+                                            <div class="d-flex flex-wrap gap-2 align-items-center">
+                                                <input type="number"
+                                                       name="monto"
+                                                       class="form-control form-control-sm"
+                                                       style="max-width: 120px;"
+                                                       placeholder="Monto"
+                                                       required
+                                                       min="100" />
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="fa-solid fa-dollar-sign"></i> Donar
+                                                </button>
+                                                <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-secondary btn-sm">
+                                                    <i class="fa-solid fa-comments"></i>
+                                                    <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
+                                                </a>
+                                                <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-dark btn-sm">
+                                                    Más info
+                                                </a>
+                                                <a th:href="@{/chat(iniciarCon=${publicacion.usuario.nombreDeUsuario})}" class="btn btn-warning btn-sm">
+                                                    Consultar
+                                                </a>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tag-adopcion tag-recaudacion">Recaudacion</div>
                         </div>
-                        <div class="card-body-custom pt-4">
-                            <div class="row g-4">
-                                <div class="col-lg-4 col-md-12"><img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="imagen-animal"></div>
-                                <div class="col-lg-8 col-md-12 d-flex flex-column">
-                                    <h2 class="nombre-animal" th:text="${publicacion.titulo}"></h2>
-                                    <div class="recaudacion-progreso mb-3">
-                                        <div class="d-flex justify-content-between">
-                                            <span>Meta: <span class="fw-bold" th:text="${publicacion.meta}"></span></span>
-                                            <span class="recaudado">Recaudado: <span class="fw-bold" th:text="${publicacion.montoActual}"></span></span>
+
+                        <!-- OTRAS PUBLICACIONES (Adopción, Perdido, Encontrado, Salud) -->
+                        <div th:case="*" class="card shadow-sm border-0 overflow-hidden">
+                            <!-- Header -->
+                            <div class="card-header bg-white border-0 p-3 p-md-4">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-avatar rounded-circle overflow-hidden d-flex align-items-center justify-content-center"
+                                             style="width: 50px; height: 50px; min-width: 50px; background-color: #f0f0f0;">
+                                            <img th:src="@{${publicacion.usuario.urlFotoDePerfil}}"
+                                                 th:alt="${publicacion.usuario.nombre}"
+                                                 class="w-100 h-100"
+                                                 style="object-fit: cover;">
                                         </div>
-                                        <div class="progress mt-1" style="height: 10px;">
-                                            <div class="progress-bar" role="progressbar" th:style="'width: ' + (${publicacion.montoActual != null and publicacion.meta > 0 ? (publicacion.montoActual / publicacion.meta * 100) : 0}) + '%;'" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="ms-3">
+                                            <div class="fw-semibold" th:text="${publicacion.usuario.nombre + ' ' + publicacion.usuario.apellido}"></div>
+                                            <div class="small">
+                                                <span class="badge bg-light text-secondary me-2"
+                                                      th:text="${#strings.capitalizeWords(publicacion.usuario.rol.toString().replace('_', ' ').toLowerCase())}">
+                                                </span>
+                                                <span class="text-muted"
+                                                      th:if="${publicacion.fechaPublicacion != null}"
+                                                      th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}">
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <p class="descripcion-animal" th:text="${publicacion.descripcionCorta}"></p>
+                                    <!-- Badge con iconos para cada categoría -->
+                                    <span th:if="${publicacion.class.simpleName == 'PublicacionAdopcion'}"
+                                          class="badge bg-purple bg-gradient px-3 py-2">
+                                        <i class="fa-solid fa-heart me-1"></i> Adopción
+                                    </span>
+                                    <span th:if="${publicacion.class.simpleName == 'PublicacionPerdido'}"
+                                          class="badge bg-danger bg-gradient px-3 py-2">
+                                        <i class="fa-solid fa-magnifying-glass me-1"></i> Perdido
+                                    </span>
+                                    <span th:if="${publicacion.class.simpleName == 'PublicacionEncontrado'}"
+                                          class="badge bg-success bg-gradient px-3 py-2">
+                                        <i class="fa-solid fa-check-circle me-1"></i> Encontrado
+                                    </span>
+                                    <span th:if="${publicacion.class.simpleName == 'PublicacionSalud'}"
+                                          class="badge bg-warning bg-gradient px-3 py-2">
+                                        <i class="fa-solid fa-heart-pulse me-1"></i> Salud
+                                    </span>
+                                </div>
+                            </div>
 
-                                    <form th:action="@{/donar}" method="POST" class="mt-auto">
-                                        <input type="hidden" name="id" th:value="${publicacion.id}" />
+                            <!-- Body -->
+                            <div class="card-body p-3 p-md-4">
+                                <div class="row g-3 g-md-4">
+                                    <div class="col-12 col-md-4">
+                                        <img th:src="@{${publicacion.imagen}}"
+                                             alt="Imagen de la mascota"
+                                             class="img-fluid rounded w-100"
+                                             style="height: 250px; object-fit: cover;">
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <h3 class="h5 fw-bold mb-3" th:text="${publicacion.titulo}"></h3>
 
-                                        <div class="boton-pta d-flex flex-wrap gap-2 align-items-center">
-                                            <div style="min-width: 120px;">
-                                                <input type="number" name="monto" class="form-control form-control-sm" placeholder="Monto" required min="100" />
-                                            </div>
+                                        <div class="d-flex flex-wrap gap-3 mb-3 small text-muted">
+                                            <span th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion) or
+                                                          publicacion instanceof T(com.tallerwebi.dominio.PublicacionRecaudacion) or
+                                                          publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud)}">
+                                                <i class="fa-solid fa-calendar-days"></i>
+                                                <span th:text="${publicacion.edad}"></span> años
+                                            </span>
+                                            <span>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                <span th:text="${publicacion.localidad}"></span>
+                                            </span>
+                                            <span>
+                                                <i class="fa-solid fa-paw"></i>
+                                                <span th:text="${publicacion.raza}"></span>
+                                            </span>
+                                        </div>
 
-                                            <button type="submit" class="btn btn-donar">
-                                                <i class="fa-solid fa-dollar-sign"></i> Donar
-                                            </button>
+                                        <p class="text-muted mb-4" th:text="${publicacion.descripcionCorta}"></p>
 
-                                            <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-secondary">
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <a th:href="@{/chat(iniciarCon=${publicacion.usuario.nombreDeUsuario})}"
+                                               class="btn btn-warning btn-sm">
+                                                <i class="fa-solid fa-comment-dots"></i> Consultar
+                                            </a>
+                                            <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                               class="btn btn-dark btn-sm">
+                                                <i class="fa-solid fa-info-circle"></i> Más info
+                                            </a>
+                                            <a th:href="@{/publicacion/{id}(id=${publicacion.id})}"
+                                               class="btn btn-secondary btn-sm">
                                                 <i class="fa-solid fa-comments"></i>
                                                 <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
                                             </a>
-
-                                            <button type="button" class="btn btn-compartir">Compartir</button>
-                                            <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-more-info">Mas info</a>
-                                            <a th:href="@{/chat(iniciarCon=${publicacion.usuario.nombreDeUsuario})}"
-                                               class="btn btn-consult">Consultar</a>
-
                                         </div>
-                                    </form>
-
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
-
-                    <!-- CASO POR DEFECTO PARA OTROS TIPOS DE PUBLICACION -->
-                    <div th:case="*">
-                        <div class="card-header-custom d-flex justify-content-between align-items-center">
-                            <div class="user-info d-flex align-items-center">
-                                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
-                                <div class="user-details ms-3">
-                                    <span class="nombre-usuario" th:text="${publicacion.usuario.nombre + ' ' + publicacion.usuario.apellido}"></span>
-                                    <div>
-                                        <span class="usuario" th:text="${#strings.capitalizeWords(publicacion.usuario.rol.toString().replace('_', ' ').toLowerCase())}"></span>
-                                        <span class="fecha" th:if="${publicacion.fechaPublicacion != null}" th:text="'  ' + ${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm').format(publicacion.fechaPublicacion)}"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tag-adopcion"
-                                 th:classappend="${publicacion.class.simpleName == 'PublicacionAdopcion' ? 'tag-adopcion' : (publicacion.class.simpleName == 'PublicacionPerdido' ? 'tag-perdido' : (publicacion.class.simpleName == 'PublicacionEncontrado' ? 'tag-encontrado' : (publicacion.class.simpleName == 'PublicacionSalud' ? 'tag-salud' : '')))}"
-                                 th:text="${#strings.capitalize(publicacion.class.simpleName.replace('Publicacion',''))}">
-                            </div>
-                        </div>
-                        <div class="card-body-custom pt-4">
-                            <div class="row g-4">
-                                <div class="col-lg-4 col-md-12"><img th:src="@{${publicacion.imagen}}" alt="Imagen de la mascota" class="imagen-animal"></div>
-                                <div class="col-lg-8 col-md-12 d-flex flex-column">
-                                    <h2 class="nombre-animal" th:text="${publicacion.titulo}"></h2>
-                                    <div class="contenedor-info d-flex flex-wrap align-items-center mb-3">
-                                        <span th:if="${publicacion instanceof T(com.tallerwebi.dominio.PublicacionAdopcion) or publicacion instanceof T(com.tallerwebi.dominio.PublicacionRecaudacion) or publicacion instanceof T(com.tallerwebi.dominio.PublicacionSalud)}">
-                                            <i class="fa-solid fa-calendar-days"></i> <span th:text="${publicacion.edad}"></span> anios
-                                        </span>
-                                        <span class="mx-3"><i class="fa-solid fa-location-dot"></i> <span th:text="${publicacion.localidad}"></span></span>
-                                        <span><i class="fa-solid fa-paw"></i> <span th:text="${publicacion.raza}"></span></span>
-                                    </div>
-                                    <p class="descripcion-animal" th:text="${publicacion.descripcionCorta}"></p>
-                                    <div class="boton-pta d-flex flex-wrap gap-2 mt-auto">
-                                        <button class="btn btn-favorite"><i class="fa-solid fa-heart"></i> Favorito</button>
-<!--                                        <button class="btn btn-consult">Consultar</button>-->
-                                        <a th:href="@{/chat(iniciarCon=${publicacion.usuario.nombreDeUsuario})}"
-                                           class="btn btn-consult">Consultar</a>
-                                        <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-more-info">Mas info</a>
-                                        <a th:href="@{/publicacion/{id}(id=${publicacion.id})}" class="btn btn-secondary">
-                                            <i class="fa-solid fa-comments"></i>
-                                            <span th:text="${publicacion.comentarios != null ? #lists.size(publicacion.comentarios) : 0}"></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<footer class="footer"></footer>
+<footer class="footer mt-5"></footer>
 
 <script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/filtros.js}"></script>

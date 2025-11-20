@@ -2,60 +2,34 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa Interactivo de Mascotas</title>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-    <link rel="stylesheet" th:href="@{/css/feed.css}"/>
+    <link rel="stylesheet" th:href="@{/css/variables.css}"/>
+    <link rel="stylesheet" th:href="@{/css/mapa.css}"/>
 
     <script th:inline="javascript">
         const contextPath = /*[[@{/}]]*/ '';
     </script>
 
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-        .map-page-container {
-            display: flex;
-            height: 100vh;
-        }
-        .sidebar-filters {
-            width: 320px;
-            flex-shrink: 0;
-            background-color: #f8f9fa;
-            border-right: 1px solid #dee2e6;
-            display: flex;
-            flex-direction: column;
-        }
-        .filters-content {
-            padding: 20px;
-            overflow-y: auto;
-        }
-        #map-container {
-            flex-grow: 1;
-        }
-        .footer-buttons {
-            margin-top: auto;
-            padding: 20px;
-            border-top: 1px solid #dee2e6;
-        }
-        .range-slider-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-    </style>
+
 </head>
 <body>
 
+<!-- Botón toggle para móvil -->
+<button class="mobile-filter-toggle" id="toggleFilters" aria-label="Toggle Filters">
+    <i class="fa-solid fa-filter"></i>
+</button>
+
+<!-- Overlay para móvil -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <div class="map-page-container">
 
-    <aside class="sidebar-filters">
+    <aside class="sidebar-filters" id="sidebarFilters">
         <div class="filters-content">
             <h3 class="titulo-filtros"><i class="fa-solid fa-filter"></i> Filtros del Mapa</h3>
 
@@ -101,6 +75,32 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script th:src="@{/js/mapa-interactivo.js}"></script>
+<script>
+    // Script para el toggle del sidebar en móvil
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('toggleFilters');
+        const sidebar = document.getElementById('sidebarFilters');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        toggleBtn.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        // Actualizar el progreso visual del slider
+        const rangeSlider = document.getElementById('filtro-rango');
+        const updateSliderProgress = () => {
+            const value = ((rangeSlider.value - rangeSlider.min) / (rangeSlider.max - rangeSlider.min)) * 100;
+            rangeSlider.style.setProperty('--value', value + '%');
+        };
+
+        rangeSlider.addEventListener('input', updateSliderProgress);
+        updateSliderProgress(); // Inicializar
+    });
+</script>
 
 </body>
 </html>

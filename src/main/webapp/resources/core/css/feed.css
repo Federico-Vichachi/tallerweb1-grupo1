@@ -1,199 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+/* Variables y configuración base */
 body {
-    background-color: #fdf5e6;
+    background-color: var(--color-fondo);
     font-family: 'Poppins', sans-serif;
     color: #333;
+    min-height: 100vh;
 }
 
-/* FILTROS */
+/* Color personalizado para badge purple */
+.bg-purple {
+    background-color: #8e44ad !important;
+}
 
-.filtro-columna {
-    background-color: #f8f9fa;
-    padding: 2rem;
-    border-radius: 1.25rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+/* Sticky sidebar - solo en pantallas grandes */
+@media (min-width: 992px) {
+    .sticky-top {
+        position: sticky;
+        top: 20px;
+        z-index: 1020;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+    }
+}
+
+/* Mejoras para los radio buttons de categorías */
+.form-check-input:checked {
+    background-color: var(--color-primario, #f39c12);
+    border-color: var(--color-primario, #f39c12);
+}
+
+
+/* Avatar de usuario */
+.user-avatar {
+    border: 2px solid #000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.user-avatar img {
+    object-fit: cover;
+    width: 100%;
     height: 100%;
 }
 
-.filtro-seccion {
-       margin-bottom: 2rem;
-}
-
-.titulo-filtros {
-font-size: 1.5rem;
-font-weight: 700;
-margin-bottom: 1.5rem;
-display: flex;
-align-items: center;
-gap: 10px;
-}
-
-.subtitulo-filtros {
-font-weight: 600;
-margin-bottom: 1rem;
-color: #555;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-
-.busqueda {
-    position: relative;
-}
-
-.busqueda .fa-magnifying-glass {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #aaa;
-}
-.busqueda-cuadro {
-    width: 100%;
-        height: 48px;
-        padding-left: 45px ;
-        border: 2px solid #3C3C3B;
-        border-radius: 50px;
-        background-color: #F5F3F0;
-        color: #3C3C3B;
-        font-size: 0.95rem;
-        font-weight: 500;
-        outline: none;
-        -webkit-appearance: none;
-        appearance: none;
-
-    }
-
-.item-categoria {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.75rem;
-}
-
-.item-categoria input[type="radio"] {
-    margin-right: 10px;
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: #fff;
-    margin: 0;
-    font: inherit;
-    color: currentColor;
-     width: 1.15em;
-    height: 1.15em;
-    border: 0.1em solid #ced4da;
-    border-radius: 0.15em;
-    transform: translateY(-0.075em);
-    display: grid;
-    place-content: center;
-    cursor: pointer;
-}
-
-.item-categoria input[type="radio"]::before {
-    content: "";
-    width: 0.65em;
-    height: 0.65em;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em #f78536;
-}
-
-.item-categoria input[type="radio"]:checked::before {
- transform: scale(1);
-}
-
-.item-categoria label {
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-.form-select {
-    border-radius: 8px;
- }
-
-.contenedor-tags, .contenedor-filtros-activos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.tag-btn {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 20px;
-    padding: 5px 15px;
-    font-size: 0.85rem;
-    cursor: pointer;
-}
-
-.tag-btn:hover {
-    background-color: #e9ecef;
-    border-color: #adb5bd;
-}
-
-.tags-activos {
-    display: flex;
-    align-items: center;
-    background-color: #f78536;
-    color: white;
-    padding: 5px 8px 5px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.eliminar-tags {
-    background: none;
-    border: none;
-    color: white;
-    margin-left: 8px;
-    font-weight: bold;
-    padding: 0 5px;
-}
-
-.limpiar-filtros-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 10px;
-    border-radius: 25px;
-    background-color: #343a40;
-    color: white;
-    font-weight: 600;
-    border: none;
-    margin-top: 1.5rem;
-}
-
-/* TERMINA FILTROS */
 
 
-
-/* PUBLICACIONES */
-.publicaciones {
-    background-color: #fef5e7;
-    border-radius: 16px;
-    padding: 24px;
-    border: 1px solid #fbeec1;
-    max-width: 950px;
-    margin: auto;
-}
-
-/* Título y Subtítulo */
-.titulo-publicacion {
-    font-weight: 700;
-    color: #212529;
-    margin: 0;
-    font-size: 2rem;
-}
-
-.subtitulo-publicacion {
-    color: #6c757d;
-    margin: 4px 0 0 0;
-    font-size: 1rem;
-}
-
+/* Botones personalizados */
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:focus,
@@ -205,249 +58,155 @@ gap: 8px;
     color: #fff !important;
 }
 
-.boton-filtrado {
-    background-color: #ffffff;
-    color: #495057;
-    border: 1px solid #dee2e6;
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    /* display: inline-flex; */
-    align-items: center;
-    gap: 8px;
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active,
+.btn-secondary.active,
+.show > .btn-secondary.dropdown-toggle {
+    background-color: var(--color-secundario) !important;
+    border-color: var(--color-secundario) !important;
+    color: #fff !important;
 }
 
-.boton-filtrado span {
-    color: #716c7d;
+.btn-light,
+.btn-light:hover,
+.btn-light:focus,
+.btn-light:active,
+.btn-light.active,
+.show > .btn-light.dropdown-toggle {
+    background-color: var(--color-fondo) !important;
+    border-color: var(--color-fondo) !important;
+    color: var(--color-secundario) !important;
 }
 
-.boton-filtrado:hover {
-    background-color: #f8f9fa;
-    border-color: #adb5bd;
+.btn {
+    transition: all 0.3s ease;
 }
 
-.boton-filtrado.active {
-    background-color: #e46914;
-    color: white;
-    border-color: transparent;
-    font-weight: 600;
-}
-
-.boton-filtrado.active:hover {
-    background-color: #d9531e;
-}
-
-/* -----------------CARTA ------------- */
-
-.carta-adopcion, .carta-perdido, .carta-encontrado{
-    margin-bottom:4rem;
-}
-
-.carta-adopcion {
-    max-width: 900px;
-    margin: auto;
-    background-color: #fef9e7;
-    border-radius: 20px;
-    padding: 25px;
-    border: 1px solid #fbeec1;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-/* --- Encabezado --- */
-.card-header-custom {
-    padding-bottom: 20px;
-}
-
-.user-icon {
-    background-color: #f39c12;
-    color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-}
-
-.nombre-usuario{
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.usuario {
-    background-color: #e9ecef;
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    color: #6c757d;
-}
-
-.fecha {
-    font-size: 0.9rem;
-    color: #6c757d;
-}
-
-.tag-adopcion {
-    background-color: #d7bde2;
-    color: #8e44ad;
-    padding: 8px 30px 8px 15px;
-    border-radius: 8px 0 0 8px;
-    font-weight: 600;
-    position: relative;
-}
-
-/* --- Cuerpo de la tarjeta --- */
-.imagen-animal {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.nombre-animal{
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.contenedor-info span {
-    color: #555;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.contenedor-info i {
-    color: #888;
-}
-
-.descripcion-animal {
-    color: #444;
-    line-height: 1.6;
-}
-
-.tags .tag {
-    display: inline-block;
-    background-color: #f5b041;
-    color: #784212;
-    padding: 5px 15px;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    margin-right: 8px;
-    margin-bottom: 8px;
-}
-
-.contenedo-tags{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-}
-
-/* --- Botones de Acción --- */
-.boton-pta .btn {
-    border-radius: 10px;
-    border: none;
-    padding: 10px 20px;
-    font-weight: 600;
-    transition: transform 0.2s;
-}
-
-.boton-pta .btn:hover {
+.btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.btn-favorite {
-    background-color: #e8daef;
-    color: #a569bd;
-}
-
-.btn-consult {
-    background-color: #f39c12;
-    color: white;
-}
-
-.btn-more-info {
-    background-color: #212529;
-    color: white;
-}
-
-#map {
-    height: 400px;
-    width: 100%;
-    border-radius: 8px;
-    border: 1px solid #ccc;
 }
 
 
-
-.tag-recaudacion {
-    background-color: #aed6f1;
-    color: #2e86c1;
+/* Input group mejorado */
+.input-group-text {
+    background-color: #f8f9fa;
 }
 
-.tag-perdido {
-    background-color: #f5b7b1;
-    color: #c0392b;
+/* Scrollbar personalizado para sidebar en desktop */
+@media (min-width: 992px) {
+    .sticky-top::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .sticky-top::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .sticky-top::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    .sticky-top::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 }
 
-.tag-encontrado {
-    background-color: #a3e4d7;
-    color: #16a085;
+/* Responsive: Ocultar texto de botones en móviles pequeños */
+@media (max-width: 576px) {
+    .btn-sm {
+        padding: 0.375rem 0.75rem;
+    }
 }
 
-.tag-salud {
-    background-color: #f9e79f;
-    color: #f1c40f;
+/* Progress bar personalizada */
+.progress {
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-
-.recaudacion-progreso {
-    font-size: 0.95rem;
-    color: #555;
+.progress-bar {
+    transition: width 0.6s ease;
 }
 
-.recaudacion-progreso .recaudado {
-    color: #28a745;
-}
-
-.recaudacion-progreso .progress {
-    background-color: #e9ecef;
-    border-radius: 20px;
-}
-
-.recaudacion-progreso .progress-bar {
-    background-color: #f39c12;
-    border-radius: 20px;
-}
-
-.tags-especificos {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.tags-especificos .tag-item {
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.8rem;
+/* Badges mejorados */
+.badge {
     font-weight: 500;
-    background-color: #f5b041;
-    color: #784212;
+    letter-spacing: 0.3px;
 }
 
-.tags-especificos .tag-urgente {
-    background-color: #e74c3c;
-    color: white;
+/* Animación suave para filtros */
+.form-check-input,
+.form-select,
+.form-control {
+    transition: all 0.2s ease;
 }
 
-.btn-donar {
-    background-color: #3498db;
-    color: white;
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--color-primario, #f39c12);
+    box-shadow: 0 0 0 0.25rem rgba(243, 156, 18, 0.25);
 }
 
-.btn-compartir {
-    background-color: #f39c12;
-    color: white;
+/* Mejora de imágenes responsivas */
+.img-fluid {
+    transition: transform 0.3s ease;
+}
+
+
+/* Footer spacing */
+.footer {
+    margin-top: auto;
+}
+
+/* Mejoras para alertas */
+.alert {
+    border-left: 4px solid;
+    border-radius: 0.5rem;
+}
+
+.alert-warning {
+    border-left-color: #ffc107;
+}
+
+.alert-info {
+    border-left-color: #0dcaf0;
+}
+
+/* Espaciado mejorado para móviles */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .card-body {
+        padding: 1rem !important;
+    }
+
+    .card-header {
+        padding: 1rem !important;
+    }
+}
+
+/* Asegurar que las imágenes mantengan aspect ratio */
+.card img {
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Efecto hover para botones de acción */
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
 }

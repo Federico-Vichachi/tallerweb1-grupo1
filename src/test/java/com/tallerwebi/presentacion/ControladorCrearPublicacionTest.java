@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ public class ControladorCrearPublicacionTest {
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
     private Usuario usuarioMock;
+    private MultipartFile archivoMock;
     private DatosAdopcion datosAdopcion;
     private DatosRecaudacion datosRecaudacion;
     private DatosSalud datosSalud;
@@ -35,8 +37,10 @@ public class ControladorCrearPublicacionTest {
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
         usuarioMock = mock(Usuario.class);
+        archivoMock = mock(MultipartFile.class);
         when(requestMock.getSession()).thenReturn(sessionMock);
         when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuarioMock);
+        when(archivoMock.isEmpty()).thenReturn(true);
     }
 
 
@@ -63,7 +67,7 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionAdopcion() {
-        return controlador.crearPublicacionAdopcion(datosAdopcion, requestMock);
+        return controlador.crearPublicacionAdopcion(datosAdopcion, archivoMock, requestMock);
     }
 
     private void thenSeMuestraLaVistaDeAdopcion(ModelAndView mav) {
@@ -100,7 +104,7 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionRecaudacion() {
-        return controlador.crearPublicacionRecaudacion(datosRecaudacion, requestMock);
+        return controlador.crearPublicacionRecaudacion(datosRecaudacion, archivoMock, requestMock);
     }
 
     private void thenSeMuestraLaVistaDeRecaudacion(ModelAndView mav) {
@@ -136,7 +140,7 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionSalud() {
-        return controlador.crearPublicacionSalud(datosSalud,requestMock);
+        return controlador.crearPublicacionSalud(datosSalud, archivoMock, requestMock);
     }
 
     private void thenSeMuestraLaVistaDeSalud(ModelAndView mav) {
@@ -173,8 +177,7 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionPerdido() {
-
-        return controlador.crearPublicacionPerdido(datosPerdido, requestMock);
+        return controlador.crearPublicacionPerdido(datosPerdido, archivoMock, requestMock);
     }
 
     private void thenSeMuestraLaVistaDePerdido(ModelAndView mav) {
@@ -205,7 +208,7 @@ public class ControladorCrearPublicacionTest {
     }
 
     private ModelAndView whenCreoLaPublicacionEncontrado() {
-        return controlador.crearPublicacionEncontrado(datosEncontrado, requestMock);
+        return controlador.crearPublicacionEncontrado(datosEncontrado, archivoMock, requestMock);
     }
 
     private void thenSeMuestraLaVistaDeEncontrado(ModelAndView mav) {

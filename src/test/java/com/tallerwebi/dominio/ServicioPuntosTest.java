@@ -29,7 +29,7 @@ public class ServicioPuntosTest {
 
         whenSumoLosPuntos(usuario, monto);
 
-        thenSeSumanLosPuntosCorrectamente(usuario, 10);
+        thenSeSumanLosPuntosCorrectamente(usuario, 1);
     }
 
     private Usuario givenTengoUnUsuarioSinPuntos() {

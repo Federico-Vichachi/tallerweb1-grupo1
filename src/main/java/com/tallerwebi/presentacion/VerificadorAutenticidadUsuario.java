@@ -25,14 +25,4 @@ public class VerificadorAutenticidadUsuario {
         Roles rol = usuario.getRol();
         return rol == Roles.ORGANIZACION;
     }
-
-    public boolean verificarUsuarioConRolVeterinario() {
-        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
-        if (usuario == null) {
-            return false;
-        }
-        Roles rol = usuario.getRol();
-        return rol == Roles.VETERINARIO;
-    }
-
 }
